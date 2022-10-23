@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layout_gravity="center">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="Select Item"
         android:gravity="center"/>
+
     <Spinner
         android:id="@+id/menuItemSpinner"
         android:layout_width="match_parent"
@@ -31,12 +33,14 @@
         android:spinnerMode="dropdown"
         android:background="@android:drawable/btn_dropdown"
         android:gravity="center"/>
+
     <TextView
         android:id="@+id/selectQuantityTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Select Item Quantity"
         android:gravity="center"/>
+
     <EditText
         android:id="@+id/planDurationEditText"
         android:layout_width="wrap_content"
@@ -46,6 +50,7 @@
         android:ems="3"
         android:inputType="number"
         android:layout_marginBottom="30sp"/>
+
     <Button
         android:id="@+id/NewItemButton"
         android:layout_width="wrap_content"
@@ -55,6 +60,7 @@
         android:backgroundTint="@android:color/darker_gray"
         android:textColor="@color/black"
         android:textSize="12sp"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -72,6 +78,7 @@
             android:textColor="@color/black"
             android:textSize="12sp"
             android:layout_marginBottom="40sp"/>
+
     </LinearLayout>
 
 </LinearLayout>
