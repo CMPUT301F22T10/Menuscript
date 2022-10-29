@@ -14,4 +14,11 @@
     <string name="view_recipes">View Recipes</string>
     <string name="view_meal_plan">View Meal Plan</string>
     <string name="view_shopping_list">View Shopping List</string>
+    <string name="ingredients">INGREDIENTS</string>
+    <string name="menuscript_logo_description">Menuscript Logo</string>
+    <string name="sort_button_description">Sort Button</string>
+
+    <string name="list_text_amount">Count</string>
+    <string name="list_text_category">Category</string>
+    <string name="list_text_description">Description</string>
 </resources>
