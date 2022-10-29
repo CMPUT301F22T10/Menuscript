@@ -1,5 +1,8 @@
 package com.example.menuscript;
 
+/**
+ * @author Lane Missel
+ */
 public class Ingredient {
     private int key;
     private String description;
@@ -7,6 +10,12 @@ public class Ingredient {
 
     public Ingredient () {
         ;
+    }
+
+    public Ingredient (int key, String description, String category) {
+        this.key = key;
+        this.description = description;
+        this.category = category;
     }
 
     public int getKey () {return this.key;}
