@@ -2,20 +2,20 @@ package com.example.menuscript;
 
 import java.util.Date;
 
-public class Ingredient {
+public class TestIngredient {
     private String description;
     private String category;
     private Integer amount;
     private String unit;
 
-    public Ingredient(String description, String category) {
+    public TestIngredient(String description, String category) {
         this.description = description;
         this.category = category;
         amount = 0;
         unit = null;
     }
 
-    public Ingredient(String description, String category, Integer amount, String unit) {
+    public TestIngredient(String description, String category, Integer amount, String unit) {
         this.description = description;
         this.category = category;
         this.amount = amount;

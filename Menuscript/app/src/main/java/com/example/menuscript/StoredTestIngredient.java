@@ -2,19 +2,19 @@ package com.example.menuscript;
 
 import java.util.Date;
 
-public class StoredIngredient extends Ingredient {
+public class StoredTestIngredient extends TestIngredient {
     private Date bestBefore;
     private String location;
 
-    public StoredIngredient(String description, String category) {
+    public StoredTestIngredient(String description, String category) {
         super(description, category);
     }
 
-    public StoredIngredient(String description, String category, Integer amount, String unit) {
+    public StoredTestIngredient(String description, String category, Integer amount, String unit) {
         super(description, category, amount, unit);
     }
 
-    public StoredIngredient(String description, String category, Integer amount, String unit, Date bestBefore, String location) {
+    public StoredTestIngredient(String description, String category, Integer amount, String unit, Date bestBefore, String location) {
         super(description, category, amount, unit);
         this.bestBefore = bestBefore;
         this.location = location;

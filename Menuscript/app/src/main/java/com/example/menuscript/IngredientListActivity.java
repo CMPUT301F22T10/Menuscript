@@ -12,7 +12,7 @@ public class IngredientListActivity extends AppCompatActivity {
 
     ListView ingredientList;
     CustomIngredientList ingredientAdapter;
-    ArrayList<Ingredient> dataList;
+    ArrayList<TestIngredient> dataList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +23,11 @@ public class IngredientListActivity extends AppCompatActivity {
 
         dataList = new ArrayList<>();
 
-        Ingredient test1 = new Ingredient("Tuna Fish", "Protein");
+        TestIngredient test1 = new TestIngredient("Tuna Fish", "Protein");
 
-        Ingredient test2 = new Ingredient("ThisIsToTestVeryLongCharacterStrings", "oog");
+        TestIngredient test2 = new TestIngredient("ThisIsToTestVeryLongCharacterStrings", "oog");
 
-        Ingredient test3 = new Ingredient("Basmati Rice", "Carb", 1700, "g");
+        TestIngredient test3 = new TestIngredient("Basmati Rice", "Carb", 1700, "g");
 
         dataList.add(test1);
         dataList.add(test2);
