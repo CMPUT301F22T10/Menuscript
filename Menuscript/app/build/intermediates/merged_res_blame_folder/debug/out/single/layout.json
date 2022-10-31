@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "C:\\Users\\lanem\\.gradle\\daemon\\7.3.3\\com.example.menuscript.app-mergeDebugResources-32:\\layout\\activity_main.xml",
+        "source": "C:\\Users\\lanem\\.gradle\\daemon\\7.3.3\\com.example.menuscript.app-main-35:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "com.example.menuscript.app-mergeDebugResources-32:/layout/activity_main.xml",
+        "source": "com.example.menuscript.app-main-35:/layout/activity_main.xml"
+    }
+]
