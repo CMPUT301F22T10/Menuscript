@@ -17,6 +17,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <Spinner
+        android:id="@+id/sort_button"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@android:drawable/ic_menu_sort_by_size"
+        app:layout_constraintBottom_toTopOf="@id/header_bar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/list_frame"
+        app:layout_constraintTop_toBottomOf="@id/ingredient_header" />
 
     <LinearLayout
         android:id="@+id/header_bar"
@@ -123,18 +133,5 @@
 
     </FrameLayout>
 
-    <ImageView
-        android:id="@+id/sort_button"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:clickable="true"
-        android:contentDescription="@string/sort_button_description"
-        android:focusable="true"
-        android:scaleType="fitStart"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@id/list_frame"
-        app:layout_constraintTop_toBottomOf="@id/list_frame"
-        app:srcCompat="@android:drawable/ic_menu_sort_by_size" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

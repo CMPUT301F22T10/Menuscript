@@ -13,11 +13,11 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 public class CustomIngredientList extends ArrayAdapter {
-    private ArrayList<TestIngredient> items;
+    private ArrayList<Ingredient> items;
     private Context context;
 
 
-    public CustomIngredientList(Context context, ArrayList<TestIngredient> items) {
+    public CustomIngredientList(Context context, ArrayList<Ingredient> items) {
         super(context, 0, items);
         this.items = items;
         this.context = context;
@@ -30,13 +30,15 @@ public class CustomIngredientList extends ArrayAdapter {
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.ingredient_content, parent, false);
         }
-        TestIngredient ingredient = items.get(position);
+        Ingredient ingredient = items.get(position);
         TextView descriptionText = view.findViewById(R.id.description_text);
         TextView amountText = view.findViewById(R.id.amount_text);
         TextView categoryText = view.findViewById(R.id.category_text);
 
         descriptionText.setText(ingredient.getDescription());
-        amountText.setText(ingredient.getAmount().toString());
+
+        // needs to be updated when we have a method or subclass that provides count
+        amountText.setText("0");
         categoryText.setText(ingredient.getCategory());
 
         return view;

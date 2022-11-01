@@ -4,7 +4,7 @@
             "outputFile": "com.example.menuscript.app-mergeDebugResources-31:/values-w600dp-v13/values-w600dp-v13.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\boxma\\AndroidStudioProjects\\Menuscript\\Menuscript\\app\\src\\main\\res\\values-w600dp\\dimens.xml",
+                    "source": "E:\\School\\CMPUT 301\\Menuscript\\Menuscript\\app\\src\\main\\res\\values-w600dp\\dimens.xml",
                     "from": {
                         "startLines": "1",
                         "startColumns": "4",

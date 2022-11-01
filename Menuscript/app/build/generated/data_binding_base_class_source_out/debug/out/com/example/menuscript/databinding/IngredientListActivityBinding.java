@@ -5,9 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -45,13 +45,13 @@ public final class IngredientListActivityBinding implements ViewBinding {
   public final FrameLayout listFrame;
 
   @NonNull
-  public final ImageView sortButton;
+  public final Spinner sortButton;
 
   private IngredientListActivityBinding(@NonNull ConstraintLayout rootView,
       @NonNull TextView amountHeader, @NonNull TextView categoryHeader,
       @NonNull TextView descriptionHeader, @NonNull LinearLayout headerBar,
       @NonNull TextView ingredientHeader, @NonNull ListView ingredientList,
-      @NonNull FrameLayout listFrame, @NonNull ImageView sortButton) {
+      @NonNull FrameLayout listFrame, @NonNull Spinner sortButton) {
     this.rootView = rootView;
     this.amountHeader = amountHeader;
     this.categoryHeader = categoryHeader;
@@ -133,7 +133,7 @@ public final class IngredientListActivityBinding implements ViewBinding {
       }
 
       id = R.id.sort_button;
-      ImageView sortButton = ViewBindings.findChildViewById(rootView, id);
+      Spinner sortButton = ViewBindings.findChildViewById(rootView, id);
       if (sortButton == null) {
         break missingId;
       }

@@ -26,11 +26,11 @@ com.example.menuscript.app-cardview-1.0.0-24 C:\Users\boxma\.gradle\caches\trans
 com.example.menuscript.app-startup-runtime-1.1.1-25 C:\Users\boxma\.gradle\caches\transforms-3\dd26f7af4232aa82cd84cd79d410c8bc\transformed\startup-runtime-1.1.1\res
 com.example.menuscript.app-navigation-ui-2.3.5-26 C:\Users\boxma\.gradle\caches\transforms-3\dfaa223da9a2dec4716992408f2eb043\transformed\navigation-ui-2.3.5\res
 com.example.menuscript.app-coordinatorlayout-1.1.0-27 C:\Users\boxma\.gradle\caches\transforms-3\f911dcf170c4355b55309601278b778a\transformed\coordinatorlayout-1.1.0\res
-com.example.menuscript.app-pngs-28 C:\Users\boxma\AndroidStudioProjects\Menuscript\Menuscript\app\build\generated\res\pngs\debug
-com.example.menuscript.app-resValues-29 C:\Users\boxma\AndroidStudioProjects\Menuscript\Menuscript\app\build\generated\res\resValues\debug
-com.example.menuscript.app-rs-30 C:\Users\boxma\AndroidStudioProjects\Menuscript\Menuscript\app\build\generated\res\rs\debug
-com.example.menuscript.app-packageDebugResources-31 C:\Users\boxma\AndroidStudioProjects\Menuscript\Menuscript\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
-com.example.menuscript.app-packageDebugResources-32 C:\Users\boxma\AndroidStudioProjects\Menuscript\Menuscript\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
-com.example.menuscript.app-merged_res-33 C:\Users\boxma\AndroidStudioProjects\Menuscript\Menuscript\app\build\intermediates\merged_res\debug
-com.example.menuscript.app-debug-34 C:\Users\boxma\AndroidStudioProjects\Menuscript\Menuscript\app\src\debug\res
-com.example.menuscript.app-main-35 C:\Users\boxma\AndroidStudioProjects\Menuscript\Menuscript\app\src\main\res
+com.example.menuscript.app-pngs-28 E:\School\CMPUT 301\Menuscript\Menuscript\app\build\generated\res\pngs\debug
+com.example.menuscript.app-resValues-29 E:\School\CMPUT 301\Menuscript\Menuscript\app\build\generated\res\resValues\debug
+com.example.menuscript.app-rs-30 E:\School\CMPUT 301\Menuscript\Menuscript\app\build\generated\res\rs\debug
+com.example.menuscript.app-packageDebugResources-31 E:\School\CMPUT 301\Menuscript\Menuscript\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.menuscript.app-packageDebugResources-32 E:\School\CMPUT 301\Menuscript\Menuscript\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.menuscript.app-merged_res-33 E:\School\CMPUT 301\Menuscript\Menuscript\app\build\intermediates\merged_res\debug
+com.example.menuscript.app-debug-34 E:\School\CMPUT 301\Menuscript\Menuscript\app\src\debug\res
+com.example.menuscript.app-main-35 E:\School\CMPUT 301\Menuscript\Menuscript\app\src\main\res
