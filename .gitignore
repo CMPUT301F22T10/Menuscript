@@ -1,12 +1,7 @@
 *.iml
 /Menuscript/.gradle
 
-/Menuscript/.idea/
-/Menuscript/.idea/caches
-/Menuscript/.idea/libraries
-/Menuscript/.idea/modules.xml
-/Menuscript/.idea/workspace.xml
-/Menuscript/.idea/navEditor.xml
+/Menuscript/.idea
 /Menuscript/.idea/assetWizardSettings.xml
 /Menuscript.DS_Store
 /Menuscript/build
