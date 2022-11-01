@@ -4,6 +4,16 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/GitHub/Menuscript/Menuscript/app/src/main/res/layout/activity_main.xml" value="0.25764596848934196" />
+        <entry key="..\:/Users/dudeo/Desktop/MenuScript/Menuscript/Menuscript/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Users/dudeo/Desktop/MenuScript/Menuscript/Menuscript/app/src/main/res/layout/recipe_add.xml" value="0.1" />
+        <entry key="..\:/Users/dudeo/Desktop/MenuScript/Menuscript/Menuscript/app/src/main/res/layout/recipe_edit.xml" value="0.5" />
+        <entry key="..\:/Users/dudeo/Desktop/MenuScript/Menuscript/Menuscript/app/src/main/res/layout/recipe_maincontext.xml" value="0.365625" />
+        <entry key="..\:/Users/dudeo/Desktop/MenuScript/Menuscript/Menuscript/app/src/main/res/layout/recipe_view.xml" value="0.365625" />
+        <entry key="..\:/Users/dudeo/Desktop/MenuScript/Menuscript/Menuscript/app/src/main/res/layout/shoplist_ingredient.xml" value="0.5" />
+        <entry key="..\:/Users/dudeo/Desktop/MenuScript/Menuscript/Menuscript/app/src/main/res/layout/shoplist_ingredientcontent.xml" value="0.365625" />
+        <entry key="..\:/Users/dudeo/Desktop/MenuScript/Menuscript/Menuscript/app/src/main/res/layout/shoplist_main.xml" value="0.1" />
+        <entry key="..\:/Users/dudeo/Desktop/MenuScript/Menuscript/Menuscript/app/src/main/res/layout/shoplist_maincontent.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/dudeo/Desktop/MenuScript/Menuscript/Menuscript/app/src/main/res/layout/shoplistingredient_content.xml" value="0.365625" />
       </map>
     </option>
   </component>

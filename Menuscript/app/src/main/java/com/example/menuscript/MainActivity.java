@@ -1,5 +1,6 @@
 package com.example.menuscript;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -27,5 +28,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //TEMPORARY PLEASE DELETE SOON
+        Intent intent = new Intent(this,RecipeActivity.class);
+        startActivity(intent);
     }
 }

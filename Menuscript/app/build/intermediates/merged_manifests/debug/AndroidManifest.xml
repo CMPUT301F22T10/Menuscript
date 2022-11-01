@@ -31,6 +31,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.menuscript.RecipeActivity" />
+        <activity android:name="com.example.menuscript.AddRecipeActivity" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"
