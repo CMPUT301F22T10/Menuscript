@@ -9,6 +9,8 @@ public class ViewRecipeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.temp_recipe_view);
+
 
     }
 }

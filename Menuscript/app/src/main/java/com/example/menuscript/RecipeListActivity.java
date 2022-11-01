@@ -1,9 +1,11 @@
 package com.example.menuscript;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,6 +17,17 @@ import java.util.ArrayList;
  * TODO:
  * GET RECIPE CLASS
  * GET LIST XML
+ */
+
+/**
+ * This class controls the view recipes list activity:
+ * recipeList {@link ListView}
+ * recipeAdapter {@link ArrayAdapter}
+ * dataList {@link ArrayList<Recipe>}
+ * header {@link TextView}
+ *
+ * @author Wanlin
+ *
  */
 
 public class RecipeListActivity extends AppCompatActivity {
@@ -40,9 +53,17 @@ public class RecipeListActivity extends AppCompatActivity {
         recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(RecipeListActivity.this, ShowActivity.class);
-                intent.putExtra("RECIPE", recipeAdapter.getItem(i));
+                Intent intent = new Intent(RecipeListActivity.this, ViewRecipeActivity.class);
+                Recipe selectedRecipe = recipeAdapter.getItem(i);
+                intent.putExtra("NAME", selectedRecipe.getTitle());
+                intent.putExtra("TIME", selectedRecipe.getTime());
+                intent.putExtra("CATEGORY", selectedRecipe.getCategory());
+                intent.putExtra("SERVINGS", selectedRecipe.getServings());
+                intent.putExtra("COMMENTS", selectedRecipe.getComments());
+                intent.putExtra("INGREDIENTS", selectedRecipe.getIngredients());
+
                 startActivity(intent);
             }
+        });
     }
 }
