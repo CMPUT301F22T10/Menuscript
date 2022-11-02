@@ -1,7 +1,7 @@
 
 ž
 S
-RecipeListActivityTestcom.example.menuscriptstart2¥œˆ›À›—’:¨œˆ›ÀÖÐ­"Ï
+RecipeListActivityTestcom.example.menuscriptstart2—¡ˆ›€è› :›¡ˆ›€¢°ÿ"Ï
 
 logcatandroid¹
 ¶C:\Users\wanli\Documents\Menuscript\Menuscript\app\build\outputs\androidTest-results\connected\Pixel_5_API_30(AVD) - 11\logcat-com.example.menuscript.RecipeListActivityTest-start.txt"¤

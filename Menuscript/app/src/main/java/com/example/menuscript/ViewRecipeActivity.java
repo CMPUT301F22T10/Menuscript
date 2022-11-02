@@ -56,14 +56,14 @@ public class ViewRecipeActivity extends AppCompatActivity {
             recipeName.setText(noArgument);
         }
 
-        if (bundle.getString("TIME")!=null){
-            recipePrepTime.setText(String.valueOf(bundle.getString("TIME")));
+        if (String.valueOf(bundle.getInt("TIME"))!=null){
+            recipePrepTime.setText(String.valueOf(bundle.getInt("TIME")));
         }else{
             recipePrepTime.setText(noArgument);
         }
 
-        if (bundle.getString("SERVINGS")!=null){
-            recipeServings.setText(String.valueOf(bundle.getString("SERVINGS")));
+        if (String.valueOf(bundle.getFloat("SERVINGS"))!=null){
+            recipeServings.setText(String.valueOf(bundle.getFloat("SERVINGS")));
         }else{
             recipeServings.setText(noArgument);
         }
