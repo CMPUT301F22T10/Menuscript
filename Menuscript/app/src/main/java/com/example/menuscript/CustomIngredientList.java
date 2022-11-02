@@ -32,14 +32,8 @@ public class CustomIngredientList extends ArrayAdapter {
         }
         Ingredient ingredient = items.get(position);
         TextView descriptionText = view.findViewById(R.id.description_text);
-        TextView amountText = view.findViewById(R.id.amount_text);
-        TextView categoryText = view.findViewById(R.id.category_text);
 
         descriptionText.setText(ingredient.getDescription());
-
-        // needs to be updated when we have a method or subclass that provides count
-        amountText.setText("0");
-        categoryText.setText(ingredient.getCategory());
 
         return view;
     }

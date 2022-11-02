@@ -2638,8 +2638,8 @@ id actions
 id activity_chooser_view_content
 id add
 id addButton
-id addIngredientButton
 id addRecipesButton
+id add_ingredient_button
 id alertTitle
 id aligned
 id all
@@ -3195,8 +3195,10 @@ layout design_navigation_menu_item
 layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout ingredient_content
+layout ingredient_content_old
 layout ingredient_details
 layout ingredient_list_activity
+layout ingredient_list_activity_old
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
@@ -3307,6 +3309,7 @@ string abc_shareactionprovider_share_with
 string abc_shareactionprovider_share_with_application
 string abc_toolbar_collapse_description
 string action_settings
+string add
 string androidx_startup
 string app_name
 string appbar_scrolling_view_behavior

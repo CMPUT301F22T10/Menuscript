@@ -2637,8 +2637,8 @@ int id actions 0x7f0a0052
 int id activity_chooser_view_content 0x7f0a0053
 int id add 0x7f0a0054
 int id addButton 0x7f0a0055
-int id addIngredientButton 0x7f0a0056
 int id addRecipesButton 0x7f0a0057
+int id add_ingredient_button 0x7f0a0215
 int id alertTitle 0x7f0a0058
 int id aligned 0x7f0a0059
 int id all 0x7f0a005a
@@ -3194,8 +3194,10 @@ int layout design_navigation_menu_item 0x7f0d0029
 int layout design_text_input_end_icon 0x7f0d002a
 int layout design_text_input_start_icon 0x7f0d002b
 int layout ingredient_content 0x7f0d002c
+int layout ingredient_content_old 0x7f0d007c
 int layout ingredient_details 0x7f0d002d
 int layout ingredient_list_activity 0x7f0d002e
+int layout ingredient_list_activity_old 0x7f0d007d
 int layout m3_alert_dialog 0x7f0d002f
 int layout m3_alert_dialog_actions 0x7f0d0030
 int layout m3_alert_dialog_title 0x7f0d0031
@@ -3306,6 +3308,7 @@ int string abc_shareactionprovider_share_with 0x7f120018
 int string abc_shareactionprovider_share_with_application 0x7f120019
 int string abc_toolbar_collapse_description 0x7f12001a
 int string action_settings 0x7f12001b
+int string add 0x7f12008f
 int string androidx_startup 0x7f12001c
 int string app_name 0x7f12001d
 int string appbar_scrolling_view_behavior 0x7f12001e
