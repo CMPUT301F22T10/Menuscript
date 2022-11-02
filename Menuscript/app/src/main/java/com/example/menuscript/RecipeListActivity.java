@@ -53,8 +53,8 @@ public class RecipeListActivity extends AppCompatActivity {
         Ingredient test2 = new Ingredient(2, "ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", "TestReallyLongCategories");
         Ingredient test3 = new Ingredient(3, "Jasmine Rice", "Carb");
         ingredients.add(test1);
-        ingredients.add(test1);
-        ingredients.add(test1);
+        ingredients.add(test2);
+        ingredients.add(test3);
         Recipe recipe1 = new Recipe(1, "Yummy title", 4, (float)4, "Dinner", "yummy food for dinner", ingredients);
         Recipe recipe2 = new Recipe(1, "Delicious title", 10, (float)2, "Lunch", "delicious food for lunch", ingredients);
         dataList.add(recipe1);
