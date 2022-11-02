@@ -35,6 +35,7 @@ public class IngredientListActivity extends AppCompatActivity {
 
         Ingredient test3 = new Ingredient(3, "Jasmine Rice", "Carb");
 
+
         dataList.add(test1);
         dataList.add(test2);
         dataList.add(test3);
