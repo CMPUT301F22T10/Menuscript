@@ -21,4 +21,11 @@
     <string name="list_text_amount">Count</string>
     <string name="list_text_category">Category</string>
     <string name="list_text_description">Description</string>
+    <string name="recipes">RECIPES</string>
+
+    <string-array name="shopListSort">
+        <item>Description</item>
+        <item>Category</item>
+    </string-array>
+
 </resources>
