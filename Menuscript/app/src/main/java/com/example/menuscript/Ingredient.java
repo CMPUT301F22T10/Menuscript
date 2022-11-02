@@ -1,9 +1,11 @@
 package com.example.menuscript;
 
+import java.io.Serializable;
+
 /**
  * @author Lane Missel
  */
-public class Ingredient {
+public class Ingredient implements Serializable {
     private int key;
     private String description;
     private String category;

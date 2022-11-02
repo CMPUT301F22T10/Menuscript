@@ -48,6 +48,8 @@ public class RecipeListActivity extends AppCompatActivity {
         recipeAdapter = new RecipeList(this, dataList);
         recipeList.setAdapter(recipeAdapter);
         //_____________________TESTING_______________________
+
+        ingredients = new ArrayList<Ingredient>();
         Ingredient test1 = new Ingredient(1, "Asparagus", "Vegetable");
         Ingredient test2 = new Ingredient(2, "ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", "TestReallyLongCategories");
         Ingredient test3 = new Ingredient(3, "Jasmine Rice", "Carb");
