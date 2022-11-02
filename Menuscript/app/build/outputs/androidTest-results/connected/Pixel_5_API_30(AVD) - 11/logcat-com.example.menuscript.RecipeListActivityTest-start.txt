@@ -1,0 +1,102 @@
+11-02 00:28:53.446  4382  4406 I TestRunner: started: start(com.example.menuscript.RecipeListActivityTest)
+11-02 00:28:53.450  4382  4406 W ActivityTestRule: getActivityIntent() returned null using default: Intent(Intent.ACTION_MAIN)
+11-02 00:28:53.455   543   593 D EventSequenceValidator: inc AccIntentStartedEvents to 2
+11-02 00:28:53.460   422   422 I perfetto: ing_service_impl.cc:758 Configured tracing session 19, #sources:1, duration:5000 ms, #buffers:1, total buffer size:4096 KB, total sessions:1, uid:1071 session name: ""
+11-02 00:28:53.461   420   420 I perfetto: probes_producer.cc:230  Ftrace setup (target_buf=19)
+11-02 00:28:53.471   543   676 W InputReader: Device virtio_input_multi_touch_9 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.471   543   676 W InputReader: Device virtio_input_multi_touch_10 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.471   543   676 W InputReader: Device virtio_input_multi_touch_7 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.471   543   676 W InputReader: Device virtio_input_multi_touch_4 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.471   543   676 W InputReader: Device virtio_input_multi_touch_11 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.471   543   676 W InputReader: Device virtio_input_multi_touch_5 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.471   543   676 W InputReader: Device virtio_input_multi_touch_2 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.471   543   676 W InputReader: Device virtio_input_multi_touch_6 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.471   543   676 W InputReader: Device virtio_input_multi_touch_3 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.471   543   676 W InputReader: Device virtio_input_multi_touch_8 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.472   543   676 W InputReader: Device virtio_input_multi_touch_9 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.472   543   676 W InputReader: Device virtio_input_multi_touch_10 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.472   543   676 W InputReader: Device virtio_input_multi_touch_7 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.472   543   676 W InputReader: Device virtio_input_multi_touch_4 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.472   543   676 W InputReader: Device virtio_input_multi_touch_11 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.472   543   676 W InputReader: Device virtio_input_multi_touch_5 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.472   543   676 W InputReader: Device virtio_input_multi_touch_2 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.472   543   676 W InputReader: Device virtio_input_multi_touch_6 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.472   543   676 W InputReader: Device virtio_input_multi_touch_3 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.472   543   676 W InputReader: Device virtio_input_multi_touch_8 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:53.481   420   420 I perfetto: ftrace_procfs.cc:176    enabled ftrace
+11-02 00:28:53.522   315   372 D goldfish-address-space: claimShared: Ask to claim region [0x3f5cec000 0x3f6690000]
+11-02 00:28:53.537  4382  4416 D libEGL  : loaded /vendor/lib/egl/libEGL_emulation.so
+11-02 00:28:53.543  4382  4416 D libEGL  : loaded /vendor/lib/egl/libGLESv1_CM_emulation.so
+11-02 00:28:53.546  4382  4416 D libEGL  : loaded /vendor/lib/egl/libGLESv2_emulation.so
+11-02 00:28:53.712  4382  4382 D LifecycleMonitor: Lifecycle status change: com.example.menuscript.RecipeListActivity@6aeb989 in: PRE_ON_CREATE
+11-02 00:28:53.849  4382  4382 W mple.menuscrip: Accessing hidden method Landroid/view/View;->computeFitSystemWindows(Landroid/graphics/Rect;Landroid/graphics/Rect;)Z (greylist, reflection, allowed)
+11-02 00:28:53.849  4382  4382 W mple.menuscrip: Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (greylist, reflection, allowed)
+11-02 00:28:53.995  1950  1971 I FontsContentProvider: Received query name=Montserrat&weight=800, URI content://com.google.android.gms.fonts
+11-02 00:28:53.995  1950  1971 I FontsContentProvider: Query [name=Montserrat&weight=800] resolved to {Montserrat, wdth 100.0, wght 800, ital 0.0, bestEffort false}
+11-02 00:28:54.000  1950  1971 I FontsContentProvider: Fetch {Montserrat, wdth 100.0, wght 800, ital 0.0, bestEffort false} end status Status{statusCode=SUCCESS, resolution=null}
+11-02 00:28:54.018  1950  1971 I FontsContentProvider: Pulling font file for id = 13, cache size = 6
+11-02 00:28:54.303  4382  4382 D LifecycleMonitor: Lifecycle status change: com.example.menuscript.RecipeListActivity@6aeb989 in: CREATED
+11-02 00:28:54.316  4382  4382 D LifecycleMonitor: Lifecycle status change: com.example.menuscript.RecipeListActivity@6aeb989 in: STARTED
+11-02 00:28:54.320  4382  4382 D LifecycleMonitor: Lifecycle status change: com.example.menuscript.RecipeListActivity@6aeb989 in: RESUMED
+11-02 00:28:54.429  4382  4414 D HostConnection: HostConnection::get() New Host Connection established 0xf245fb90, tid 4414
+11-02 00:28:54.444  4382  4414 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV_Cache ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_sync_buffer_data ANDROID_EMU_read_color_buffer_dma GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0
+11-02 00:28:54.487   174   174 I hwservicemanager: getTransport: Cannot find entry android.hardware.configstore@1.0::ISurfaceFlingerConfigs/default in either framework or device manifest.
+11-02 00:28:54.488  4382  4414 W OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+11-02 00:28:54.563  4382  4414 D EGL_emulation: eglCreateContext: 0xf245f810: maj 3 min 0 rcv 3
+11-02 00:28:54.636  4382  4414 D EGL_emulation: eglMakeCurrent: 0xf245f810: ver 3 0 (tinfo 0xf27b3450) (first time)
+11-02 00:28:54.667   315   372 D goldfish-address-space: claimShared: Ask to claim region [0x3f4000000 0x3f49a4000]
+11-02 00:28:54.672   174   174 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device manifest.
+11-02 00:28:54.673  4382  4414 I Gralloc4: mapper 4.x is not supported
+11-02 00:28:54.673  4382  4414 D HostConnection: createUnique: call
+11-02 00:28:54.674  4382  4414 D HostConnection: HostConnection::get() New Host Connection established 0xf245f180, tid 4414
+11-02 00:28:54.676  4382  4414 D goldfish-address-space: allocate: Ask for block of size 0x100
+11-02 00:28:54.676  4382  4414 D goldfish-address-space: allocate: ioctl allocate returned offset 0x3f3ffe000 size 0x2000
+11-02 00:28:54.690  4382  4414 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV_Cache ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_sync_buffer_data ANDROID_EMU_read_color_buffer_dma GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0
+11-02 00:28:54.696   315   372 D goldfish-address-space: claimShared: Ask to claim region [0x3f5348000 0x3f5cec000]
+11-02 00:28:54.706   315   372 D goldfish-address-space: claimShared: Ask to claim region [0x3f6690000 0x3f7034000]
+11-02 00:28:55.070  4382  4414 I OpenGLRenderer: Davey! duration=724ms; Flags=1, IntendedVsync=3965978110331, Vsync=3965978110331, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=3965981705900, AnimationStart=3965981742500, PerformTraversalsStart=3965981819800, DrawStart=3966337072800, SyncQueued=3966356026700, SyncStart=3966365037700, IssueDrawCommandsStart=3966365101600, SwapBuffers=3966700002800, FrameCompleted=3966711638600, DequeueBufferDuration=501400, QueueBufferDuration=758600, GpuCompleted=0,
+11-02 00:28:55.078  4382  4382 I Choreographer: Skipped 43 frames!  The application may be doing too much work on its main thread.
+11-02 00:28:55.080   543   598 D ArtManagerInternalImpl: /data/misc/iorapd/com.example.menuscript/1/com.example.menuscript.RecipeListActivity/compiled_traces/compiled_trace.pb doesn't exist
+11-02 00:28:55.081   543   598 I ActivityTaskManager: Displayed com.example.menuscript/.RecipeListActivity: +1s623ms
+11-02 00:28:55.090   543   593 D EventSequenceValidator: dec AccIntentStartedEvents to 1
+11-02 00:28:55.129  4382  4414 I OpenGLRenderer: Davey! duration=772ms; Flags=0, IntendedVsync=3965994769249, Vsync=3966711435887, OldestInputEvent=9223372036854775807, NewestInputEvent=0, HandleInputStart=3966719907300, AnimationStart=3966719960800, PerformTraversalsStart=3966720568600, DrawStart=3966720787300, SyncQueued=3966721462500, SyncStart=3966725294200, IssueDrawCommandsStart=3966725560500, SwapBuffers=3966735403200, FrameCompleted=3966770707800, DequeueBufferDuration=1961900, QueueBufferDuration=19034600, GpuCompleted=0,
+11-02 00:28:55.514  4382  4406 W mple.menuscrip: Verification of boolean com.robotium.solo.Waiter.waitForFragment(java.lang.String, int, int) took 102.366ms (302.83 bytecodes/s) (1224B approximate peak alloc)
+11-02 00:28:55.765   315   372 D goldfish-address-space: claimShared: Ask to claim region [0x3f5cec000 0x3f6690000]
+11-02 00:28:55.841   847   847 I Choreographer: Skipped 36 frames!  The application may be doing too much work on its main thread.
+11-02 00:28:55.847   543   594 W system_server: Long monitor contention with owner Binder:543_5 (676) at void com.android.server.wm.TaskChangeNotificationController.forAllLocalListeners(com.android.server.wm.TaskChangeNotificationController$TaskStackConsumer, android.os.Message)(TaskChangeNotificationController.java:351) waiters=0 in void com.android.server.wm.InputMonitor$UpdateInputWindows.run() for 218ms
+11-02 00:28:55.852  4382  4382 D LifecycleMonitor: Lifecycle status change: com.example.menuscript.RecipeListActivity@6aeb989 in: PAUSED
+11-02 00:28:55.864   543  2671 W InputReader: Device virtio_input_multi_touch_9 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.864   543  2671 W InputReader: Device virtio_input_multi_touch_10 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.864   543  2671 W InputReader: Device virtio_input_multi_touch_7 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.864   543  2671 W InputReader: Device virtio_input_multi_touch_4 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.864   543  2671 W InputReader: Device virtio_input_multi_touch_11 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.864   543  2671 W InputReader: Device virtio_input_multi_touch_5 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.864   543  2671 W InputReader: Device virtio_input_multi_touch_2 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_6 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_3 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_8 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_9 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_10 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_7 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_4 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_11 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_5 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_2 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_6 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_3 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.865   543  2671 W InputReader: Device virtio_input_multi_touch_8 is associated with display ADISPLAY_ID_NONE.
+11-02 00:28:55.874   543  3566 D HostConnection: HostConnection::get() New Host Connection established 0xf2476560, tid 3566
+11-02 00:28:55.888   543  3566 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_native_sync_v2 ANDROID_EMU_native_sync_v3 ANDROID_EMU_native_sync_v4 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_YUV_Cache ANDROID_EMU_has_shared_slots_host_memory_allocator ANDROID_EMU_sync_buffer_data ANDROID_EMU_read_color_buffer_dma GL_OES_EGL_image_external_essl3 GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_3_0
+11-02 00:28:55.890   543  3566 W OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+11-02 00:28:55.911   543  3566 D EGL_emulation: eglCreateContext: 0xf2474960: maj 3 min 0 rcv 3
+11-02 00:28:55.922   543  3566 D EGL_emulation: eglMakeCurrent: 0xf2474960: ver 3 0 (tinfo 0xb9509870) (first time)
+11-02 00:28:55.927   847   865 W ndroid.systemu: Reducing the number of considered missed Gc histogram windows from 280 to 100
+11-02 00:28:55.935   315   372 D goldfish-address-space: claimShared: Ask to claim region [0x3f49a4000 0x3f5348000]
+11-02 00:28:55.958   315   372 D goldfish-address-space: claimShared: Ask to claim region [0x3f7034000 0x3f79d8000]
+11-02 00:28:55.991   315   372 D goldfish-address-space: claimShared: Ask to claim region [0x3f98f5000 0x3fa299000]
+11-02 00:28:56.734  4382  4382 D LifecycleMonitor: Lifecycle status change: com.example.menuscript.RecipeListActivity@6aeb989 in: STOPPED
+11-02 00:28:56.738  4382  4382 D LifecycleMonitor: Lifecycle status change: com.example.menuscript.RecipeListActivity@6aeb989 in: DESTROYED
+11-02 00:28:56.760   543   681 W InputDispatcher: Permission denied: injecting event from pid 4382 uid 10121 to window Window{12e303c u0 com.android.launcher3/com.android.launcher3.uioverrides.QuickstepLauncher} owned by uid 10109
+11-02 00:28:56.762  4382  4382 W mple.menuscrip: Accessing hidden field Landroid/app/Activity;->mResultCode:I (greylist, reflection, allowed)
+11-02 00:28:56.763  4382  4382 W mple.menuscrip: Accessing hidden field Landroid/app/Activity;->mResultData:Landroid/content/Intent; (greylist, reflection, allowed)
+11-02 00:28:56.764  4382  4406 I TestRunner: finished: start(com.example.menuscript.RecipeListActivityTest)

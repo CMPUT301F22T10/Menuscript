@@ -90,7 +90,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
         Bundle args = getIntent().getBundleExtra("INGREDIENTS_BUNDLE");
         ingredientList = (ArrayList<Ingredient>) args.getSerializable("INGREDIENTS");
         //TEMPORARY VIEW OF INGREDIENT LIST
-        ingredientAdapter = new RecipeIngredientList(this, ingredientList);
+        ingredientAdapter = new RecipeIngredientListAdapter(this, ingredientList);
         recipeIngredientList.setAdapter(ingredientAdapter);
 
 

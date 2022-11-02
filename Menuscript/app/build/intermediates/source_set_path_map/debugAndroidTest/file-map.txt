@@ -1,0 +1,7 @@
+com.example.menuscript.test.app-androidTest-0 C:\Users\wanli\Documents\Menuscript\Menuscript\app\build\generated\res\resValues\androidTest\debug
+com.example.menuscript.test.app-androidTest-1 C:\Users\wanli\Documents\Menuscript\Menuscript\app\build\generated\res\rs\androidTest\debug
+com.example.menuscript.test.app-mergeDebugAndroidTestResources-2 C:\Users\wanli\Documents\Menuscript\Menuscript\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.example.menuscript.test.app-mergeDebugAndroidTestResources-3 C:\Users\wanli\Documents\Menuscript\Menuscript\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.example.menuscript.test.app-merged_res-4 C:\Users\wanli\Documents\Menuscript\Menuscript\app\build\intermediates\merged_res\debugAndroidTest
+com.example.menuscript.test.app-androidTest-5 C:\Users\wanli\Documents\Menuscript\Menuscript\app\src\androidTest\res
+com.example.menuscript.test.app-androidTestDebug-6 C:\Users\wanli\Documents\Menuscript\Menuscript\app\src\androidTestDebug\res

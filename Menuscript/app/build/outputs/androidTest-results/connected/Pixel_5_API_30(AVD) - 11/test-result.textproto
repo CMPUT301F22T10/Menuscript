@@ -1,0 +1,68 @@
+# 2022-11-02T06:28:57.693Z:
+test_suite_meta_data {
+  scheduled_test_case_count: 1
+}
+test_status: PASSED
+test_result {
+  test_case {
+    test_class: "RecipeListActivityTest"
+    test_package: "com.example.menuscript"
+    test_method: "start"
+    start_time {
+      seconds: 1667370533
+      nanos: 575000000
+    }
+    end_time {
+      seconds: 1667370536
+      nanos: 901000000
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\wanli\\Documents\\Menuscript\\Menuscript\\app\\build\\outputs\\androidTest-results\\connected\\Pixel_5_API_30(AVD) - 11\\logcat-com.example.menuscript.RecipeListActivityTest-start.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\wanli\\Documents\\Menuscript\\Menuscript\\app\\build\\outputs\\androidTest-results\\connected\\Pixel_5_API_30(AVD) - 11\\device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\wanli\\Documents\\Menuscript\\Menuscript\\app\\build\\outputs\\androidTest-results\\connected\\Pixel_5_API_30(AVD) - 11\\meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\wanli\\Documents\\Menuscript\\Menuscript\\app\\build\\outputs\\androidTest-results\\connected\\Pixel_5_API_30(AVD) - 11\\cpuinfo"
+    }
+  }
+}
+output_artifact {
+  label {
+    label: "test-results.log"
+    namespace: "com.google.testing.platform.runtime.android.driver.AndroidInstrumentationDriver"
+  }
+  source_path {
+    path: "C:\\Users\\wanli\\Documents\\Menuscript\\Menuscript\\app\\build\\outputs\\androidTest-results\\connected\\Pixel_5_API_30(AVD) - 11\\testlog\\test-results.log"
+  }
+  type: TEST_DATA
+  mime_type: "text/plain"
+}

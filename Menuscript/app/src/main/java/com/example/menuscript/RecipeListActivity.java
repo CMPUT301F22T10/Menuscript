@@ -1,7 +1,6 @@
 package com.example.menuscript;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -45,7 +44,7 @@ public class RecipeListActivity extends AppCompatActivity {
 
         recipeList = findViewById(R.id.item_list);
         dataList = new ArrayList<Recipe>();
-        recipeAdapter = new RecipeList(this, dataList);
+        recipeAdapter = new RecipeListAdapter(this, dataList);
         recipeList.setAdapter(recipeAdapter);
         //_____________________TESTING_______________________
 
