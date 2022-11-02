@@ -29,11 +29,11 @@ public class RecipeIngredientListAdapter extends ArrayAdapter<Ingredient> {
 
         View view = convertView;
         if(view==null){
-            view = LayoutInflater.from(context).inflate(R.layout.recipe_name,parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.recipe_ingredient_content,parent,false);
         }
         Ingredient ingredient = recipeIngredients.get(position);
 
-        TextView IngredientName = view.findViewById(R.id.recipeName);
+        TextView IngredientName = view.findViewById(R.id.description_text);
         IngredientName.setText(ingredient.getDescription());
 
         return view;

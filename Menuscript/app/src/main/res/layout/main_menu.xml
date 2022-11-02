@@ -28,12 +28,8 @@
         android:id="@+id/app_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/montserrat_extrabold"
+        style="@style/MainHeader"
         android:text="@string/menuscript"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="@color/black"
-
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo" />
@@ -55,21 +51,17 @@
             android:layout_height="wrap_content"
             android:background="@drawable/bordered_button"
             app:backgroundTint="@color/black"
-            android:fontFamily="@font/open_sans"
+            style="@style/MainBody"
             android:paddingVertical="0dp"
-            android:text="@string/view_ingredients"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/black" />
+            android:text="@string/view_ingredients" />
 
         <Button
             android:id="@+id/recipe_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
             android:paddingVertical="0dp"
             android:text="@string/view_recipes"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/black"
+            style="@style/MainBody"
             android:background="@drawable/bordered_button"
             app:backgroundTint="@color/black" />
 
@@ -77,11 +69,9 @@
             android:id="@+id/meal_plan_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
+            style="@style/MainBody"
             android:paddingVertical="0dp"
             android:text="@string/view_meal_plan"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/black"
             android:background="@drawable/bordered_button"
             app:backgroundTint="@color/black" />
 
@@ -89,11 +79,9 @@
             android:id="@+id/shopping_list_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/open_sans"
+            style="@style/MainBody"
             android:paddingVertical="0dp"
             android:text="@string/view_shopping_list"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/black"
             android:background="@drawable/bordered_button"
             app:backgroundTint="@color/black" />
 

@@ -42,7 +42,7 @@ public class RecipeListActivity extends AppCompatActivity {
         setContentView(R.layout.list_activity);
 
         header = findViewById(R.id.header);
-        header.setText("RECIPES");
+        header.setText(R.string.recipes);
 
         recipeList = findViewById(R.id.item_list);
         dataList = new ArrayList<Recipe>();

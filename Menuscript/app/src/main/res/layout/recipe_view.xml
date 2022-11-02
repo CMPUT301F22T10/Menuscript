@@ -10,11 +10,8 @@
         android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="sans-serif-black"
-        android:gravity="center"
-        android:text="@string/recipes"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        android:textSize="55sp" />
+        style="@style/MainHeader"
+        android:text="@string/recipes" />
 
     <ListView
         android:id="@+id/recipe_list"
