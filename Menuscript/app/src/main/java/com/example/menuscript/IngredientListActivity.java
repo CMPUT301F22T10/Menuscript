@@ -3,19 +3,15 @@ package com.example.menuscript;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class IngredientListActivity extends AppCompatActivity {
@@ -27,15 +23,15 @@ public class IngredientListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ingredient_list_activity);
+        setContentView(R.layout.list_activity);
 
-        ingredientList = findViewById(R.id.ingredient_list);
+        ingredientList = findViewById(R.id.item_list);
 
         dataList = new ArrayList<>();
 
         Ingredient test1 = new Ingredient(1, "Asparagus", "Vegetable");
 
-        Ingredient test2 = new Ingredient(2, "ThisIsToTestVeryLongCharacterStrings", "TestReallyLongCategories");
+        Ingredient test2 = new Ingredient(2, "ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", "TestReallyLongCategories");
 
         Ingredient test3 = new Ingredient(3, "Jasmine Rice", "Carb");
 
@@ -49,28 +45,27 @@ public class IngredientListActivity extends AppCompatActivity {
         ingredientList.setAdapter(ingredientAdapter);
 
         Spinner sortButton = findViewById(R.id.sort_button);
-
         String[] sortOptions = new String[]{"Description", "Best Before Date", "Category"};
-
         CustomSortAdapter<String> sortAdapter = new CustomSortAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortOptions);
-
         sortButton.setAdapter(sortAdapter);
+
+        FloatingActionButton addIngredientButton = findViewById(R.id.add_item_button);
+        addIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // add ingredient activity
+            }
+        });
+
+
 
         sortButton.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (adapterView.getItemAtPosition(i) == "Category") {
-                    Collections.sort(dataList, new Comparator<Ingredient>() {
-                        public int compare(Ingredient left, Ingredient right) {
-                            return left.getCategory().compareTo(right.getCategory());
-                        }
-                    });
+                    dataList.sort(Comparator.comparing(Ingredient::getCategory));
                 } else if (adapterView.getItemAtPosition(i) == "Description") {
-                    Collections.sort(dataList, new Comparator<Ingredient>() {
-                        public int compare(Ingredient left, Ingredient right) {
-                            return left.getDescription().compareTo(right.getDescription());
-                        }
-                    });
+                    dataList.sort(Comparator.comparing(Ingredient::getDescription));
                 }
                 ingredientAdapter.notifyDataSetChanged();
             }

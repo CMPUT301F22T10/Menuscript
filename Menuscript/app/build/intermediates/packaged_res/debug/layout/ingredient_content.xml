@@ -18,7 +18,6 @@
             android:layout_width="0dp"
             android:layout_weight="2"
             android:ellipsize="marquee"
-            android:maxLength="30"
             android:singleLine="true"
             android:text="@string/list_text_description"
             android:fontFamily="@font/open_sans"
@@ -28,46 +27,6 @@
             android:textColor="@color/black"
             app:layout_constraintEnd_toStartOf="@+id/quantity_text"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-<!--        <View-->
-<!--            android:layout_width="1dp"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_marginEnd="3dp"-->
-<!--            android:paddingTop="-7dp"-->
-<!--            android:paddingBottom="-7dp"-->
-<!--            android:background="@android:color/black" />-->
-
-        <TextView
-            android:id="@+id/category_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:singleLine="true"
-            android:text="@string/list_text_category"
-            android:fontFamily="@font/open_sans"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/description_text"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/amount_text"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="marquee"
-            android:gravity="start"
-            android:singleLine="true"
-            android:text="@string/list_text_amount"
-            android:fontFamily="@font/open_sans"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/cost_text"
-            app:layout_constraintStart_toEndOf="@+id/category_text"
             app:layout_constraintTop_toTopOf="parent" />
 
 

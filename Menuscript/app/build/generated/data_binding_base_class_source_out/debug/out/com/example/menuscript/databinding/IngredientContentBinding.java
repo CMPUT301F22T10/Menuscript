@@ -20,23 +20,14 @@ public final class IngredientContentBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
-  public final TextView amountText;
-
-  @NonNull
-  public final TextView categoryText;
-
-  @NonNull
   public final TextView descriptionText;
 
   @NonNull
   public final ConstraintLayout linearLayout;
 
-  private IngredientContentBinding(@NonNull ConstraintLayout rootView, @NonNull TextView amountText,
-      @NonNull TextView categoryText, @NonNull TextView descriptionText,
-      @NonNull ConstraintLayout linearLayout) {
+  private IngredientContentBinding(@NonNull ConstraintLayout rootView,
+      @NonNull TextView descriptionText, @NonNull ConstraintLayout linearLayout) {
     this.rootView = rootView;
-    this.amountText = amountText;
-    this.categoryText = categoryText;
     this.descriptionText = descriptionText;
     this.linearLayout = linearLayout;
   }
@@ -68,18 +59,6 @@ public final class IngredientContentBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.amount_text;
-      TextView amountText = ViewBindings.findChildViewById(rootView, id);
-      if (amountText == null) {
-        break missingId;
-      }
-
-      id = R.id.category_text;
-      TextView categoryText = ViewBindings.findChildViewById(rootView, id);
-      if (categoryText == null) {
-        break missingId;
-      }
-
       id = R.id.description_text;
       TextView descriptionText = ViewBindings.findChildViewById(rootView, id);
       if (descriptionText == null) {
@@ -88,8 +67,8 @@ public final class IngredientContentBinding implements ViewBinding {
 
       ConstraintLayout linearLayout = (ConstraintLayout) rootView;
 
-      return new IngredientContentBinding((ConstraintLayout) rootView, amountText, categoryText,
-          descriptionText, linearLayout);
+      return new IngredientContentBinding((ConstraintLayout) rootView, descriptionText,
+          linearLayout);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

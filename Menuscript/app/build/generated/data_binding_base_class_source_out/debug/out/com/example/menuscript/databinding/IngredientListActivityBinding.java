@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -15,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.viewbinding.ViewBinding;
 import androidx.viewbinding.ViewBindings;
 import com.example.menuscript.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.lang.NullPointerException;
 import java.lang.Override;
 import java.lang.String;
@@ -24,16 +24,7 @@ public final class IngredientListActivityBinding implements ViewBinding {
   private final ConstraintLayout rootView;
 
   @NonNull
-  public final TextView amountHeader;
-
-  @NonNull
-  public final TextView categoryHeader;
-
-  @NonNull
-  public final TextView descriptionHeader;
-
-  @NonNull
-  public final LinearLayout headerBar;
+  public final FloatingActionButton addIngredientButton;
 
   @NonNull
   public final TextView ingredientHeader;
@@ -48,15 +39,11 @@ public final class IngredientListActivityBinding implements ViewBinding {
   public final Spinner sortButton;
 
   private IngredientListActivityBinding(@NonNull ConstraintLayout rootView,
-      @NonNull TextView amountHeader, @NonNull TextView categoryHeader,
-      @NonNull TextView descriptionHeader, @NonNull LinearLayout headerBar,
-      @NonNull TextView ingredientHeader, @NonNull ListView ingredientList,
-      @NonNull FrameLayout listFrame, @NonNull Spinner sortButton) {
+      @NonNull FloatingActionButton addIngredientButton, @NonNull TextView ingredientHeader,
+      @NonNull ListView ingredientList, @NonNull FrameLayout listFrame,
+      @NonNull Spinner sortButton) {
     this.rootView = rootView;
-    this.amountHeader = amountHeader;
-    this.categoryHeader = categoryHeader;
-    this.descriptionHeader = descriptionHeader;
-    this.headerBar = headerBar;
+    this.addIngredientButton = addIngredientButton;
     this.ingredientHeader = ingredientHeader;
     this.ingredientList = ingredientList;
     this.listFrame = listFrame;
@@ -90,27 +77,9 @@ public final class IngredientListActivityBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.amount_header;
-      TextView amountHeader = ViewBindings.findChildViewById(rootView, id);
-      if (amountHeader == null) {
-        break missingId;
-      }
-
-      id = R.id.category_header;
-      TextView categoryHeader = ViewBindings.findChildViewById(rootView, id);
-      if (categoryHeader == null) {
-        break missingId;
-      }
-
-      id = R.id.description_header;
-      TextView descriptionHeader = ViewBindings.findChildViewById(rootView, id);
-      if (descriptionHeader == null) {
-        break missingId;
-      }
-
-      id = R.id.header_bar;
-      LinearLayout headerBar = ViewBindings.findChildViewById(rootView, id);
-      if (headerBar == null) {
+      id = R.id.add_ingredient_button;
+      FloatingActionButton addIngredientButton = ViewBindings.findChildViewById(rootView, id);
+      if (addIngredientButton == null) {
         break missingId;
       }
 
@@ -138,9 +107,8 @@ public final class IngredientListActivityBinding implements ViewBinding {
         break missingId;
       }
 
-      return new IngredientListActivityBinding((ConstraintLayout) rootView, amountHeader,
-          categoryHeader, descriptionHeader, headerBar, ingredientHeader, ingredientList, listFrame,
-          sortButton);
+      return new IngredientListActivityBinding((ConstraintLayout) rootView, addIngredientButton,
+          ingredientHeader, ingredientList, listFrame, sortButton);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -79,7 +79,7 @@ public final class MealPlanMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.addIngredientButton;
+      id = R.id.add_ingredient_button;
       Button addIngredientButton = ViewBindings.findChildViewById(rootView, id);
       if (addIngredientButton == null) {
         break missingId;

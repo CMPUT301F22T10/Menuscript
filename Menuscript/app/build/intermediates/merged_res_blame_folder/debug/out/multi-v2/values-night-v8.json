@@ -4,7 +4,7 @@
             "outputFile": "com.example.menuscript.app-mergeDebugResources-31:/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "E:\\School\\CMPUT 301\\Menuscript\\Menuscript\\app\\src\\main\\res\\values-night\\themes.xml",
+                    "source": "C:\\Users\\boxma\\AndroidStudioProjects\\Menuscript\\Menuscript\\app\\src\\main\\res\\values-night\\themes.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
