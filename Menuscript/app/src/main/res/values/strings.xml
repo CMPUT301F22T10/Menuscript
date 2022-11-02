@@ -21,15 +21,13 @@
     <string name="list_text_amount">Count</string>
     <string name="list_text_category">Category</string>
     <string name="list_text_description">Description</string>
-<<<<<<< HEAD
+
     <string name="recipes">RECIPES</string>
 
     <string-array name="shopListSort">
         <item>Description</item>
         <item>Category</item>
     </string-array>
-
-=======
     <string name="add">Add</string>
->>>>>>> 95a401c436d609dd5c675a60f25a091f76fe8301
+
 </resources>

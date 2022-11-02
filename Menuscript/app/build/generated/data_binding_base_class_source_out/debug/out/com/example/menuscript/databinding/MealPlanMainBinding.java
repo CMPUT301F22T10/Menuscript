@@ -22,7 +22,7 @@ public final class MealPlanMainBinding implements ViewBinding {
   private final LinearLayout rootView;
 
   @NonNull
-  public final Button addIngredientButton;
+  public final Button addItemButton;
 
   @NonNull
   public final Button addRecipesButton;
@@ -39,12 +39,12 @@ public final class MealPlanMainBinding implements ViewBinding {
   @NonNull
   public final ListView recipeListView;
 
-  private MealPlanMainBinding(@NonNull LinearLayout rootView, @NonNull Button addIngredientButton,
+  private MealPlanMainBinding(@NonNull LinearLayout rootView, @NonNull Button addItemButton,
       @NonNull Button addRecipesButton, @NonNull Button completeMealPlanButton,
       @NonNull ListView ingredientListView, @NonNull EditText planDurationEditText,
       @NonNull ListView recipeListView) {
     this.rootView = rootView;
-    this.addIngredientButton = addIngredientButton;
+    this.addItemButton = addItemButton;
     this.addRecipesButton = addRecipesButton;
     this.completeMealPlanButton = completeMealPlanButton;
     this.ingredientListView = ingredientListView;
@@ -79,9 +79,9 @@ public final class MealPlanMainBinding implements ViewBinding {
     // This is done to optimize the compiled bytecode for size and performance.
     int id;
     missingId: {
-      id = R.id.add_ingredient_button;
-      Button addIngredientButton = ViewBindings.findChildViewById(rootView, id);
-      if (addIngredientButton == null) {
+      id = R.id.add_item_button;
+      Button addItemButton = ViewBindings.findChildViewById(rootView, id);
+      if (addItemButton == null) {
         break missingId;
       }
 
@@ -115,7 +115,7 @@ public final class MealPlanMainBinding implements ViewBinding {
         break missingId;
       }
 
-      return new MealPlanMainBinding((LinearLayout) rootView, addIngredientButton, addRecipesButton,
+      return new MealPlanMainBinding((LinearLayout) rootView, addItemButton, addRecipesButton,
           completeMealPlanButton, ingredientListView, planDurationEditText, recipeListView);
     }
     String missingId = rootView.getResources().getResourceName(id);

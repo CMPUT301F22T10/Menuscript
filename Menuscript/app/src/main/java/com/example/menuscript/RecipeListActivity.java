@@ -11,13 +11,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-/**
- * TODO:
- * GET RECIPE CLASS
- * GET LIST XML
- */
+import java.util.ArrayList;
 
 /**
  * This class controls the view recipes list activity:
@@ -35,20 +31,34 @@ public class RecipeListActivity extends AppCompatActivity {
     ArrayAdapter<Recipe> recipeAdapter;
     ArrayList<Recipe> dataList;
     TextView header;
-
+//_____________________TESTING_______________________
+    ArrayList<Ingredient> ingredients;
+//---------------------------------------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.ingredient_list_activity);
+        setContentView(R.layout.list_activity);
 
-        header = findViewById(R.id.ingredient_header);
+        header = findViewById(R.id.header);
         header.setText("RECIPES");
 
-        recipeList = findViewById(R.id.ingredient_list);
+        recipeList = findViewById(R.id.item_list);
         dataList = new ArrayList<Recipe>();
         recipeAdapter = new RecipeList(this, dataList);
         recipeList.setAdapter(recipeAdapter);
+        //_____________________TESTING_______________________
+        Ingredient test1 = new Ingredient(1, "Asparagus", "Vegetable");
+        Ingredient test2 = new Ingredient(2, "ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", "TestReallyLongCategories");
+        Ingredient test3 = new Ingredient(3, "Jasmine Rice", "Carb");
+        ingredients.add(test1);
+        ingredients.add(test1);
+        ingredients.add(test1);
+        Recipe recipe1 = new Recipe(1, "Yummy title", 4, (float)4, "Dinner", "yummy food for dinner", ingredients);
+        Recipe recipe2 = new Recipe(1, "Delicious title", 10, (float)2, "Lunch", "delicious food for lunch", ingredients);
+        dataList.add(recipe1);
+        dataList.add(recipe2);
+        //---------------------------------------------------
 
         recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -60,9 +70,19 @@ public class RecipeListActivity extends AppCompatActivity {
                 intent.putExtra("CATEGORY", selectedRecipe.getCategory());
                 intent.putExtra("SERVINGS", selectedRecipe.getServings());
                 intent.putExtra("COMMENTS", selectedRecipe.getComments());
-                intent.putExtra("INGREDIENTS", selectedRecipe.getIngredients());
+                Bundle args = new Bundle();
+                args.putSerializable("INGREDIENTS", selectedRecipe.getIngredients());
+                intent.putExtra("INGREDIENTS_BUNDLE", args);
 
                 startActivity(intent);
+            }
+        });
+
+        FloatingActionButton addRecipeButton = findViewById(R.id.add_item_button);
+        addRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // add recipe activity
             }
         });
     }

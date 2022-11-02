@@ -33,13 +33,13 @@ public final class IngredientListActivityOldBinding implements ViewBinding {
   public final TextView descriptionHeader;
 
   @NonNull
+  public final TextView header;
+
+  @NonNull
   public final LinearLayout headerBar;
 
   @NonNull
-  public final TextView ingredientHeader;
-
-  @NonNull
-  public final ListView ingredientList;
+  public final ListView itemList;
 
   @NonNull
   public final FrameLayout listFrame;
@@ -49,16 +49,16 @@ public final class IngredientListActivityOldBinding implements ViewBinding {
 
   private IngredientListActivityOldBinding(@NonNull ConstraintLayout rootView,
       @NonNull TextView amountHeader, @NonNull TextView categoryHeader,
-      @NonNull TextView descriptionHeader, @NonNull LinearLayout headerBar,
-      @NonNull TextView ingredientHeader, @NonNull ListView ingredientList,
-      @NonNull FrameLayout listFrame, @NonNull Spinner sortButton) {
+      @NonNull TextView descriptionHeader, @NonNull TextView header,
+      @NonNull LinearLayout headerBar, @NonNull ListView itemList, @NonNull FrameLayout listFrame,
+      @NonNull Spinner sortButton) {
     this.rootView = rootView;
     this.amountHeader = amountHeader;
     this.categoryHeader = categoryHeader;
     this.descriptionHeader = descriptionHeader;
+    this.header = header;
     this.headerBar = headerBar;
-    this.ingredientHeader = ingredientHeader;
-    this.ingredientList = ingredientList;
+    this.itemList = itemList;
     this.listFrame = listFrame;
     this.sortButton = sortButton;
   }
@@ -108,21 +108,21 @@ public final class IngredientListActivityOldBinding implements ViewBinding {
         break missingId;
       }
 
+      id = R.id.header;
+      TextView header = ViewBindings.findChildViewById(rootView, id);
+      if (header == null) {
+        break missingId;
+      }
+
       id = R.id.header_bar;
       LinearLayout headerBar = ViewBindings.findChildViewById(rootView, id);
       if (headerBar == null) {
         break missingId;
       }
 
-      id = R.id.ingredient_header;
-      TextView ingredientHeader = ViewBindings.findChildViewById(rootView, id);
-      if (ingredientHeader == null) {
-        break missingId;
-      }
-
-      id = R.id.ingredient_list;
-      ListView ingredientList = ViewBindings.findChildViewById(rootView, id);
-      if (ingredientList == null) {
+      id = R.id.item_list;
+      ListView itemList = ViewBindings.findChildViewById(rootView, id);
+      if (itemList == null) {
         break missingId;
       }
 
@@ -139,8 +139,7 @@ public final class IngredientListActivityOldBinding implements ViewBinding {
       }
 
       return new IngredientListActivityOldBinding((ConstraintLayout) rootView, amountHeader,
-          categoryHeader, descriptionHeader, headerBar, ingredientHeader, ingredientList, listFrame,
-          sortButton);
+          categoryHeader, descriptionHeader, header, headerBar, itemList, listFrame, sortButton);
     }
     String missingId = rootView.getResources().getResourceName(id);
     throw new NullPointerException("Missing required view with ID: ".concat(missingId));

@@ -1,16 +1,100 @@
 package com.example.menuscript;
 
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
+/**
+ * This class views the details of a recipe, the intent is passed the details of the recipe:
+ * recipeName {@link TextView}
+ * recipePrepTime {@link TextView}
+ * recipeServings {@link TextView}
+ * recipeCategory {@link TextView}
+ * recipeIngredientList {@link ListView}
+ * recipeComments {@link TextView}
+ * noArgument {@link String}
+ * ingredientList {@link ArrayList<Ingredient>}
+ * ingredientAdapter{@link ArrayAdapter<Ingredient>}
+ *
+ * @author Wanlin
+ *
+ */
 public class ViewRecipeActivity extends AppCompatActivity {
+
+    TextView recipeName;
+    TextView recipePrepTime;
+    TextView recipeServings;
+    TextView recipeCategory;
+    ListView recipeIngredientList;
+    TextView recipeComments;
+    String noArgument = "Unavailable";
+    ArrayList<Ingredient> ingredientList;
+    ArrayAdapter<Ingredient> ingredientAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.temp_recipe_view);
+        setContentView(R.layout.recipe_edit);
+        recipeName = findViewById(R.id.recipeEditName);
+        recipePrepTime = findViewById(R.id.recipeEditPrepTime);
+        recipeServings = findViewById(R.id.recipeEditServings);
+        recipeCategory = findViewById(R.id.recipeEditCategory);
+        recipeIngredientList = findViewById(R.id.recipeEditIngredientList);
+        recipeComments = findViewById((R.id.recipeEditComment));
+
+        Bundle bundle = getIntent().getExtras();
+
+        if (bundle.getString("NAME")!=null){
+            recipeName.setText(bundle.getString("NAME"));
+        }else{
+            recipeName.setText(noArgument);
+        }
+
+        if (bundle.getString("TIME")!=null){
+            recipePrepTime.setText(String.valueOf(bundle.getString("TIME")));
+        }else{
+            recipePrepTime.setText(noArgument);
+        }
+
+        if (bundle.getString("SERVINGS")!=null){
+            recipeServings.setText(String.valueOf(bundle.getString("SERVINGS")));
+        }else{
+            recipeServings.setText(noArgument);
+        }
+
+        if (bundle.getString("CATEGORY")!=null){
+            recipeCategory.setText(bundle.getString("CATEGORY"));
+        }else{
+            recipeCategory.setText(noArgument);
+        }
+
+        recipeComments.setMovementMethod(new ScrollingMovementMethod());
+        if (bundle.getString("COMMENTS")!=null){
+            recipeComments.setText(bundle.getString("COMMENTS"));
+        }else{
+            recipeName.setText(noArgument);
+        }
+
+        if (bundle.getString("COMMENTS")!=null){
+            recipeComments.setText(bundle.getString("COMMENTS"));
+        }else{
+            recipeName.setText(noArgument);
+        }
+
+        Bundle args = getIntent().getBundleExtra("INGREDIENTS_BUNDLE");
+        ingredientList = (ArrayList<Ingredient>) args.getSerializable("INGREDIENTS");
+        //TEMPORARY VIEW OF INGREDIENT LIST
+        ingredientAdapter = new RecipeIngredientList(this, ingredientList);
+        recipeIngredientList.setAdapter(ingredientAdapter);
 
 
     }
 }
+
+
