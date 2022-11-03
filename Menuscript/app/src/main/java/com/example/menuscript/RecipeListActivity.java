@@ -8,7 +8,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -32,6 +37,7 @@ public class RecipeListActivity extends AppCompatActivity {
     ArrayAdapter<Recipe> recipeAdapter;
     ArrayList<Recipe> dataList;
     TextView header;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
 //_____________________TESTING_______________________
     ArrayList<Ingredient> ingredients;
 //---------------------------------------------------
@@ -111,11 +117,36 @@ public class RecipeListActivity extends AppCompatActivity {
             }
         });
 
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if(result.getResultCode() == 420 && result.getData() != null){
+                    //Toast.makeText(RecipeListActivity.this, "TEST",Toast.LENGTH_SHORT).show();
+                    Intent intent = result.getData();
+                    String title = intent.getStringExtra("title");
+                    int time = intent.getIntExtra("time",0);
+                    float servings = intent.getFloatExtra("servings",0.0f);
+                    String category = intent.getStringExtra("category");
+                    String comments = intent.getStringExtra("comments");
+                    //byte[] image = intent.getByteArrayExtra("image"); CORRESPONDS TO LINES IN ADDRECIPEACTIVITY
+
+                    Recipe newRecipe = new Recipe(1, title, time, servings, category, comments, ingredients);
+                    dataList.add(newRecipe);
+                    recipeAdapter.notifyDataSetChanged();
+
+                }
+            }
+        });
+
         FloatingActionButton addRecipeButton = findViewById(R.id.add_item_button);
         addRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // add recipe activity
+                //Bundle ingredients = new Bundle();
+                Intent intent = new Intent(getApplicationContext(),AddRecipeActivity.class);
+                intent.putExtra("ingredients",ingredients); //NOTE: USING TEMPORARY ingredients ARRAYLIST -- PLEASE NOTE FOR FULL IMPLEMENTATION
+                activityResultLauncher.launch(intent);
             }
         });
     }
