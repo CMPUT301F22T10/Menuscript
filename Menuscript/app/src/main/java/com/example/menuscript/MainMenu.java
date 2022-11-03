@@ -32,9 +32,21 @@ public class MainMenu extends AppCompatActivity {
                 startIngredientListActivity();
             }
         });
+
+        viewRecipesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRecipeListActivity();
+            }
+        });
     }
     public void startIngredientListActivity(){
         Intent intent = new Intent(this, IngredientListActivity.class);
+        startActivity(intent);
+    }
+
+    public void startRecipeListActivity(){
+        Intent intent = new Intent(this, RecipeListActivity.class);
         startActivity(intent);
     }
     @Override

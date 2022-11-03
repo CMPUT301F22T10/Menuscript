@@ -1,0 +1,9 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.example.menuscript.RecipeListActivityTest" tests="1" failures="0" errors="0" skipped="0" time="5.082" timestamp="2022-11-02T06:39:24" hostname="localhost">
+  <properties>
+    <property name="device" value="Pixel_5_API_30(AVD) - 11" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="start" classname="com.example.menuscript.RecipeListActivityTest" time="4.381" />
+</testsuite>

@@ -40,7 +40,7 @@ public class RecipeActivity extends AppCompatActivity {
         dataList.add(new Recipe(1,"CheeseySauce",10,3,"CAT1","comment",testIngList));
         dataList.add(new Recipe(1,"CheeseySaucey",10,544,"CAT2","comment",testIngList));
 
-        recipeAdapter = new RecipeList(this,dataList);
+        recipeAdapter = new RecipeListAdapter(this,dataList);
         recipeList.setAdapter(recipeAdapter);
 
 

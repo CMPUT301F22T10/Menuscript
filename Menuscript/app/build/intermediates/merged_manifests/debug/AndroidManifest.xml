@@ -26,6 +26,14 @@
             android:exported="false"
             android:parentActivityName="com.example.menuscript.MainMenu" />
         <activity
+            android:name="com.example.menuscript.RecipeListActivity"
+            android:exported="false"
+            android:parentActivityName="com.example.menuscript.MainMenu" />
+        <activity
+            android:name="com.example.menuscript.ViewRecipeActivity"
+            android:exported="false"
+            android:parentActivityName="com.example.menuscript.RecipeListActivity" />
+        <activity
             android:name="com.example.menuscript.MainMenu"
             android:exported="true"
             android:theme="@style/Theme.Menuscript.NoActionBar" >

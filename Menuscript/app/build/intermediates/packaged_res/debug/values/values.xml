@@ -18,6 +18,10 @@
         <item>@font/montserrat_extrabold</item>
         <item>@font/open_sans</item>
     </array>
+    <string-array name="shopListSort">
+        <item>Description</item>
+        <item>Category</item>
+    </string-array>
     <color name="black">#FF000000</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
@@ -41,6 +45,7 @@
     <string name="menuscript_logo_description">Menuscript Logo</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="recipes">RECIPES</string>
     <string name="second_fragment_label">Second Fragment</string>
     <string name="sort_button_description">Sort Button</string>
     <string name="view_ingredients">View Ingredients</string>

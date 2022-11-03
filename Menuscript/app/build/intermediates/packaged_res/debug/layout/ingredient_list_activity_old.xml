@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/ingredient_header"
+        android:id="@+id/header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/montserrat_extrabold"
@@ -26,7 +26,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@id/list_frame"
-        app:layout_constraintTop_toBottomOf="@id/ingredient_header" />
+        app:layout_constraintTop_toBottomOf="@id/header" />
 
     <LinearLayout
         android:id="@+id/header_bar"
@@ -41,7 +41,7 @@
         app:layout_constraintBottom_toTopOf="@id/list_frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ingredient_header">
+        app:layout_constraintTop_toBottomOf="@id/header">
 
         <TextView
             android:id="@+id/description_header"
@@ -119,7 +119,7 @@
         app:layout_constraintTop_toBottomOf="@id/header_bar">
 
         <ListView
-            android:id="@+id/ingredient_list"
+            android:id="@+id/item_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:choiceMode="singleChoice"

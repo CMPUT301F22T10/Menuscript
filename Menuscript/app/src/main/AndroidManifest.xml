@@ -18,6 +18,14 @@
             android:parentActivityName=".MainMenu"
             android:exported="false" />
         <activity
+            android:name=".RecipeListActivity"
+            android:parentActivityName=".MainMenu"
+            android:exported="false" />
+        <activity
+            android:name=".ViewRecipeActivity"
+            android:parentActivityName=".RecipeListActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainMenu"
             android:exported="true"
             android:theme="@style/Theme.Menuscript.NoActionBar">
