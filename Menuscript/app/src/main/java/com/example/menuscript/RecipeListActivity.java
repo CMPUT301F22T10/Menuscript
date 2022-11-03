@@ -63,10 +63,10 @@ public class RecipeListActivity extends AppCompatActivity {
         ingredients.add(test1);
         ingredients.add(test2);
         ingredients.add(test3);
-        Recipe recipe1 = new Recipe(1, "Yummy title", 4, (float)4, "Dinner", "yummy food for dinner", ingredients);
-        Recipe recipe2 = new Recipe(1, "Delicious title", 10, (float)2, "Lunch", "delicious food for lunch wwwaaafawklglkawnglkanwg long string long string long string so many comments wowowowowowowowowowowowowowwoow", ingredients);
-        dataList.add(new Recipe(1,"CheeseySauce",10,3,"CAT1","comment",ingredients));
-        dataList.add(new Recipe(1,"CheeseySaucey",10,544,"CAT2","comment",ingredients));
+        Recipe recipe1 = new Recipe(1, "Yummy title", 4, (float)4, "Dinner", "yummy food for dinner", null, ingredients);
+        Recipe recipe2 = new Recipe(1, "Delicious title", 10, (float)2, "Lunch", "delicious food for lunch wwwaaafawklglkawnglkanwg long string long string long string so many comments wowowowowowowowowowowowowowwoow", null, ingredients);
+        dataList.add(new Recipe(1,"CheeseySauce",10,3,"CAT1","comment", null,ingredients));
+        dataList.add(new Recipe(1,"CheeseySaucey",10,544,"CAT2","comment", null, ingredients));
         dataList.add(recipe1);
         dataList.add(recipe2);
         //---------------------------------------------------
@@ -81,6 +81,7 @@ public class RecipeListActivity extends AppCompatActivity {
                 intent.putExtra("CATEGORY", selectedRecipe.getCategory());
                 intent.putExtra("SERVINGS", selectedRecipe.getServings());
                 intent.putExtra("COMMENTS", selectedRecipe.getComments());
+                intent.putExtra("IMAGE", selectedRecipe.getImage());
                 Bundle args = new Bundle();
                 args.putSerializable("INGREDIENTS", selectedRecipe.getIngredients());
                 intent.putExtra("INGREDIENTS_BUNDLE", args);
@@ -128,9 +129,9 @@ public class RecipeListActivity extends AppCompatActivity {
                     float servings = intent.getFloatExtra("servings",0.0f);
                     String category = intent.getStringExtra("category");
                     String comments = intent.getStringExtra("comments");
-                    //byte[] image = intent.getByteArrayExtra("image"); CORRESPONDS TO LINES IN ADDRECIPEACTIVITY
+                    byte[] image = intent.getByteArrayExtra("image"); //CORRESPONDS TO LINES IN ADDRECIPEACTIVITY
 
-                    Recipe newRecipe = new Recipe(1, title, time, servings, category, comments, ingredients);
+                    Recipe newRecipe = new Recipe(1, title, time, servings, category, comments, image, ingredients);
                     dataList.add(newRecipe);
                     recipeAdapter.notifyDataSetChanged();
 

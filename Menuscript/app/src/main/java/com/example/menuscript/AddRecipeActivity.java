@@ -24,6 +24,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
+ * This class controls the addition of a new recipe.
  * @author Dylan Clarke
  */
 
@@ -91,11 +92,11 @@ public class AddRecipeActivity extends AppCompatActivity {
                 intent.putExtra("comments",recipeComments.getText().toString());
 
                 //_____________CHECK IF IMAGE FUNCTIONALITY WORKING______________
-                //Bitmap bitmap = ((BitmapDrawable)recipeImage.getDrawable()).getBitmap();
-                //ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                //bitmap.compress(Bitmap.CompressFormat.PNG,10,stream); //THE QUALITY HERE IS THE 2nd PARAMETER, THINK IT GOES FROM 1-100? MESS AROUND WITH IF NEEDED
-                //byte[] imageByteArray = stream.toByteArray();
-                //intent.putExtra("image", imageByteArray);
+                Bitmap bitmap = ((BitmapDrawable)recipeImage.getDrawable()).getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG,10,stream); //THE QUALITY HERE IS THE 2nd PARAMETER, THINK IT GOES FROM 1-100? MESS AROUND WITH IF NEEDED
+                byte[] imageByteArray = stream.toByteArray();
+                intent.putExtra("image", imageByteArray);
                 //_____________CORRESPONDS TO LINES IN RECIPELISTACTIVITY's activityResultLauncher_____________
                 setResult(420,intent);
                 finish();

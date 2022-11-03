@@ -25,7 +25,7 @@ public class Recipe {
     private float servings;
     private String category;
     private String comments;
-    //private byte[] image;
+    private byte[] image;
     private ArrayList<Ingredient> ingredients;
 
 
@@ -41,7 +41,7 @@ public class Recipe {
      * @param ingredients A list of ingredients that the recipe uses {@link ArrayList<Ingredient>}
      */
 
-    public Recipe(int key, String title, int time, float servings, String category, String comments, /*byte[] image, */ ArrayList<Ingredient> ingredients) {
+    public Recipe(int key, String title, int time, float servings, String category, String comments, byte[] image, ArrayList<Ingredient> ingredients) {
         //ADD BYTE[] BACK TO CONSTRUCTOR
         this.key = key;
         this.title = title;
@@ -101,14 +101,14 @@ public class Recipe {
         this.comments = comments;
     }
 
-    /*
+
     public byte[] getImage() {
         return image;
     }
 
     public void setImage(byte[] image) {
         this.image = image;
-    }*/
+    }
 
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
