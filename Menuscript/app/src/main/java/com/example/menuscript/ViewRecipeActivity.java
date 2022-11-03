@@ -1,8 +1,11 @@
 package com.example.menuscript;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -33,6 +36,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
     TextView recipeCategory;
     ListView recipeIngredientList;
     TextView recipeComments;
+    ImageView recipeImage;
     String noArgument = "Unavailable";
     ArrayList<Ingredient> ingredientList;
     ArrayAdapter<Ingredient> ingredientAdapter;
@@ -47,6 +51,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
         recipeCategory = findViewById(R.id.recipeEditCategory);
         recipeIngredientList = findViewById(R.id.recipeEditIngredientList);
         recipeComments = findViewById((R.id.recipeEditComment));
+        recipeImage = findViewById(R.id.recipeEditImage);
 
         Bundle bundle = getIntent().getExtras();
 
@@ -85,6 +90,11 @@ public class ViewRecipeActivity extends AppCompatActivity {
             recipeComments.setText(bundle.getString("COMMENTS"));
         }else{
             recipeName.setText(noArgument);
+        }
+
+        if (bundle.getByteArray("IMAGE") != null){
+            Bitmap bitmap = BitmapFactory.decodeByteArray(bundle.getByteArray("IMAGE"), 0, bundle.getByteArray("IMAGE").length);
+            recipeImage.setImageBitmap(bitmap);
         }
 
         Bundle args = getIntent().getBundleExtra("INGREDIENTS_BUNDLE");
