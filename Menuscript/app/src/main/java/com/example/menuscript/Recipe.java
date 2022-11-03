@@ -49,7 +49,7 @@ public class Recipe {
         this.servings = servings;
         this.category = category;
         this.comments = comments;
-        //this.image = image;
+        this.image = image;
         this.ingredients = ingredients;
     }
 
