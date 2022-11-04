@@ -1,5 +1,6 @@
 package com.example.menuscript;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -13,6 +14,9 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.ByteArrayOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class ViewIngredientActivity extends AppCompatActivity {
 
@@ -28,6 +32,15 @@ public class ViewIngredientActivity extends AppCompatActivity {
 
     private static final String[] locOptions = {"Pantry", "Fridge", "Freezer"};
     private static final String[] catOptions = {"Protein", "Carb", "Veg"};
+
+    Calendar calendar = Calendar.getInstance();
+
+    private void updateLabel() {
+        String format = "yyyy-MM-dd";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.CANADA);
+
+        ingredientDate.setText(dateFormat.format(calendar.getTime()));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +69,30 @@ public class ViewIngredientActivity extends AppCompatActivity {
 
         ingredientLocation.setAdapter(locAdapter);
         ingredientCategory.setAdapter(catAdapter);
+
+        DatePickerDialog.OnDateSetListener datePicker = (datePicker1, year, month, day) -> {
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+            updateLabel();
+        };
+
+        ingredientDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if (b) {
+                    new DatePickerDialog(ViewIngredientActivity.this, datePicker, calendar
+                            .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                            calendar.get(Calendar.DAY_OF_MONTH)
+                    ).show();
+                }
+            }
+        });
+
+        ingredientDate.setOnClickListener(v -> new DatePickerDialog(this, datePicker, calendar
+                .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+        ).show());
 
         Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {

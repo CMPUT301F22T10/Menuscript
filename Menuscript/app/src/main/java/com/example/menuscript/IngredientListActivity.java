@@ -136,8 +136,10 @@ public class IngredientListActivity extends AppCompatActivity {
                         ingredients.add(newIngredient);
                     } else if (result.getResultCode() == 401) {
                         db.deleteStoredIngredient(clickedIngredient);
+                        ingredients.remove(clickedIngredient);
                         clickedIngredient = new StoredIngredient(description, amount, unit, category, date, location);
                         db.addStoredIngredient(clickedIngredient);
+                        ingredients.add(clickedIngredient);
                     } else if (result.getResultCode() == 402) {
                         db.deleteStoredIngredient(clickedIngredient);
                         ingredients.remove(clickedIngredient);
