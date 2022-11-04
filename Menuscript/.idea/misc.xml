@@ -5,25 +5,22 @@
       <map>
         <entry key="..\:/GitHub/Menuscript/Menuscript/app/src/main/res/layout/activity_main.xml" value="0.25764596848934196" />
         <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/drawable/bordered_button.xml" value="0.4185" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/drawable/ic_menuscript_logosvg.xml" value="0.4185" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/drawable/menuscript_logo.xml" value="0.4905" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/drawable/menuscript_logo_white.xml" value="0.4905" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/font/montserrat_extrabold.xml" value="0.5807291666666666" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/font/open_sans.xml" value="0.5807291666666666" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/ingredient_content.xml" value="0.5505208333333333" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/ingredient_details.xml" value="0.5505208333333333" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/ingredient_list_activity.xml" value="0.5" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/drawable/new_dropdown.xml" value="0.207" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/edit_ingredients.xml" value="0.26795580110497236" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/ingredient_details.xml" value="0.55" />
         <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/list_activity.xml" value="0.55" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/main_menu.xml" value="0.6" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/meal_plan_add.xml" value="0.6666666666666666" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/meal_plan_main.xml" value="0.5505208333333333" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_add.xml" value="0.487962962962963" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_edit.xml" value="0.487962962962963" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/main_menu.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/meal_plan_add.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/meal_plan_main.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_add.xml" value="0.5" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_edit.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_ingredient_content.xml" value="0.55" />
         <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_maincontext.xml" value="0.55" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_name.xml" value="0.487962962962963" />
         <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_view.xml" value="0.55" />
         <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/shoplist_ingredient.xml" value="0.55" />
-        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/menu/menu_main.xml" value="0.5505208333333333" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/shoplist_ingredientcontent.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/shoplist_main.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/shoplist_maincontent.xml" value="0.55" />
       </map>
     </option>
   </component>

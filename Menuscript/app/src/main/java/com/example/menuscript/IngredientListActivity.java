@@ -36,11 +36,8 @@ public class IngredientListActivity extends AppCompatActivity {
         dataList = new ArrayList<>();
 
         Ingredient test1 = new Ingredient(1, "Asparagus", "Vegetable");
-
         Ingredient test2 = new Ingredient(2, "ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", "TestReallyLongCategories");
-
         Ingredient test3 = new Ingredient(3, "Jasmine Rice", "Carb");
-
 
         dataList.add(test1);
         dataList.add(test2);
@@ -60,11 +57,16 @@ public class IngredientListActivity extends AppCompatActivity {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == 420 && result.getData() != null) {
+                if (result.getResultCode() == 6969 && result.getData() != null) {
                     Intent intent = result.getData();
+                    String description = intent.getStringExtra("description");
+                    String category = intent.getStringExtra("category");
+                    Integer amount = intent.getIntExtra("amount", 0);
+                    String date = intent.getStringExtra("date");
+                    String location = intent.getStringExtra("location");
 
-                    // pull new ingredient data and add new ingredient
-
+                    Ingredient newIngredient = new Ingredient(33, description, category);
+                    dataList.add(newIngredient);
                     ingredientAdapter.notifyDataSetChanged();
                 }
             }
@@ -77,7 +79,6 @@ public class IngredientListActivity extends AppCompatActivity {
                 // add ingredient activity
                 Intent intent = new Intent(getApplicationContext(), AddIngredientActivity.class);
                 activityResultLauncher.launch(intent);
-
             }
         });
 
@@ -98,8 +99,5 @@ public class IngredientListActivity extends AppCompatActivity {
 
             }
         });
-
     }
-
 }
-
