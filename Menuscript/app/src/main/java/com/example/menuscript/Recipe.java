@@ -26,7 +26,7 @@ public class Recipe {
     private ArrayList<Ingredient> ingredients;
 
     /**
-     * This is a constructor to create a Recipe object. (can write packagename.classname#city)
+     * This is a constructor to create a Recipe object.
      *
      * @param title Stores the name of the recipe {@link String}
      * @param time The time needed to prepare the recipe {@link int}

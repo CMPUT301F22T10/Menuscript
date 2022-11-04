@@ -23,13 +23,15 @@ import java.util.Comparator;
 
 /**
  * This class controls the view recipes list activity:
+ * Users can click on a recipe to view its details. The sort button will allow a user to sort through their recipes by a desired sorter.
+ * Clicking the button on the bottom right will bring a user to the AddRecipeActivity
  * recipeList {@link ListView}
  * recipeAdapter {@link ArrayAdapter}
  * dataList {@link ArrayList<Recipe>}
  * header {@link TextView}
  * selectedRecipe {@link Recipe}
  *
- * @author Wanlin
+ * @author Wanlin, Dylan
  */
 
 public class RecipeListActivity extends AppCompatActivity {

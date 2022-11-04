@@ -28,8 +28,11 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
- * This class views the details of a recipe, the intent
- * is passed the details of the recipe:
+ * This class views the details of a recipe, the intent is passed the details of the recipe:
+ * This class also serves to edit and delete a Viewed Recipe.
+ * Attributes can be edited by clicking on them, and clicking the top-right button confirms the changes.
+ * Clicking the top-left button will delete the recipe.
+ * Currently, interactions with ingredients is not yet implemented.
  * recipeName {@link EditText}
  * recipePrepTime {@link EditText}
  * recipeServings {@link EditText}
@@ -41,7 +44,7 @@ import java.util.ArrayList;
  * ingredientList {@link ArrayList<Ingredient>}
  * ingredientAdapter{@link ArrayAdapter<Ingredient>}
  *
- * @author Wanlin
+ * @author Wanlin, Dylan
  * @see Recipe
  * @see Ingredient
  * @see StoredIngredient

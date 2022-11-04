@@ -24,6 +24,13 @@ public class RecipeIngredientListAdapter extends ArrayAdapter<Ingredient> {
     private ArrayList<Ingredient> recipeIngredients;
     private Context context;
 
+    /**
+     * This is a constructor to create an adapter
+     *
+     * @param context The corresponding context for the view {@link Context}
+     * @param recipeIngredients A list of ingredients that the recipe uses {@link ArrayList<Ingredient>}
+     */
+
     public RecipeIngredientListAdapter(Context context, ArrayList<Ingredient>  recipeIngredients){
         super(context, 0,recipeIngredients);
         this.recipeIngredients = recipeIngredients;
