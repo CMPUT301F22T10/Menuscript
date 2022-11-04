@@ -36,9 +36,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:maxImageSize="40dp"
-            app:srcCompat="@android:drawable/ic_menu_save"
-            app:tint="@color/black" />
+            app:maxImageSize="75dp"
+            app:srcCompat="@android:drawable/btn_check_buttonless_on"
+            app:tint="@color/material_dynamic_neutral_variant40" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -47,7 +47,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/recipes"
-        android:style="@style/MainHeader"
+        style="@style/MainHeader"
         />
 
     <EditText
@@ -57,7 +57,8 @@
         android:text="Recipe Name"
         android:textSize="30sp"
         android:layout_marginBottom="4sp"
-        android:layout_marginLeft="20sp"/>
+        android:layout_marginLeft="20sp"
+        style="@style/MainBody"/>
 
     <View
         android:layout_width="match_parent"
@@ -76,22 +77,22 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginTop="25dp"
-            android:style="@style/MainBody"
             android:text="Time:"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/MainBody"/>
 
         <EditText
             android:id="@+id/recipeEditPrepTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:style="@style/MainBody"
             android:text="Prep Time"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/recipeEditPrepTimeTV"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/MainBody"/>
 
         <TextView
             android:id="@+id/recipeEditServingTV"
@@ -99,11 +100,11 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="25dp"
             android:layout_marginTop="25dp"
-            android:style="@style/MainBody"
             android:text="Servings:"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipeEditPrepTime" />
+            app:layout_constraintTop_toBottomOf="@+id/recipeEditPrepTime"
+            style="@style/MainBody"/>
 
         <EditText
             android:id="@+id/recipeEditServings"
@@ -113,7 +114,8 @@
             android:text="# of Servings"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/recipeEditServingTV"
-            app:layout_constraintTop_toBottomOf="@+id/recipeEditPrepTime" />
+            app:layout_constraintTop_toBottomOf="@+id/recipeEditPrepTime"
+            style="@style/MainBody"/>
 
         <EditText
             android:id="@+id/recipeEditCategory"
@@ -125,7 +127,8 @@
             android:text="Recipe Category"
             android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipeEditServings" />
+            app:layout_constraintTop_toBottomOf="@+id/recipeEditServings"
+            style="@style/MainBody"/>
 
 
         <ImageButton
