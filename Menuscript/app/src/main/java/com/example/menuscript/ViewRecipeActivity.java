@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -50,12 +51,16 @@ public class ViewRecipeActivity extends AppCompatActivity {
     EditText recipeServings;
     EditText recipeCategory;
     ListView recipeIngredientList;
+    ListView addedRecipeIngredientList;
     EditText recipeComments;
     ImageButton recipeImage;
     String noArgument = "Unavailable";
     ArrayList<Ingredient> ingredientList;
     ArrayAdapter<Ingredient> ingredientAdapter;
     ActivityResultLauncher<Intent> activityResultLauncher;
+
+    ArrayList<Ingredient> addedIngredientList;
+    ArrayAdapter<Ingredient> addedIngredientAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
@@ -66,8 +71,13 @@ public class ViewRecipeActivity extends AppCompatActivity {
         recipeServings = findViewById(R.id.recipeEditServings);
         recipeCategory = findViewById(R.id.recipeEditCategory);
         recipeIngredientList = findViewById(R.id.recipeEditIngredientList);
+        addedRecipeIngredientList = findViewById(R.id.recipeEditIngredientListAdded);
         recipeComments = findViewById((R.id.recipeEditComment));
         recipeImage = findViewById(R.id.recipeEditImage);
+
+
+
+
 
         Bundle bundle = getIntent().getExtras();
 
@@ -113,11 +123,39 @@ public class ViewRecipeActivity extends AppCompatActivity {
             recipeImage.setImageBitmap(bitmap);
         }
 
-        Bundle args = getIntent().getBundleExtra("INGREDIENTS_BUNDLE");
-        ingredientList = (ArrayList<Ingredient>) args.getSerializable("INGREDIENTS");
-        //TEMPORARY VIEW OF INGREDIENT LIST
+
+        ingredientList = new ArrayList<Ingredient>();
+        Ingredient test1 = new Ingredient( "Pickles", 12, "pounds", "Vegetable");
+        Ingredient test2 = new Ingredient("ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", 12, "unit", "TestReallyLongCategories");
+        Ingredient test3 = new Ingredient("Blue Rice", 12, "pounds", "Carb");
+        ingredientList.add(test1);
+        ingredientList.add(test2);
+        ingredientList.add(test3); //THIS IS TEMP REPRESENTATION OF ALL INGREDIENTS IN STORAGE
         ingredientAdapter = new RecipeIngredientListAdapter(this, ingredientList);
         recipeIngredientList.setAdapter(ingredientAdapter);
+
+        Bundle args = getIntent().getBundleExtra("INGREDIENTS_BUNDLE");
+        addedIngredientList = (ArrayList<Ingredient>) args.getSerializable("INGREDIENTS");
+        addedIngredientAdapter = new RecipeIngredientListAdapter(this, addedIngredientList);
+        addedRecipeIngredientList.setAdapter(addedIngredientAdapter);
+
+
+        recipeIngredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Ingredient movedIngredient = ingredientList.get(i);
+                addedIngredientList.add(movedIngredient);
+                addedIngredientAdapter.notifyDataSetChanged();
+            }
+        });
+
+        addedRecipeIngredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                addedIngredientList.remove(addedIngredientList.get(i));
+                addedIngredientAdapter.notifyDataSetChanged();
+            }
+        });
 
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {

@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -46,6 +47,7 @@ public class AddRecipeActivity extends AppCompatActivity {
     ListView ingredientListView;
     CustomIngredientList ingredientAdapter;
     ArrayList<Ingredient> ingredientList;
+    ArrayList<Ingredient> addedIngredientList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +64,16 @@ public class AddRecipeActivity extends AppCompatActivity {
         ingredientListView = findViewById(R.id.recipeAddIngredientsList);
         ingredientAdapter = new CustomIngredientList(this,ingredientList);
         ingredientListView.setAdapter(ingredientAdapter);
+
+        addedIngredientList = new ArrayList<Ingredient>();
+
+        ingredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                addedIngredientList.add(ingredientList.get(i));
+                Toast.makeText(AddRecipeActivity.this,"Ingredient " + ingredientList.get(i).getDescription() + " added!", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -126,6 +138,9 @@ public class AddRecipeActivity extends AppCompatActivity {
                 byte[] imageByteArray = stream.toByteArray();
                 intent.putExtra("image", imageByteArray);
                 //_____________CORRESPONDS TO LINES IN RECIPELISTACTIVITY's activityResultLauncher_____________
+                Bundle args = new Bundle();
+                //args.putSerializable("ingredients", addedIngredientList);
+                //intent.putExtra("ingredients_bundle", args);
                 setResult(420,intent);
                 finish();
 

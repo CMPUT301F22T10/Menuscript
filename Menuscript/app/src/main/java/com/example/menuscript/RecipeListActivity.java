@@ -133,6 +133,10 @@ public class RecipeListActivity extends AppCompatActivity {
                     String category = intent.getStringExtra("category");
                     String comments = intent.getStringExtra("comments");
                     byte[] image = intent.getByteArrayExtra("image"); //CORRESPONDS TO LINES IN ADDRECIPEACTIVITY
+                    //Bundle args = getIntent().getBundleExtra("ingredients_bundle");
+                    //ArrayList<Ingredient> addedIngredients = (ArrayList<Ingredient>) args.getSerializable("ingredients");
+
+
                     if(result.getResultCode() == 420) {
                         Recipe newRecipe = new Recipe(title, time, servings, category, comments, image, ingredients);
                         dataList.add(newRecipe);
