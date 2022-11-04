@@ -2,6 +2,7 @@ package com.example.menuscript;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,17 +26,17 @@ import java.util.Comparator;
 /**
  * This class displays a list of ingredients.:
  * ingredientList {@link ListView}
- * ingredientAdapter {@link CustomIngredientList}
- * dataList {@link ArrayList<Ingredient>}
+ * ingredientAdapter {@link StoredIngredientListAdapter}
+ * dataList {@link ArrayList<StoredIngredient>}
  *
  */
 public class IngredientListActivity extends AppCompatActivity {
 
     ListView ingredientList;
-    CustomIngredientList ingredientAdapter;
-    ArrayList<Ingredient> dataList;
+    StoredIngredientListAdapter ingredientAdapter;
+    ArrayList<StoredIngredient> dataList;
     private ActivityResultLauncher<Intent> activityResultLauncher;
-    FirebaseFirestore db;
+    DatabaseManager db = new DatabaseManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,17 +46,19 @@ public class IngredientListActivity extends AppCompatActivity {
         ingredientList = findViewById(R.id.item_list);
 
         dataList = new ArrayList<>();
+        dataList.addAll(db.getStoredIngredients());
+        //Log.d("INGREDIENT LIST", dataList.get(0).getDate());
 
-        StoredIngredient test1 = new StoredIngredient( "Asparagus", 12, "pounds", "Vegetable", "05/11/2022", "fridge");
-        StoredIngredient test2 = new StoredIngredient("ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", 12, "unit", "TestReallyLongCategories", "05/11/2023", "ThisIsAReallyLongLocation");
-        StoredIngredient test3 = new StoredIngredient("Jasmine Rice", 12, "pounds", "Carb", "01/12/2030", "cellar");
+//        StoredIngredient test1 = new StoredIngredient( "Asparagus", 12, "pounds", "Vegetable", "05/11/2022", "fridge");
+//        StoredIngredient test2 = new StoredIngredient("ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", 12, "unit", "TestReallyLongCategories", "05/11/2023", "ThisIsAReallyLongLocation");
+//        StoredIngredient test3 = new StoredIngredient("Jasmine Rice", 12, "pounds", "Carb", "01/12/2030", "cellar");
 
-        dataList.add(test1);
-        dataList.add(test2);
-        dataList.add(test3);
+//        dataList.add(test1);
+//        dataList.add(test2);
+//        dataList.add(test3);
 
-        ingredientAdapter = new CustomIngredientList(this, dataList);
-        ingredientAdapter.notifyDataSetChanged();
+        ingredientAdapter = new StoredIngredientListAdapter(this, dataList);
+        //ingredientAdapter.notifyDataSetChanged();
 
         ingredientList.setAdapter(ingredientAdapter);
 
