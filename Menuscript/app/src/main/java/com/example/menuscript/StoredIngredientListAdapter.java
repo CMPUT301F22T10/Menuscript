@@ -11,18 +11,23 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
-
+/**
+ * Custom ArrayAdapter for displaying the StoredIngredient objects.
+ * storedIngredients {@link ArrayList<StoredIngredient>}
+ *
+ * @see RecipeListActivity
+ * @see RecipeListAdapter
+ * @see ViewRecipeActivity
+ */
 public class StoredIngredientListAdapter extends ArrayAdapter {
     private ArrayList<StoredIngredient> items;
     private Context context;
-
 
     public StoredIngredientListAdapter(Context context, ArrayList<StoredIngredient> items) {
         super(context, 0, items);
         this.items = items;
         this.context = context;
     }
-
 
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {

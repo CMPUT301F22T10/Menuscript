@@ -2,6 +2,14 @@ package com.example.menuscript;
 
 import java.util.HashMap;
 
+/**
+ * StoredIngredient contains stored ingredient attributes for use in
+ * recipes, shopping, and meal planning.
+ * date {@link String}
+ * location {@link String}
+ *
+ * @see Ingredient
+ */
 public class StoredIngredient extends Ingredient {
     private String date;
     private String location;
@@ -15,6 +23,14 @@ public class StoredIngredient extends Ingredient {
     public String getDate () {return this.date;}
     public String getLocation () {return this.location;}
 
+    /**
+     * Method to return a hashmap filled with data of the ingredient with
+     * the keys as what values represent
+     * data {@link HashMap<String, Object>}
+     *
+     * @return  data    a hashmap containing all the details of ingredients
+     *                  associated with right keys.
+     */
     public HashMap<String, Object> asHashMap () {
         HashMap<String, Object> data  = new HashMap<>();
         data.put("description", this.description);

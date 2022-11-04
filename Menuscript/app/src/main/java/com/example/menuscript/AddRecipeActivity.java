@@ -29,9 +29,12 @@ import java.util.ArrayList;
  * recipePrepTime {@link EditText}
  * recipeServings {@link EditText}
  * recipeCategory {@link EditText}
- * recipeIngredientList {@link ListView}
  * recipeComments {@link EditText}
  * recipeImage {@link ImageButton}
+ * ingredientListView {@link ListView}
+ * ingredientAdapter {@link CustomIngredientList}
+ * ingredientList {@link ListView}
+ *
  * @author Dylan Clarke
  */
 

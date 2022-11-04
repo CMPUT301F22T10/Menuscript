@@ -61,7 +61,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="?android:attr/textCheckMark" />
 
     <ListView
         android:id="@+id/recipeAddIngredientsList"
