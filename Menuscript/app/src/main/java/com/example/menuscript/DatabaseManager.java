@@ -1,18 +1,60 @@
 package com.example.menuscript;
 
+
+import static android.content.ContentValues.TAG;
+
+import android.media.MediaPlayer;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DatabaseManager {
-    private Object connection;
+    private FirebaseFirestore databaseInstance;
+    private CollectionReference collectionReference;
+
+    public DatabaseManager () {
+        this.databaseInstance = FirebaseFirestore.getInstance();
+    }
 
     /**
      * Returns an array from database of user stored ingredients.
      */
     public ArrayList<StoredIngredient> getStoredIngredients () {
         ArrayList<StoredIngredient> ingredients = new ArrayList<StoredIngredient>();
-        ingredients.add(new StoredIngredient("Carrots", 2, "pounds", "vegetable", "10/11/2022", "Fridge"));
-        ingredients.add(new StoredIngredient("Apples", 1, "pounds", "fruit", "10/11/2022", "Fridge"));
-        ingredients.add(new StoredIngredient("Tomato Soup", 2, "litres", "canned goods", "10/11/2027", "pantry"));
+        collectionReference = databaseInstance.collection("StoredIngredients");
+        collectionReference.get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                    public void onComplete (@NonNull Task<QuerySnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            Map<String, Object> data = document.getData();
+                            ingredients.add(new StoredIngredient(
+                                    (String)data.get("description"),
+                                    (float)data.get("amount"),
+                                    (String)data.get("unit"),
+                                    (String)data.get("category"),
+                                    (String)data.get("date"),
+                                    (String)data.get("location")
+                            ));
+                        }
+                    } else {
+                        Log.d(TAG, "Error Getting StoredIngredients from database.");
+                    }
+                }
+        });
+        
         return ingredients;
     }
 
