@@ -54,7 +54,7 @@ public class DatabaseManager {
                     }
                 }
         });
-        
+
         return ingredients;
     }
 
@@ -76,5 +76,13 @@ public class DatabaseManager {
 
     public void deleteRecipe (Recipe recipe) {
         ;
+    }
+
+    public ArrayList<String> getIngredientCategories () {
+        ArrayList<String> cats = new ArrayList<String>();
+        cats.add("Breakfast");
+        cats.add("Lunch");
+        cats.add("Dinner");
+        return cats;
     }
 }
