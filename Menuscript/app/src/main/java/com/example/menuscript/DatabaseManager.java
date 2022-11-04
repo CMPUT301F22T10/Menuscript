@@ -3,6 +3,8 @@ package com.example.menuscript;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.Activity;
+import android.content.Context;
 import android.media.MediaPlayer;
 import android.util.Log;
 
@@ -33,7 +35,8 @@ import java.util.Map;
 public class DatabaseManager {
     private FirebaseFirestore databaseInstance;
     private CollectionReference collectionReference;
-    ArrayList<StoredIngredient> ingredients;
+    ArrayList<StoredIngredient> ingredients = new ArrayList<>();
+    Context context;
 
     private String descriptionFieldStr = "description";
     private String amountFieldStr = "amount";
@@ -43,8 +46,9 @@ public class DatabaseManager {
     private String locationFieldStr = "location";
 
 
-    public DatabaseManager () {
+    public DatabaseManager (Context _context) {
         this.databaseInstance = FirebaseFirestore.getInstance();
+        context = _context;
         Log.d("DATABASE MANAGER", "DATABASE MANAGER CREATED");
     }
 
@@ -53,7 +57,7 @@ public class DatabaseManager {
      * @return ingredients {@link ArrayList<StoredIngredient>}
      */
     public ArrayList<StoredIngredient> getStoredIngredients () {
-        ingredients = new ArrayList<>();
+        //ingredients = new ArrayList<>();
         collectionReference = databaseInstance.collection("StoredIngredients");
 
         Log.d("DATABASE MANAGER", "called getStoredIngredients");
@@ -102,6 +106,8 @@ public class DatabaseManager {
                         }else {
                             Log.d("INGREDIENT LIST", "NOT EMPTY");
                         }
+
+                        Activity activity = (Activity) context;
                             }
                     } else {
                         Log.d(TAG, "Error Getting StoredIngredients from database.");

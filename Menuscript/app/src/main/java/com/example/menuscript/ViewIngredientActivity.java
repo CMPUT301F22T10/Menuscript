@@ -39,5 +39,6 @@ public class ViewIngredientActivity extends AppCompatActivity {
         ingredientAmount.setText((String.valueOf(viewedIngredient.getAmount())));
         ingredientDate.setText(viewedIngredient.getDate());
         ingredientUnit.setText(viewedIngredient.getUnit());
+
     }
 }
