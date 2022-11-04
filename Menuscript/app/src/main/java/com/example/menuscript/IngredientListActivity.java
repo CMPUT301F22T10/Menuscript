@@ -1,7 +1,10 @@
 package com.example.menuscript;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,11 +16,17 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -25,17 +34,26 @@ import java.util.Comparator;
 /**
  * This class displays a list of ingredients.:
  * ingredientList {@link ListView}
- * ingredientAdapter {@link CustomIngredientList}
- * dataList {@link ArrayList<Ingredient>}
+ * ingredientAdapter {@link StoredIngredientListAdapter}
+ * ingredients {@link ArrayList<StoredIngredient>}
  *
  */
 public class IngredientListActivity extends AppCompatActivity {
 
     ListView ingredientList;
-    CustomIngredientList ingredientAdapter;
-    ArrayList<Ingredient> dataList;
+    StoredIngredientListAdapter ingredientAdapter;
     private ActivityResultLauncher<Intent> activityResultLauncher;
-    FirebaseFirestore db;
+    DatabaseManager db = new DatabaseManager(this);
+
+    private String descriptionFieldStr = "description";
+    private String amountFieldStr = "amount";
+    private String unitFieldStr = "unit";
+    private String categoryFieldStr = "category";
+    private String dateFieldStr = "date";
+    private String locationFieldStr = "location";
+    ArrayList<StoredIngredient> ingredients;
+    private FirebaseFirestore databaseInstance;
+    private CollectionReference collectionReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,18 +62,20 @@ public class IngredientListActivity extends AppCompatActivity {
 
         ingredientList = findViewById(R.id.item_list);
 
-        dataList = new ArrayList<>();
+        databaseInstance = FirebaseFirestore.getInstance();
+        collectionReference = databaseInstance.collection("StoredIngredients");
+        ingredients = new ArrayList<>();
 
-        StoredIngredient test1 = new StoredIngredient( "Asparagus", 12, "pounds", "Vegetable", "05/11/2022", "fridge");
-        StoredIngredient test2 = new StoredIngredient("ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", 12, "unit", "TestReallyLongCategories", "05/11/2023", "ThisIsAReallyLongLocation");
-        StoredIngredient test3 = new StoredIngredient("Jasmine Rice", 12, "pounds", "Carb", "01/12/2030", "cellar");
+//        StoredIngredient test1 = new StoredIngredient( "Asparagus", 12, "pounds", "Vegetable", "05/11/2022", "fridge");
+//        StoredIngredient test2 = new StoredIngredient("ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", 12, "unit", "TestReallyLongCategories", "05/11/2023", "ThisIsAReallyLongLocation");
+//        StoredIngredient test3 = new StoredIngredient("Jasmine Rice", 12, "pounds", "Carb", "01/12/2030", "cellar");
 
-        dataList.add(test1);
-        dataList.add(test2);
-        dataList.add(test3);
+//        dataList.add(test1);
+//        dataList.add(test2);
+//        dataList.add(test3);
 
-        ingredientAdapter = new CustomIngredientList(this, dataList);
-        ingredientAdapter.notifyDataSetChanged();
+        ingredientAdapter = new StoredIngredientListAdapter(this, ingredients);
+
 
         ingredientList.setAdapter(ingredientAdapter);
 
@@ -63,6 +83,26 @@ public class IngredientListActivity extends AppCompatActivity {
         String[] sortOptions = new String[]{"Description", "Best Before Date", "Category"};
         CustomSortAdapter<String> sortAdapter = new CustomSortAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortOptions);
         sortButton.setAdapter(sortAdapter);
+
+        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                    FirebaseFirestoreException error) {
+                ingredients.clear();
+                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
+                {
+                    String description = (String) doc.getData().get(descriptionFieldStr);
+                    float amount = Float.parseFloat(String.valueOf(doc.getData().get(amountFieldStr)));
+                    String unit = (String) doc.getData().get(unitFieldStr);
+                    String category = (String) doc.getData().get(categoryFieldStr);
+                    String date = (String) doc.getData().get(dateFieldStr);
+                    String location = (String) doc.getData().get(locationFieldStr);
+
+                    ingredients.add(new StoredIngredient(description, amount, unit, category, date, location));
+                }
+                ingredientAdapter.notifyDataSetChanged();
+            }
+        });
 
         ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -88,7 +128,8 @@ public class IngredientListActivity extends AppCompatActivity {
                     String location = intent.getStringExtra("location");
 
                     StoredIngredient newIngredient = new StoredIngredient(description, amount, null, category, date, location);
-                    dataList.add(newIngredient);
+                    db.addStoredIngredient(newIngredient);
+                    ingredients.add(newIngredient);
                     ingredientAdapter.notifyDataSetChanged();
                 }
             }
@@ -109,9 +150,9 @@ public class IngredientListActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (adapterView.getItemAtPosition(i) == "Category") {
-                    dataList.sort(Comparator.comparing(Ingredient::getCategory));
+                    ingredients.sort(Comparator.comparing(Ingredient::getCategory));
                 } else if (adapterView.getItemAtPosition(i) == "Description") {
-                    dataList.sort(Comparator.comparing(Ingredient::getDescription));
+                    ingredients.sort(Comparator.comparing(Ingredient::getDescription));
                 }
                 ingredientAdapter.notifyDataSetChanged();
             }
@@ -122,4 +163,5 @@ public class IngredientListActivity extends AppCompatActivity {
             }
         });
     }
+
 }
