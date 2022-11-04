@@ -25,4 +25,20 @@ public class StoredIngredient extends Ingredient {
         data.put("location", this.location);
         return data;
     }
+
+    @Override
+    public boolean equals (Object x) {
+        StoredIngredient other = (StoredIngredient) x;
+        if (this.description == other.description &&
+            this.amount == other.amount &&
+                this.unit == other.unit &&
+                this.category == other.category &&
+                this.date == other.date &&
+                this.location == other.location
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    };
 }
