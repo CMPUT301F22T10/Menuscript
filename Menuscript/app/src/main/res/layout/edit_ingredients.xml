@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/add_edit_ingredient_header"
+            style="@style/MainHeader"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ingredients"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/itemDescriptionTextView"
+            style="@style/MainBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Ingredient Description"
+            android:layout_marginTop="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/add_edit_ingredient_header" />
+
+        <EditText
+            android:id="@+id/itemDescriptionEditText"
+            style="@style/MainBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="8"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemDescriptionTextView" />
+
+        <TextView
+            android:id="@+id/countTextView"
+            style="@style/MainBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Amount"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/itemDescriptionEditText" />
+
+        <EditText
+            android:id="@+id/countEditText"
+            style="@style/MainBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:digits="0123456789"
+            android:ems="8"
+            android:imeOptions="actionNext"
+            android:importantForAutofill="no"
+            android:inputType="numberDecimal"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/countTextView" />
+
+        <TextView
+            android:id="@+id/unitTextView"
+            style="@style/MainBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Unit"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/countEditText" />
+
+        <EditText
+            android:id="@+id/unitEditText"
+            style="@style/MainBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="8"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/unitTextView" />
+
+        <TextView
+            android:id="@+id/bestBeforeTextView"
+            style="@style/MainBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Best Before Date"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/unitEditText" />
+
+        <EditText
+            android:id="@+id/bestBeforeEditText"
+            style="@style/MainBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:ems="8"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="date"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bestBeforeTextView" />
+
+        <TextView
+            android:id="@+id/selectLocationTextView"
+            style="@style/MainBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Location"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bestBeforeEditText" />
+
+
+        <Spinner
+            android:id="@+id/locationSpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/MainBody"
+            android:background="@android:drawable/edit_text"
+            android:gravity="center"
+            android:spinnerMode="dropdown"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@id/bestBeforeEditText"
+            app:layout_constraintStart_toStartOf="@id/bestBeforeEditText"
+            app:layout_constraintTop_toBottomOf="@id/selectLocationTextView" />
+
+        <TextView
+            android:id="@+id/selectCategoryTextView"
+            style="@style/MainBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Select Item Category"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/locationSpinner" />
+
+        <Spinner
+            android:id="@+id/categorySpinner"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            style="@style/MainBody"
+            android:background="@android:drawable/edit_text"
+            android:gravity="center"
+            android:spinnerMode="dropdown"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="@id/bestBeforeEditText"
+            app:layout_constraintStart_toStartOf="@id/bestBeforeEditText"
+            app:layout_constraintTop_toBottomOf="@id/selectCategoryTextView" />
+
+
+        <Button
+            android:id="@+id/submitButton"
+            style="@style/MainBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bordered_button"
+            android:text="Submit"
+            app:backgroundTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/categorySpinner" />
+
+        <Button
+            android:id="@+id/deleteButton"
+            style="@style/MainBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/bordered_button"
+            android:text="Delete"
+            app:backgroundTint="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/submitButton" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

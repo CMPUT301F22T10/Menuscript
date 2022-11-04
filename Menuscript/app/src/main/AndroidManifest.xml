@@ -2,21 +2,45 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.menuscript">
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_test"
         android:supportsRtl="true"
         android:theme="@style/Theme.Menuscript"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".IngredientListActivity"
+            android:parentActivityName=".MainMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RecipeListActivity"
+            android:parentActivityName=".MainMenuActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewRecipeActivity"
+            android:parentActivityName=".RecipeListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddRecipeActivity"
+            android:parentActivityName=".RecipeListActivity"
+            android:exported="false"
+
+        />
+        <activity
+            android:name=".AddIngredientActivity"
+            android:parentActivityName=".IngredientListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ViewIngredientActivity"
+            android:parentActivityName=".IngredientListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MainMenuActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.Menuscript.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,8 +48,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RecipeActivity" />
-        <activity android:name=".AddRecipeActivity" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

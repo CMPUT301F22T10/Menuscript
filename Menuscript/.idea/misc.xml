@@ -4,6 +4,23 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/GitHub/Menuscript/Menuscript/app/src/main/res/layout/activity_main.xml" value="0.25764596848934196" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/drawable/bordered_button.xml" value="0.4185" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/drawable/new_dropdown.xml" value="0.207" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/edit_ingredients.xml" value="0.5" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/ingredient_details.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/list_activity.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/main_menu.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/meal_plan_add.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/meal_plan_main.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_add.xml" value="0.5" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_edit.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_ingredient_content.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_maincontext.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/recipe_view.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/shoplist_ingredient.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/shoplist_ingredientcontent.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/shoplist_main.xml" value="0.55" />
+        <entry key="..\:/School/CMPUT 301/Menuscript/Menuscript/app/src/main/res/layout/shoplist_maincontent.xml" value="0.55" />
       </map>
     </option>
   </component>

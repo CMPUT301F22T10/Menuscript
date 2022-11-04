@@ -33,7 +33,7 @@
             android:padding="10sp">
 
             <Button
-                android:id="@+id/addIngredientButton"
+                android:id="@+id/add_item_button"
                 android:layout_width="150sp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
