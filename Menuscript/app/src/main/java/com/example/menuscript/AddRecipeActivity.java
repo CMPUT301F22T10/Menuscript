@@ -25,20 +25,27 @@ import java.util.ArrayList;
 
 /**
  * This class controls the addition of a new recipe.
+ * recipeName {@link EditText}
+ * recipePrepTime {@link EditText}
+ * recipeServings {@link EditText}
+ * recipeCategory {@link EditText}
+ * recipeIngredientList {@link ListView}
+ * recipeComments {@link EditText}
+ * recipeImage {@link ImageButton}
  * @author Dylan Clarke
  */
 
 public class AddRecipeActivity extends AppCompatActivity {
-    private EditText recipeTitle;
-    private EditText recipeTime;
-    private EditText recipeServings;
-    private EditText recipeCategory;
-    private EditText recipeComments;
-    private ImageButton recipeImage;
-    private ActivityResultLauncher<Intent> activityResultLauncher;
-    private ListView ingredientListView;
-    private CustomIngredientList ingredientAdapter;
-    private ArrayList<Ingredient> ingredientList;
+    EditText recipeTitle;
+    EditText recipeTime;
+    EditText recipeServings;
+    EditText recipeCategory;
+    EditText recipeComments;
+    ImageButton recipeImage;
+    ActivityResultLauncher<Intent> activityResultLauncher;
+    ListView ingredientListView;
+    CustomIngredientList ingredientAdapter;
+    ArrayList<Ingredient> ingredientList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,11 +92,32 @@ public class AddRecipeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.putExtra("title",recipeTitle.getText().toString());
-                intent.putExtra("time",Integer.valueOf(recipeTime.getText().toString()));
-                intent.putExtra("servings",Float.valueOf(recipeServings.getText().toString()));
-                intent.putExtra("category",recipeCategory.getText().toString());
-                intent.putExtra("comments",recipeComments.getText().toString());
+                if(!recipeTitle.getText().toString().equals("")) {
+                    intent.putExtra("title", recipeTitle.getText().toString());
+                } else {
+                    intent.putExtra("title", "Unnamed Recipe");
+                }
+                if(!recipeTime.getText().toString().equals("")) {
+                    intent.putExtra("time", Integer.valueOf(recipeTime.getText().toString()));
+                } else {
+                    intent.putExtra("time", 0);
+                }
+                if(!recipeServings.getText().toString().equals("")){
+                    intent.putExtra("servings",Float.valueOf(recipeServings.getText().toString()));
+                } else {
+                    intent.putExtra("servings",0f);
+                }
+                if(!recipeCategory.getText().toString().equals("")){
+                    intent.putExtra("category",recipeCategory.getText().toString());
+                } else {
+                    intent.putExtra("category","Uncategorized");
+                }
+                if(!recipeComments.getText().toString().equals("")) {
+                    intent.putExtra("comments",recipeComments.getText().toString());
+                } else {
+                    intent.putExtra("comments","");
+                }
+
 
                 //_____________CHECK IF IMAGE FUNCTIONALITY WORKING______________
                 Bitmap bitmap = ((BitmapDrawable)recipeImage.getDrawable()).getBitmap();

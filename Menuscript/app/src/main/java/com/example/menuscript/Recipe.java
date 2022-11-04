@@ -37,7 +37,7 @@ public class Recipe {
      * @param servings Amount of servings that the recipe produces {@link float}
      * @param category A category to describe the recipe's type {@link String}
      * @param comments Notes/Comments about the recipe {@link String}
-     *
+     * @param image A byte representation of a recipe's image {@link byte[]}
      * @param ingredients A list of ingredients that the recipe uses {@link ArrayList<Ingredient>}
      */
 

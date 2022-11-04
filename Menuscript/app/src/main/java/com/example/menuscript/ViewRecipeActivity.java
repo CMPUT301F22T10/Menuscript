@@ -21,6 +21,7 @@ import java.util.ArrayList;
  * recipeCategory {@link TextView}
  * recipeIngredientList {@link ListView}
  * recipeComments {@link TextView}
+ * recipeImage {@link ImageView}
  * noArgument {@link String}
  * ingredientList {@link ArrayList<Ingredient>}
  * ingredientAdapter{@link ArrayAdapter<Ingredient>}
