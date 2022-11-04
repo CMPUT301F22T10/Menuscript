@@ -81,4 +81,28 @@ public class Recipe {
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setTime(int time) {
+        this.time = time;
+    }
+
+    public void setServings(float servings) {
+        this.servings = servings;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
 }
