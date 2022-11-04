@@ -6,6 +6,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * Custom ArrayAdapter for sorting the objects.
+ *
+ * @param <T> Filler parameter.
+ */
 public class CustomSortAdapter<T> extends ArrayAdapter<String> {
     public CustomSortAdapter(Context context, int textViewResourceId, String[] objects) {
         super(context, textViewResourceId, objects);

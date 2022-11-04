@@ -17,6 +17,19 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+/**
+ * AddIngredientActivity displays multiple fields that arre editable for users.
+ * The activity returns all attributes from the user for that instance of the Ingredient object.
+ * ingredientDescription {@link EditText}
+ * ingredientAmount {@link EditText}
+ * ingredientDate {@link EditText}
+ * ingredientLocation {@link Spinner}
+ * ingredientCategory {@link Spinner}
+ *
+ * @see Ingredient
+ * @see StoredIngredient
+ * @see IngredientListActivity
+ */
 
 public class AddIngredientActivity extends AppCompatActivity {
 
@@ -34,6 +47,12 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     Calendar calendar = Calendar.getInstance();
 
+    /**
+     * Obtains date from the user to set date for the date attribute in the ingredient class.
+     * formate {@link String}
+     *
+     * @see Ingredient
+     */
     private void updateLabel() {
         String format = "yyyy-MM-dd";
         SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.CANADA);

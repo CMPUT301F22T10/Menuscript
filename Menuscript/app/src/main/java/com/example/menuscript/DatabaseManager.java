@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Methods for accessing firestore database
+ * Methods for accessing the firestore database
  * databaseInstance {@link FirebaseFirestore}
  * collectionReference {@link CollectionReference}
  */

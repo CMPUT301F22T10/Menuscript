@@ -20,7 +20,15 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-
+/**
+ * MainMenuActvitiy is the starting screen of Menuscript. The user can go to the
+ * other activities, Ingredients, Recipes, Meal Plans, and Shopping List.
+ * This screen is the main navigation page for users to explore all
+ * functionalities of the application.
+ *
+ * @see IngredientListActivity
+ * @see RecipeListActivity
+ */
 public class MainMenuActivity extends AppCompatActivity {
 
     //DatabaseManager db = new DatabaseManager();
@@ -37,7 +45,11 @@ public class MainMenuActivity extends AppCompatActivity {
         final Button viewMealPlanButton = findViewById(R.id.meal_plan_button);
         final Button viewShoppingListButton = findViewById(R.id.shopping_list_button);
 
-
+        /**
+         * Switches to the ingredient list activity.
+         *
+         * @see IngredientListActivity
+         */
         viewIngredientsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,6 +57,11 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Switches to the recipe list activity.
+         *
+         * @see RecipeListActivity
+         */
         viewRecipesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
