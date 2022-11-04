@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -108,13 +109,12 @@ public class IngredientListActivity extends AppCompatActivity {
         ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(IngredientListActivity.this, ViewIngredientActivity.class);
+                Intent intent = new Intent(getApplicationContext(), ViewIngredientActivity.class);
                 clickedIngredient = (StoredIngredient) ingredientAdapter.getItem(i);
                 intent.putExtra("INGREDIENT", clickedIngredient);
-                startActivity(intent);
+                activityResultLauncher.launch(intent);
             }
         });
-
 
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -131,13 +131,15 @@ public class IngredientListActivity extends AppCompatActivity {
                     String location = intent.getStringExtra("location");
 
                     if (result.getResultCode() == 400) {
-
                         StoredIngredient newIngredient = new StoredIngredient(description, amount, unit, category, date, location);
                         db.addStoredIngredient(newIngredient);
                         ingredients.add(newIngredient);
                     } else if (result.getResultCode() == 401) {
+                        db.deleteStoredIngredient(clickedIngredient);
                         clickedIngredient = new StoredIngredient(description, amount, unit, category, date, location);
+                        db.addStoredIngredient(clickedIngredient);
                     } else if (result.getResultCode() == 402) {
+                        db.deleteStoredIngredient(clickedIngredient);
                         ingredients.remove(clickedIngredient);
                     }
                     ingredientAdapter.notifyDataSetChanged();
