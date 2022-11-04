@@ -36,9 +36,9 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:maxImageSize="40dp"
-            app:srcCompat="@android:drawable/ic_menu_save"
-            app:tint="@color/black" />
+            app:maxImageSize="75dp"
+            app:srcCompat="@android:drawable/btn_check_buttonless_on"
+            app:tint="@color/material_dynamic_neutral_variant40" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
