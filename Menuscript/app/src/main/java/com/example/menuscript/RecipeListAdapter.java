@@ -14,9 +14,11 @@ import java.util.ArrayList;
 
 /**
  * Custom array adapter for recipe list in RecipeListActivity
+ * recipes {@link ArrayList<Recipe>}
+ *
  * @author Wanlin
+ * @see Recipe
  */
-
 public class RecipeListAdapter extends ArrayAdapter<Recipe> {
     private ArrayList<Recipe> recipes;
     private Context context;

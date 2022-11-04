@@ -18,6 +18,18 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ *  This class displays the details of an Ingredient.
+ * ingredientDescription {@link EditText}
+ * ingredientAmount {@link EditText}
+ * ingredientDate {@link EditText}
+ * ingredientUnit {@link EditText}
+ * ingredientLocation {@link Spinner}
+ * ingredientCategory {@link Spinner}
+ * calendar {@link Calendar}
+ *
+ * @see Ingredient
+ */
 public class ViewIngredientActivity extends AppCompatActivity {
 
     private EditText ingredientDescription;

@@ -18,10 +18,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 /**
- * AddIngredientActivity displays multiple fields that arre editable for users.
+ * AddIngredientActivity displays multiple fields that are editable for users.
  * The activity returns all attributes from the user for that instance of the Ingredient object.
  * ingredientDescription {@link EditText}
  * ingredientAmount {@link EditText}
+ * ingredientUnit {@link EditText}
  * ingredientDate {@link EditText}
  * ingredientLocation {@link Spinner}
  * ingredientCategory {@link Spinner}
@@ -50,7 +51,7 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     /**
      * Obtains date from the user to set date for the date attribute in the ingredient class.
-     * formate {@link String}
+     * format {@link String}
      *
      * @see Ingredient
      */

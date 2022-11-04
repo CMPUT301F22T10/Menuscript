@@ -33,11 +33,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- * This class displays a list of ingredients.:
+ * This class displays a list of ingredients:
  * ingredientList {@link ListView}
  * ingredientAdapter {@link StoredIngredientListAdapter}
  * ingredients {@link ArrayList<StoredIngredient>}
  *
+ * @see Ingredient
+ * @see AddIngredientActivity
  */
 public class IngredientListActivity extends AppCompatActivity {
 

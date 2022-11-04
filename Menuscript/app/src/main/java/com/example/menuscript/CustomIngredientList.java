@@ -13,7 +13,7 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 /**
- * Custom ArrayAdapter for objects of class ingredients containing 2 variables:
+ * Custom ArrayAdapter for objects of class Ingredient containing 2 variables:
  * items {@link ArrayList<Ingredient>}
  *
  * @see Ingredient
