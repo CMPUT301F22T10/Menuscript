@@ -30,8 +30,8 @@ public class ViewIngredientActivity extends AppCompatActivity {
         ingredientAmount = findViewById(R.id.countEditText);
         ingredientDate = findViewById(R.id.bestBeforeEditText);
         ingredientUnit = findViewById(R.id.unitEditText);
-        ingredientLocation = findViewById(R.id.locationSpinner);
-        ingredientCategory = findViewById(R.id.categorySpinner);
+        ingredientLocation = (Spinner) findViewById(R.id.locationSpinner);
+        ingredientCategory = (Spinner) findViewById(R.id.categorySpinner);
 
         StoredIngredient viewedIngredient = (StoredIngredient) getIntent().getSerializableExtra("INGREDIENT");
 
@@ -39,6 +39,25 @@ public class ViewIngredientActivity extends AppCompatActivity {
         ingredientAmount.setText((String.valueOf(viewedIngredient.getAmount())));
         ingredientDate.setText(viewedIngredient.getDate());
         ingredientUnit.setText(viewedIngredient.getUnit());
+        ingredientLocation.setonItemSelectedListener(this);
+        ingredientCategory.setonItemSelectedListener(this);
+        locAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locOptions);
+        locAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ingredientLocation.setAdapter(locAdapter);
+        catAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, catOptions);
+        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ingredientCategory.setAdapter(catAdapter);
+        FloatingActionButton editRecipeButton = findViewById(R.id.recipeConfirmEdit);
+        editRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent = onButtonClick(intent);
+                setResult(421,intent);
+                finish();
+
+            }
+        });
 
     }
 }
