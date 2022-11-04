@@ -1,6 +1,8 @@
 package com.example.menuscript;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -9,6 +11,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import java.io.ByteArrayOutputStream;
 
 public class ViewIngredientActivity extends AppCompatActivity {
 
@@ -29,6 +33,7 @@ public class ViewIngredientActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_ingredients);
+
         ingredientDescription = findViewById(R.id.itemDescriptionEditText);
         ingredientAmount = findViewById(R.id.countEditText);
         ingredientDate = findViewById(R.id.bestBeforeEditText);
@@ -51,23 +56,63 @@ public class ViewIngredientActivity extends AppCompatActivity {
 
         ingredientLocation.setAdapter(locAdapter);
         ingredientCategory.setAdapter(catAdapter);
-        Button submitButton = findViewById(R.id.submitButton);
 
+        Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.putExtra("description", ingredientDescription.getText().toString());
-                intent.putExtra("amount", Integer.valueOf(ingredientAmount.getText().toString()));
-                intent.putExtra("date", ingredientDate.getText().toString());
-                intent.putExtra("location", ingredientLocation.getSelectedItem().toString());
-                intent.putExtra("category", ingredientCategory.getSelectedItem().toString());
-
-                setResult(6969, intent);
+                intent = onButtonClick(intent);
+                setResult(401, intent);
                 finish();
 
             }
         });
 
+        Button deleteButton = findViewById(R.id.deleteButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent = onButtonClick(intent);
+                setResult(402, intent);
+                finish();
+
+            }
+        });
+    }
+    private Intent onButtonClick(Intent intent){
+
+        if(!ingredientDescription.getText().toString().equals("")) {
+            intent.putExtra("description", ingredientDescription.getText().toString());
+        } else {
+            intent.putExtra("description", "Unnamed Ingredient");
+        }
+        if(!ingredientAmount.getText().toString().equals("")) {
+            intent.putExtra("amount", Float.valueOf(ingredientAmount.getText().toString()));
+        } else {
+            intent.putExtra("amount", 0.0f);
+        }
+        if(!ingredientUnit.getText().toString().equals("")){
+            intent.putExtra("unit", ingredientUnit.getText().toString());
+        } else {
+            intent.putExtra("unit","No Unit");
+        }
+        if(!ingredientDate.getText().toString().equals("")){
+            intent.putExtra("date", ingredientDate.getText().toString());
+        } else {
+            intent.putExtra("category","No Best Before Date");
+        }
+        if(!ingredientCategory.getSelectedItem().toString().equals("")) {
+            intent.putExtra("category",ingredientCategory.getSelectedItem().toString());
+        } else {
+            intent.putExtra("category","Uncategorized");
+        }
+        if(!ingredientLocation.getSelectedItem().toString().equals("")) {
+            intent.putExtra("location",ingredientLocation.getSelectedItem().toString());
+        } else {
+            intent.putExtra("location","No Location");
+        }
+        return intent;
     }
 }

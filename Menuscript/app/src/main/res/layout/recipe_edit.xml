@@ -56,6 +56,7 @@
         android:layout_height="wrap_content"
         android:text="Recipe Name"
         android:textSize="30sp"
+        android:inputType="text"
         android:layout_marginBottom="4sp"
         android:layout_marginLeft="20sp"
         style="@style/MainBody"/>

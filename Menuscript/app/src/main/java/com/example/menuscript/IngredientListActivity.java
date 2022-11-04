@@ -45,15 +45,17 @@ public class IngredientListActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> activityResultLauncher;
     DatabaseManager db = new DatabaseManager(this);
 
-    private String descriptionFieldStr = "description";
-    private String amountFieldStr = "amount";
-    private String unitFieldStr = "unit";
-    private String categoryFieldStr = "category";
-    private String dateFieldStr = "date";
-    private String locationFieldStr = "location";
+    private final String descriptionFieldStr = "description";
+    private final String amountFieldStr = "amount";
+    private final String unitFieldStr = "unit";
+    private final String categoryFieldStr = "category";
+    private final String dateFieldStr = "date";
+    private final String locationFieldStr = "location";
     ArrayList<StoredIngredient> ingredients;
     private FirebaseFirestore databaseInstance;
     private CollectionReference collectionReference;
+
+    StoredIngredient clickedIngredient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +77,6 @@ public class IngredientListActivity extends AppCompatActivity {
 //        dataList.add(test3);
 
         ingredientAdapter = new StoredIngredientListAdapter(this, ingredients);
-
 
         ingredientList.setAdapter(ingredientAdapter);
 
@@ -108,7 +109,7 @@ public class IngredientListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(IngredientListActivity.this, ViewIngredientActivity.class);
-                StoredIngredient clickedIngredient = (StoredIngredient) ingredientAdapter.getItem(i);
+                clickedIngredient = (StoredIngredient) ingredientAdapter.getItem(i);
                 intent.putExtra("INGREDIENT", clickedIngredient);
                 startActivity(intent);
             }
@@ -119,17 +120,26 @@ public class IngredientListActivity extends AppCompatActivity {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                if (result.getResultCode() == 6969 && result.getData() != null) {
+                if (result.getData() != null) {
                     Intent intent = result.getData();
+
                     String description = intent.getStringExtra("description");
-                    String category = intent.getStringExtra("category");
-                    Integer amount = intent.getIntExtra("amount", 0);
+                    float amount = intent.getFloatExtra("amount", 0.0f);
+                    String unit = intent.getStringExtra("unit");
                     String date = intent.getStringExtra("date");
+                    String category = intent.getStringExtra("category");
                     String location = intent.getStringExtra("location");
 
-                    StoredIngredient newIngredient = new StoredIngredient(description, amount, null, category, date, location);
-                    db.addStoredIngredient(newIngredient);
-                    ingredients.add(newIngredient);
+                    if (result.getResultCode() == 400) {
+
+                        StoredIngredient newIngredient = new StoredIngredient(description, amount, unit, category, date, location);
+                        db.addStoredIngredient(newIngredient);
+                        ingredients.add(newIngredient);
+                    } else if (result.getResultCode() == 401) {
+                        clickedIngredient = new StoredIngredient(description, amount, unit, category, date, location);
+                    } else if (result.getResultCode() == 402) {
+                        ingredients.remove(clickedIngredient);
+                    }
                     ingredientAdapter.notifyDataSetChanged();
                 }
             }
@@ -153,6 +163,8 @@ public class IngredientListActivity extends AppCompatActivity {
                     ingredients.sort(Comparator.comparing(Ingredient::getCategory));
                 } else if (adapterView.getItemAtPosition(i) == "Description") {
                     ingredients.sort(Comparator.comparing(Ingredient::getDescription));
+                } else if (adapterView.getItemAtPosition(i) == "Best Before Date") {
+                    ingredients.sort(Comparator.comparing(StoredIngredient::getDate));
                 }
                 ingredientAdapter.notifyDataSetChanged();
             }

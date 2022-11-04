@@ -35,6 +35,7 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     private EditText ingredientDescription;
     private EditText ingredientAmount;
+    private EditText ingredientUnit;
     private EditText ingredientDate;
     private Spinner ingredientLocation;
     private Spinner ingredientCategory;
@@ -65,8 +66,12 @@ public class AddIngredientActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_ingredients);
 
+        Button deleteButton = findViewById(R.id.deleteButton);
+        deleteButton.setVisibility(View.INVISIBLE);
+
         ingredientDescription = findViewById(R.id.itemDescriptionEditText);
         ingredientAmount = findViewById(R.id.countEditText);
+        ingredientUnit = findViewById(R.id.unitEditText);
         ingredientDate = findViewById(R.id.bestBeforeEditText);
         ingredientLocation = findViewById(R.id.locationSpinner);
         ingredientCategory = findViewById(R.id.categorySpinner);
@@ -106,16 +111,45 @@ public class AddIngredientActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent.putExtra("description", ingredientDescription.getText().toString());
-                intent.putExtra("amount", Integer.valueOf(ingredientAmount.getText().toString()));
-                intent.putExtra("date", ingredientDate.getText().toString());
-                intent.putExtra("location", ingredientLocation.getSelectedItem().toString());
-                intent.putExtra("category", ingredientCategory.getSelectedItem().toString());
-
-                setResult(6969, intent);
+                intent = onButtonClick(intent);
+                setResult(400, intent);
                 finish();
 
             }
         });
+    }
+    private Intent onButtonClick(Intent intent){
+
+        if(!ingredientDescription.getText().toString().equals("")) {
+            intent.putExtra("description", ingredientDescription.getText().toString());
+        } else {
+            intent.putExtra("description", "Unnamed Ingredient");
+        }
+        if(!ingredientAmount.getText().toString().equals("")) {
+            intent.putExtra("amount", Float.valueOf(ingredientAmount.getText().toString()));
+        } else {
+            intent.putExtra("amount", 0.0f);
+        }
+        if(!ingredientUnit.getText().toString().equals("")){
+            intent.putExtra("unit", ingredientUnit.getText().toString());
+        } else {
+            intent.putExtra("unit","No Unit");
+        }
+        if(!ingredientDate.getText().toString().equals("")){
+            intent.putExtra("date", ingredientDate.getText().toString());
+        } else {
+            intent.putExtra("category","No Best Before Date");
+        }
+        if(!ingredientCategory.getSelectedItem().toString().equals("")) {
+            intent.putExtra("category",ingredientCategory.getSelectedItem().toString());
+        } else {
+            intent.putExtra("category","Uncategorized");
+        }
+        if(!ingredientLocation.getSelectedItem().toString().equals("")) {
+            intent.putExtra("location",ingredientLocation.getSelectedItem().toString());
+        } else {
+            intent.putExtra("location","No Location");
+        }
+        return intent;
     }
 }
