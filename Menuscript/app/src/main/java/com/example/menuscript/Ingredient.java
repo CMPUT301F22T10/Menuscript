@@ -16,7 +16,10 @@ public class Ingredient implements Serializable {
      * Class constructor.
      */
     public Ingredient () {
-
+        this.description = "";
+        this.amount = 0;
+        this.unit = null;
+        this.category = null;
     }
 
     /**
@@ -26,6 +29,8 @@ public class Ingredient implements Serializable {
      * @param category  the category to which the Ingredient belongs
      */
     public Ingredient (String description, float amount, String unit, String category) {
+        assert(amount >= 0);
+
         this.description = description;
         this.amount = amount;
         this.unit = unit;
