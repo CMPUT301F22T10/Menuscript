@@ -11,8 +11,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.navigation.ui.AppBarConfiguration;
 
-
-
+/**
+ * MainMenu is the starting screen of Menuscript. The user can go to the
+ * other activities, Ingredients, Recipes, Meal Plans, and Shopping List.
+ * This screen is the main navigation page for users to explore all
+ * functionalities of the application.
+ *
+ * @see IngredientListActivity
+ * @see RecipeListActivity
+ */
 public class MainMenu extends AppCompatActivity {
 
     @Override
@@ -25,7 +32,11 @@ public class MainMenu extends AppCompatActivity {
         final Button viewMealPlanButton = findViewById(R.id.meal_plan_button);
         final Button viewShoppingListButton = findViewById(R.id.shopping_list_button);
 
-
+        /**
+         * Switches to the ingredient list activity.
+         *
+         * @see IngredientListActivity
+         */
         viewIngredientsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,6 +44,11 @@ public class MainMenu extends AppCompatActivity {
             }
         });
 
+        /**
+         * Switches to the recipe list activity.
+         *
+         * @see RecipeListActivity
+         */
         viewRecipesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -40,6 +56,7 @@ public class MainMenu extends AppCompatActivity {
             }
         });
     }
+
     public void startIngredientListActivity(){
         Intent intent = new Intent(this, IngredientListActivity.class);
         startActivity(intent);

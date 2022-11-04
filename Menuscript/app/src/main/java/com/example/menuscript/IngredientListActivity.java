@@ -19,6 +19,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * IngredientListActivity displays all Ingredient objects in the
+ * ArrayList Ingredients class.
+ * ingredientList {@link ListView}
+ * ingredientAdapter {@link CustomIngredientList}
+ * dataList {@link ArrayList<Ingredient>}
+ *
+ * @see Ingredient
+ * @see Ingredients
+ * @see AddIngredientActivity
+ */
 public class IngredientListActivity extends AppCompatActivity {
 
     ListView ingredientList;
@@ -53,7 +64,13 @@ public class IngredientListActivity extends AppCompatActivity {
         CustomSortAdapter<String> sortAdapter = new CustomSortAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortOptions);
         sortButton.setAdapter(sortAdapter);
 
-
+        /**
+         * Grabs the information from activities related to the
+         * creation of Ingredient object and stores it in an ArrayList.
+         *
+         * @see AddIngredientActivity
+         * @see Ingredient
+         */
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {

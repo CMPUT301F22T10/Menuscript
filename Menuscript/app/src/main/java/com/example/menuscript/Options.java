@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Set;
 
 /**
+ * Solid description about Options right here.
+ * values {@link Set}
+ *
  * @author Lane Missel
  */
 public class Options {

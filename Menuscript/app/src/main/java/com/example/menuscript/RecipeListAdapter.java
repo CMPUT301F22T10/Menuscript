@@ -13,8 +13,11 @@ import androidx.annotation.Nullable;
 import java.util.ArrayList;
 
 /**
+ * Custom ArrayAdapter for displaying Recipe objects in the Recipe Activity.
+ * recipes {@link ArrayList<Recipe>}
  *
  * @author Wanlin
+ * @see Recipe
  */
 public class RecipeListAdapter extends ArrayAdapter<Recipe> {
     private ArrayList<Recipe> recipes;

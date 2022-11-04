@@ -18,6 +18,20 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * AddIngredientActivity displays multiple editable fields for users.
+ * The activity returns all attributes from the user for the
+ * instantiation of the Ingredient object.
+ * ingredientDescription {@link EditText}
+ * ingredientAmount {@link EditText}
+ * ingredientDate {@link EditText}
+ * ingredientLocation {@link Spinner}
+ * ingredientCategory {@link Spinner}
+ *
+ * @see Ingredient
+ * @see StoredIngredient
+ * @see IngredientListActivity
+ */
 public class AddIngredientActivity extends AppCompatActivity {
 
     private EditText ingredientDescription;
@@ -34,6 +48,12 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     Calendar calendar = Calendar.getInstance();
 
+    /**
+     * Obtains date from user for the date attribute in Ingredient class.
+     * formate {@link String}
+     *
+     * @see Ingredient
+     */
     private void updateLabel() {
         String format = "yyyy-MM-dd";
         SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.CANADA);

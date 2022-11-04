@@ -32,6 +32,7 @@ import java.util.ArrayList;
  * recipeIngredientList {@link ListView}
  * recipeComments {@link EditText}
  * recipeImage {@link ImageButton}
+ *
  * @author Dylan Clarke
  */
 

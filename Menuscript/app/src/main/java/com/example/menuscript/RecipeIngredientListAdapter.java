@@ -12,6 +12,14 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * Custom ArrayAdapter for displaying the Ingredient objects in the recipe.
+ * recipeIngredients {@link ArrayList<Ingredient>}
+ *
+ * @see RecipeListActivity
+ * @see RecipeListAdapter
+ * @see ViewRecipeActivity
+ */
 public class RecipeIngredientListAdapter extends ArrayAdapter<Ingredient> {
     private ArrayList<Ingredient> recipeIngredients;
     private Context context;

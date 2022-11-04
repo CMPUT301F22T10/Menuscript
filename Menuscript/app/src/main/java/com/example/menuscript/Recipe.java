@@ -6,17 +6,16 @@ import java.util.ArrayList;
 
 /**
  * This class creates/defines a Recipe object with eight variables:
- * Key {@link int}
- * Title {@link String}
- * Time {@link int}
- * Servings {@link float}
- * Category {@link String}
- * Comments {@link String}
- * Image {@link Bitmap}
- * Ingredients {@link ArrayList<Ingredient>}
+ * key {@link int}
+ * title {@link String}
+ * time {@link int}
+ * servings {@link float}
+ * category {@link String}
+ * comments {@link String}
+ * image {@link Bitmap}
+ * ingredients {@link ArrayList<Ingredient>}
+ *
  * @author Dylan
- *
- *
  */
 public class Recipe {
     private int key;
@@ -31,6 +30,7 @@ public class Recipe {
 
     /**
      * This is a constructor to create a City object. (can write packagename.classname#city)
+     *
      * @param key To be used for server functionality/keeping track of recipes {@link int}
      * @param title Stores the name of the recipe {@link String}
      * @param time The time needed to prepare the recipe {@link int}
@@ -40,7 +40,6 @@ public class Recipe {
      * @param image A byte representation of a recipe's image {@link byte[]}
      * @param ingredients A list of ingredients that the recipe uses {@link ArrayList<Ingredient>}
      */
-
     public Recipe(int key, String title, int time, float servings, String category, String comments, byte[] image, ArrayList<Ingredient> ingredients) {
         //ADD BYTE[] BACK TO CONSTRUCTOR
         this.key = key;

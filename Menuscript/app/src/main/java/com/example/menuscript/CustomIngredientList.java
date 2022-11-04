@@ -12,6 +12,12 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * Custom ArrayAdapter for Ingredient objects which contains 2 variables:
+ * items {@link ArrayList<Ingredient>}
+ *
+ * @see Ingredient
+ */
 public class CustomIngredientList extends ArrayAdapter {
     private ArrayList<Ingredient> items;
     private Context context;

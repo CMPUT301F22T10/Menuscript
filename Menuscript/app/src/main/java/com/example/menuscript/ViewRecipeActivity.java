@@ -27,7 +27,6 @@ import java.util.ArrayList;
  * ingredientAdapter{@link ArrayAdapter<Ingredient>}
  *
  * @author Wanlin
- *
  */
 public class ViewRecipeActivity extends AppCompatActivity {
 

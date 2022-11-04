@@ -3,12 +3,24 @@ package com.example.menuscript;
 import java.io.Serializable;
 
 /**
- * This class minimally defines a general ingredient for use in recipes, shopping, and meal planning.
+ * This class minimally defines a general ingredient for use in recipes,
+ * shopping, and meal planning.
+ * key {@link int}
+ * description {@link String}
+ * category {@link String}
+ *
  * @author Lane Missel
+ * @see Ingredients
+ * @see StoredIngredient
  */
 public class Ingredient implements Serializable {
     /**
-     * A unique integer key for each instance of Ingredient, allowing access to the specific instance of Ingredient within the {@link Ingredients Ingredients} or {@link StoredIngredients StoredIngredients} classes.
+     * A unique integer key for each instance of Ingredient, allowing
+     * access to the specific instance of Ingredient within the
+     * Ingredients or StoredIngredients classes.
+     * key {@link int}
+     * description {@link String}
+     * category {@link String}
      */
     private int key;
     private String description;
@@ -35,19 +47,22 @@ public class Ingredient implements Serializable {
 
     /**
      * Returns the {@link Integer Integer} key belonging to the Ingredient.
-     * @return  the Ingredient's unique key
+     *
+     * @return key   the Ingredient's unique key
      */
     public int getKey () {return this.key;}
 
     /**
      * Returns the {@link String String} description of the Ingredient.
+     *
      * @return  the Ingredient's description.
      */
     public String getDescription () {return this.description;}
 
     /**
      * Returns the {@link String String} category of the Ingredient.
-     * @return  the Ingredient's category.
+     *
+     * @return category  the Ingredient's category.
      */
     public String getCategory () {return this.category;}
 }
