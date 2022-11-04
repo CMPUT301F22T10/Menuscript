@@ -7,10 +7,10 @@ import java.io.Serializable;
  * @author Lane Missel
  */
 public class Ingredient implements Serializable {
-    private String description;
-    private float amount;
-    private String unit;
-    private String category;
+    protected String description;
+    protected float amount;
+    protected String unit;
+    protected String category;
 
     /**
      * Class constructor.
