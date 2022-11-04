@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.menuscript">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <application
         android:allowBackup="true"
@@ -15,11 +14,11 @@
         tools:targetApi="31">
         <activity
             android:name=".IngredientListActivity"
-            android:parentActivityName=".MainMenu"
+            android:parentActivityName=".MainMenuActivity"
             android:exported="false" />
         <activity
             android:name=".RecipeListActivity"
-            android:parentActivityName=".MainMenu"
+            android:parentActivityName=".MainMenuActivity"
             android:exported="false" />
         <activity
             android:name=".ViewRecipeActivity"
@@ -34,7 +33,7 @@
             android:parentActivityName=".IngredientListActivity"
             android:exported="false" />
         <activity
-            android:name=".MainMenu"
+            android:name=".MainMenuActivity"
             android:exported="true"
             android:theme="@style/Theme.Menuscript.NoActionBar">
             <intent-filter>

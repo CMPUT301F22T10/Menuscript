@@ -12,6 +12,10 @@ import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 
+/**
+ * Custom array adapter for ingredient list in ViewRecipeActivity
+ * @author wanli
+ */
 public class RecipeIngredientListAdapter extends ArrayAdapter<Ingredient> {
     private ArrayList<Ingredient> recipeIngredients;
     private Context context;

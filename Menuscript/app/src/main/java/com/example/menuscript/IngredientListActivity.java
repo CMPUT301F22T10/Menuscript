@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -15,16 +17,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * This class displays a list of ingredients.:
+ * ingredientList {@link ListView}
+ * ingredientAdapter {@link CustomIngredientList}
+ * dataList {@link ArrayList<Ingredient>}
+ *
+ */
 public class IngredientListActivity extends AppCompatActivity {
 
     ListView ingredientList;
     CustomIngredientList ingredientAdapter;
     ArrayList<Ingredient> dataList;
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
