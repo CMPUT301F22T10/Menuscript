@@ -1,7 +1,10 @@
 package com.example.menuscript;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -39,16 +42,18 @@ public class ViewIngredientActivity extends AppCompatActivity {
         ingredientAmount.setText((String.valueOf(viewedIngredient.getAmount())));
         ingredientDate.setText(viewedIngredient.getDate());
         ingredientUnit.setText(viewedIngredient.getUnit());
-        ingredientLocation.setonItemSelectedListener(this);
-        ingredientCategory.setonItemSelectedListener(this);
+
         locAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locOptions);
-        locAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ingredientLocation.setAdapter(locAdapter);
         catAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, catOptions);
+
+        locAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ingredientLocation.setAdapter(locAdapter);
         ingredientCategory.setAdapter(catAdapter);
         Button submitButton = findViewById(R.id.submitButton);
-        submitButtonButton.setOnClickListener(new View.OnClickListener() {
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
