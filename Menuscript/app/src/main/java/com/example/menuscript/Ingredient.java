@@ -3,8 +3,16 @@ package com.example.menuscript;
 import java.io.Serializable;
 
 /**
- * This class minimally defines a general ingredient for use in recipes, shopping, and meal planning.
+ * This class minimally defines a general ingredient for use in recipes,
+ * shopping, and meal planning.
+ * description {@link String}
+ * amount {@link float}
+ * unit {@link String}
+ * category {@link String}
+ *
  * @author Lane Missel
+ * @see Ingredient
+ * @see StoredIngredient
  */
 public class Ingredient implements Serializable {
     protected String description;

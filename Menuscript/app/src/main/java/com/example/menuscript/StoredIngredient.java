@@ -5,15 +5,10 @@ import java.util.HashMap;
 /**
  * StoredIngredient contains stored ingredient attributes for use in
  * recipes, shopping, and meal planning.
- * description {@link String}
- * amount {@link float}
- * category {@link String}
  * date {@link String}
- * unit {@link String}
  * location {@link String}
  *
  * @see Ingredient
-
  */
 public class StoredIngredient extends Ingredient {
     private String date;
@@ -29,8 +24,12 @@ public class StoredIngredient extends Ingredient {
     public String getLocation () {return this.location;}
 
     /**
-     * Method to return a hashmap filled with data of the ingredient with the keys as what values represent
-     * @return data a hashmap conatining all the details of ingredients assocaited with right keys
+     * Method to return a hashmap filled with data of the ingredient with
+     * the keys as what values represent
+     * data {@link HashMap<String, Object>}
+     *
+     * @return  data    a hashmap containing all the details of ingredients
+     *                  associated with right keys.
      */
     public HashMap<String, Object> asHashMap () {
         HashMap<String, Object> data  = new HashMap<>();

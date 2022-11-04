@@ -5,20 +5,17 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -30,6 +27,7 @@ import java.util.Map;
  * Methods for accessing the firestore database
  * databaseInstance {@link FirebaseFirestore}
  * collectionReference {@link CollectionReference}
+ * ingredients {@link ArrayList<StoredIngredient>}
  */
 
 public class DatabaseManager {
@@ -46,17 +44,18 @@ public class DatabaseManager {
     private String locationFieldStr = "location";
 
 
-    public DatabaseManager (Context _context) {
+    public DatabaseManager(Context _context) {
         this.databaseInstance = FirebaseFirestore.getInstance();
         context = _context;
         Log.d("DATABASE MANAGER", "DATABASE MANAGER CREATED");
     }
 
     /**
-     *Returns an array from database of user stored ingredients.
+     * Returns an array from database of user stored ingredients.
+     *
      * @return ingredients {@link ArrayList<StoredIngredient>}
      */
-    public ArrayList<StoredIngredient> getStoredIngredients () {
+    public ArrayList<StoredIngredient> getStoredIngredients() {
         //ingredients = new ArrayList<>();
         collectionReference = databaseInstance.collection("StoredIngredients");
 
@@ -88,35 +87,35 @@ public class DatabaseManager {
 
         collectionReference.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                @Override
-                    public void onComplete (@NonNull Task<QuerySnapshot> task) {
-                    if (task.isSuccessful()) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            Map<String, Object> data = document.getData();
-                            ingredients.add(new StoredIngredient(
-                                    (String)data.get(descriptionFieldStr),
-                                    Float.parseFloat(String.valueOf(data.get(amountFieldStr))),
-                                    (String)data.get(unitFieldStr),
-                                    (String)data.get(categoryFieldStr),
-                                    (String)data.get(dateFieldStr),
-                                    (String)data.get(locationFieldStr)
-                            ));
-                        if (ingredients.isEmpty()){
-                            Log.d("INGREDIENT LIST", "EMPTY");
-                        }else {
-                            Log.d("INGREDIENT LIST", "NOT EMPTY");
-                        }
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Map<String, Object> data = document.getData();
+                                ingredients.add(new StoredIngredient(
+                                        (String) data.get(descriptionFieldStr),
+                                        Float.parseFloat(String.valueOf(data.get(amountFieldStr))),
+                                        (String) data.get(unitFieldStr),
+                                        (String) data.get(categoryFieldStr),
+                                        (String) data.get(dateFieldStr),
+                                        (String) data.get(locationFieldStr)
+                                ));
+                                if (ingredients.isEmpty()) {
+                                    Log.d("INGREDIENT LIST", "EMPTY");
+                                } else {
+                                    Log.d("INGREDIENT LIST", "NOT EMPTY");
+                                }
 
-                        Activity activity = (Activity) context;
+                                Activity activity = (Activity) context;
                             }
-                    } else {
-                        Log.d(TAG, "Error Getting StoredIngredients from database.");
+                        } else {
+                            Log.d(TAG, "Error Getting StoredIngredients from database.");
+                        }
                     }
-                }
-        });
-        if (ingredients.isEmpty()){
+                });
+        if (ingredients.isEmpty()) {
             Log.d("INGREDIENT LIST", "EMPTY");
-        }else{
+        } else {
             Log.d("INGREDIENT LIST", "NOT EMPTY");
         }
         return ingredients;
@@ -124,18 +123,13 @@ public class DatabaseManager {
 
     /**
      * Store ingredient into firebase collection, assumes storedIngredient has valid entries
+     *
      * @param storedIngredient
      */
-    public void addStoredIngredient (StoredIngredient storedIngredient) {
+    public void addStoredIngredient(StoredIngredient storedIngredient) {
         collectionReference = databaseInstance.collection("StoredIngredients");
 
-        HashMap<String,Object> data = new HashMap<>();
-        data.put(descriptionFieldStr, storedIngredient.getDescription());
-        data.put(amountFieldStr, storedIngredient.getAmount());
-        data.put(unitFieldStr, storedIngredient.getUnit());
-        data.put(categoryFieldStr,storedIngredient.getCategory());
-        data.put(dateFieldStr,storedIngredient.getDate());
-        data.put(locationFieldStr,storedIngredient.getLocation());
+        HashMap<String, Object> data = storedIngredient.asHashMap();
 
         collectionReference.document().set(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -147,32 +141,86 @@ public class DatabaseManager {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG, "Data could not be added" +e.toString());
+                        Log.d(TAG, "Data could not be added" + e.toString());
                     }
                 });
     }
 
-    public void deleteStoredIngredient (StoredIngredient storedIngredient) {
+    public void deleteStoredIngredient(StoredIngredient storedIngredient) {
+        collectionReference = databaseInstance.collection("StoredIngredients");
+
+        HashMap<String, Object> data = storedIngredient.asHashMap();
+
+        ArrayList<String> docID = new ArrayList<>();
+
+        collectionReference
+                .whereEqualTo("description", storedIngredient.getDescription())
+                .whereEqualTo("category", storedIngredient.getCategory())
+                .whereEqualTo("date", storedIngredient.getDate())
+                .whereEqualTo("location", storedIngredient.getLocation())
+                .whereEqualTo("unit", storedIngredient.getUnit())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                docID.add(document.getId());
+                                Log.d("what", document.getId() + " => " + document.getData());
+
+                                String toDelete = docID.get(0);
+                                Log.d("non nonono", toDelete);
+                                Log.d("mmm", docID.toString());
+                                collectionReference
+                                        .document(toDelete)
+                                        .delete()
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w(TAG, "Error deleting document", e);
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+
+                    }
+                });
 
     }
 
-    public ArrayList<Recipe> getRecipes () {
+    public ArrayList<Recipe> getRecipes() {
         return new ArrayList<Recipe>();
     }
 
-    public void addRecipe (Recipe recipe) {
+    public void addRecipe(Recipe recipe) {
         ;
     }
 
-    public void deleteRecipe (Recipe recipe) {
+    public void deleteRecipe(Recipe recipe) {
         ;
     }
 
-    public ArrayList<String> getIngredientCategories () {
-        ArrayList<String> cats = new ArrayList<String>();
-        cats.add("Breakfast");
-        cats.add("Lunch");
-        cats.add("Dinner");
-        return cats;
+    public void addIngredientCategory(String category) {
+        DocumentReference categories = databaseInstance.collection("Options").document("Ingredient Categories");
+
+        categories.update(category, category);
+    }
+    public void addLocation(String location) {
+        DocumentReference categories = databaseInstance.collection("Options").document("Locations");
+
+        categories.update(location, location);
+    }
+    public void addUnit(String unit) {
+        DocumentReference categories = databaseInstance.collection("Options").document("Units");
+
+        categories.update(unit, unit);
     }
 }

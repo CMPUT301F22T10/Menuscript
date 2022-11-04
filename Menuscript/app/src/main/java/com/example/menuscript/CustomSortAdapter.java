@@ -7,7 +7,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 /**
- * Custom ArrayAdapter for sorting the objects.
+ * Custom ArrayAdapter for sorting objects.
  *
  * @param <T> Filler parameter.
  */
