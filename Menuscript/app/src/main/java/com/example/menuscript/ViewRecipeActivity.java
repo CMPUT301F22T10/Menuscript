@@ -29,11 +29,14 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
- * This class views the details of a recipe, the intent is passed the details of the recipe:
+ * This class views the details of a recipe, the intent is passed the details of the recipe.
+ * You are also able to edit the details of a recipe through this class by clicking on an attribute and editing it.
+ * The button in the top-left will delete the currently viewed recipe, while the button in the top-right will save any edits made.
  * recipeName {@link EditText}
  * recipePrepTime {@link EditText}
  * recipeServings {@link EditText}
  * recipeCategory {@link EditText}
+ * recipeIngredientList {@link ListView}
  * recipeIngredientList {@link ListView}
  * recipeComments {@link EditText}
  * recipeImage {@link ImageButton}
