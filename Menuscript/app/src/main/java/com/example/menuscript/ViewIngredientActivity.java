@@ -47,13 +47,18 @@ public class ViewIngredientActivity extends AppCompatActivity {
         catAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, catOptions);
         catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         ingredientCategory.setAdapter(catAdapter);
-        FloatingActionButton editRecipeButton = findViewById(R.id.recipeConfirmEdit);
-        editRecipeButton.setOnClickListener(new View.OnClickListener() {
+        Button submitButton = findViewById(R.id.submitButton);
+        submitButtonButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent = onButtonClick(intent);
-                setResult(421,intent);
+                intent.putExtra("description", ingredientDescription.getText().toString());
+                intent.putExtra("amount", Integer.valueOf(ingredientAmount.getText().toString()));
+                intent.putExtra("date", ingredientDate.getText().toString());
+                intent.putExtra("location", ingredientLocation.getSelectedItem().toString());
+                intent.putExtra("category", ingredientCategory.getSelectedItem().toString());
+
+                setResult(6969, intent);
                 finish();
 
             }
