@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/recipeAddConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        app:srcCompat="@android:drawable/ic_input_add" />
+
     <EditText
-        android:id="@+id/recipe_addTitle"
+        android:id="@+id/recipeAddTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -13,7 +21,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/recipe_addTime"
+        android:id="@+id/recipeAddTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -21,25 +29,51 @@
         android:inputType="number" />
 
     <EditText
-        android:id="@+id/recipe_addServings"
+        android:id="@+id/recipeAddServings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Servings"
-        android:inputType="number" />
+        android:inputType="numberDecimal" />
     <EditText
-        android:id="@+id/recipe_addCategory"
+        android:id="@+id/recipeAddCategory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Category"
         android:inputType="textPersonName" />
     <EditText
-        android:id="@+id/recipe_addComments"
+        android:id="@+id/recipeAddComments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Comments"
         android:inputType="textPersonName" />
+
+    <ImageButton
+        android:id="@+id/recipeAddImage"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_gallery" />
+
+
+    <ListView
+        android:id="@+id/recipeAddIngredientsList"
+        android:background="@drawable/listview_border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="80sp"
+        android:layout_gravity="center"
+        android:headerDividersEnabled="false"
+        ></ListView>
+
+
+
 
 </LinearLayout>
