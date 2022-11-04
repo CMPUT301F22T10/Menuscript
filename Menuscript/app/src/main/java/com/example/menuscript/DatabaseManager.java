@@ -27,6 +27,7 @@ import java.util.Map;
  * Methods for accessing the firestore database
  * databaseInstance {@link FirebaseFirestore}
  * collectionReference {@link CollectionReference}
+ * ingredients {@link ArrayList<StoredIngredient>}
  */
 
 public class DatabaseManager {

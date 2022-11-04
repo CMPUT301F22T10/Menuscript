@@ -6,6 +6,7 @@ import java.util.Set;
 /**
  * Class to essentially add,remove,check for and get all Options.
  * values {@link Set}
+ *
  * @author Lane Missel
  */
 public class Options {

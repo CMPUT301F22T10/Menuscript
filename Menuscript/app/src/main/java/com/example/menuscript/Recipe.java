@@ -6,17 +6,15 @@ import java.util.ArrayList;
 
 /**
  * This class creates/defines a Recipe object with eight variables:
- * Key {@link int}
- * Title {@link String}
- * Time {@link int}
- * Servings {@link float}
- * Category {@link String}
- * Comments {@link String}
- * Image {@link Bitmap}
- * Ingredients {@link ArrayList<Ingredient>}
+ * title {@link String}
+ * time {@link int}
+ * servings {@link float}
+ * category {@link String}
+ * comments {@link String}
+ * image {@link Bitmap}
+ * ingredients {@link ArrayList<Ingredient>}
+ *
  * @author Dylan
- *
- *
  */
 public class Recipe {
     private String title;
@@ -29,6 +27,7 @@ public class Recipe {
 
     /**
      * This is a constructor to create a Recipe object. (can write packagename.classname#city)
+     *
      * @param title Stores the name of the recipe {@link String}
      * @param time The time needed to prepare the recipe {@link int}
      * @param servings Amount of servings that the recipe produces {@link float}
@@ -48,7 +47,6 @@ public class Recipe {
         this.image = image;
         this.ingredients = ingredients;
     }
-
 
     public String getTitle() {
         return title;

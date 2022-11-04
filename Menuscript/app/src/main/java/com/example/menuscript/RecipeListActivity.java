@@ -27,9 +27,9 @@ import java.util.Comparator;
  * recipeAdapter {@link ArrayAdapter}
  * dataList {@link ArrayList<Recipe>}
  * header {@link TextView}
+ * selectedRecipe {@link Recipe}
  *
  * @author Wanlin
- *
  */
 
 public class RecipeListActivity extends AppCompatActivity {

@@ -78,6 +78,7 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent intent = new Intent(this, RecipeListActivity.class);
         startActivity(intent);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();

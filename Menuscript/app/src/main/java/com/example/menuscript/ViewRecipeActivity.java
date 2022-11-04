@@ -28,7 +28,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 
 /**
- * This class views the details of a recipe, the intent is passed the details of the recipe:
+ * This class views the details of a recipe, the intent
+ * is passed the details of the recipe:
  * recipeName {@link EditText}
  * recipePrepTime {@link EditText}
  * recipeServings {@link EditText}
@@ -41,7 +42,9 @@ import java.util.ArrayList;
  * ingredientAdapter{@link ArrayAdapter<Ingredient>}
  *
  * @author Wanlin
- *
+ * @see Recipe
+ * @see Ingredient
+ * @see StoredIngredient
  */
 public class ViewRecipeActivity extends AppCompatActivity {
 
