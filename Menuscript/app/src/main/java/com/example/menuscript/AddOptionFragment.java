@@ -11,6 +11,14 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+/**
+ * This class controls the addition of a new category, unit, or location.
+ * Users can input desired attributes (within restrictions) and click the confirm to add the option.
+ * Currently, adding of specific units or locations is not implemented.
+ * editOption {@link EditText}
+ *
+ * @author Micheal Chow
+ */
 
 public class AddOptionFragment extends DialogFragment {
     private AddOptionFragment.OnFragmentInteractionListener listener;
