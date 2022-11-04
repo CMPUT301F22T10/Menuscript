@@ -32,7 +32,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 /**
- * This class displays a list of ingredients.:
+ * This class displays a list of ingredients:
  * ingredientList {@link ListView}
  * ingredientAdapter {@link StoredIngredientListAdapter}
  * ingredients {@link ArrayList<StoredIngredient>}
@@ -66,16 +66,7 @@ public class IngredientListActivity extends AppCompatActivity {
         collectionReference = databaseInstance.collection("StoredIngredients");
         ingredients = new ArrayList<>();
 
-//        StoredIngredient test1 = new StoredIngredient( "Asparagus", 12, "pounds", "Vegetable", "05/11/2022", "fridge");
-//        StoredIngredient test2 = new StoredIngredient("ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", 12, "unit", "TestReallyLongCategories", "05/11/2023", "ThisIsAReallyLongLocation");
-//        StoredIngredient test3 = new StoredIngredient("Jasmine Rice", 12, "pounds", "Carb", "01/12/2030", "cellar");
-
-//        dataList.add(test1);
-//        dataList.add(test2);
-//        dataList.add(test3);
-
         ingredientAdapter = new StoredIngredientListAdapter(this, ingredients);
-
 
         ingredientList.setAdapter(ingredientAdapter);
 
