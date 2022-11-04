@@ -28,7 +28,7 @@ public class CustomIngredientList extends ArrayAdapter {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if (view == null) {
-            view = LayoutInflater.from(context).inflate(R.layout.ingredient_content, parent, false);
+            view = LayoutInflater.from(context).inflate(R.layout.recipe_ingredient_content, parent, false);
         }
         Ingredient ingredient = items.get(position);
         TextView descriptionText = view.findViewById(R.id.description_text);

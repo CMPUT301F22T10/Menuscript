@@ -31,11 +31,11 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         View view = convertView;
         if(view==null){
-            view = LayoutInflater.from(context).inflate(R.layout.recipe_name,parent,false);
+            view = LayoutInflater.from(context).inflate(R.layout.recipe_ingredient_content,parent,false);
         }
         Recipe recipe = recipes.get(position);
 
-        TextView recipeName = view.findViewById(R.id.recipeName);
+        TextView recipeName = view.findViewById(R.id.description_text);
         recipeName.setText(recipe.getTitle());
 
         return view;
