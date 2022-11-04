@@ -35,9 +35,9 @@ public class IngredientListActivity extends AppCompatActivity {
 
         dataList = new ArrayList<>();
 
-        Ingredient test1 = new Ingredient(1, "Asparagus", "Vegetable");
-        Ingredient test2 = new Ingredient(2, "ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", "TestReallyLongCategories");
-        Ingredient test3 = new Ingredient(3, "Jasmine Rice", "Carb");
+        StoredIngredient test1 = new StoredIngredient( "Asparagus", 12, "pounds", "Vegetable", "05/11/2022", "fridge");
+        StoredIngredient test2 = new StoredIngredient("ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", 12, "unit", "TestReallyLongCategories", "05/11/2023", "ThisIsAReallyLongLocation");
+        StoredIngredient test3 = new StoredIngredient("Jasmine Rice", 12, "pounds", "Carb", "01/12/2030", "cellar");
 
         dataList.add(test1);
         dataList.add(test2);
@@ -65,7 +65,7 @@ public class IngredientListActivity extends AppCompatActivity {
                     String date = intent.getStringExtra("date");
                     String location = intent.getStringExtra("location");
 
-                    Ingredient newIngredient = new Ingredient(33, description, category);
+                    StoredIngredient newIngredient = new StoredIngredient(description, amount, null, category, date, location);
                     dataList.add(newIngredient);
                     ingredientAdapter.notifyDataSetChanged();
                 }

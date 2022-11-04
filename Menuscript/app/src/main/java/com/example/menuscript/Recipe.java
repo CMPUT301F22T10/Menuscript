@@ -19,7 +19,6 @@ import java.util.ArrayList;
  *
  */
 public class Recipe {
-    private int key;
     private String title;
     private int time;
     private float servings;
@@ -28,10 +27,8 @@ public class Recipe {
     private byte[] image;
     private ArrayList<Ingredient> ingredients;
 
-
     /**
-     * This is a constructor to create a City object. (can write packagename.classname#city)
-     * @param key To be used for server functionality/keeping track of recipes {@link int}
+     * This is a constructor to create a Recipe object. (can write packagename.classname#city)
      * @param title Stores the name of the recipe {@link String}
      * @param time The time needed to prepare the recipe {@link int}
      * @param servings Amount of servings that the recipe produces {@link float}
@@ -41,9 +38,8 @@ public class Recipe {
      * @param ingredients A list of ingredients that the recipe uses {@link ArrayList<Ingredient>}
      */
 
-    public Recipe(int key, String title, int time, float servings, String category, String comments, byte[] image, ArrayList<Ingredient> ingredients) {
+    public Recipe(String title, int time, float servings, String category, String comments, byte[] image, ArrayList<Ingredient> ingredients) {
         //ADD BYTE[] BACK TO CONSTRUCTOR
-        this.key = key;
         this.title = title;
         this.time = time;
         this.servings = servings;
@@ -53,36 +49,17 @@ public class Recipe {
         this.ingredients = ingredients;
     }
 
-    public int getKey() {
-        return key;
-    }
-
-    public void setKey(int key) {
-        this.key = key;
-    }
 
     public String getTitle() {
         return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
     }
 
     public int getTime() {
         return time;
     }
 
-    public void setTime(int time) {
-        this.time = time;
-    }
-
     public float getServings() {
         return servings;
-    }
-
-    public void setServings(float servings) {
-        this.servings = servings;
     }
 
     public String getCategory() {
@@ -97,24 +74,11 @@ public class Recipe {
         return comments;
     }
 
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-
     public byte[] getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
-    }
-
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
-    }
-
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
-        this.ingredients = ingredients;
     }
 }

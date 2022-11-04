@@ -57,16 +57,16 @@ public class RecipeListActivity extends AppCompatActivity {
         //_____________________TESTING_______________________
 
         ingredients = new ArrayList<Ingredient>();
-        Ingredient test1 = new Ingredient(1, "Asparagus", "Vegetable");
-        Ingredient test2 = new Ingredient(2, "ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", "TestReallyLongCategories");
-        Ingredient test3 = new Ingredient(3, "Jasmine Rice", "Carb");
+        Ingredient test1 = new Ingredient( "Asparagus", 12, "pounds", "Vegetable");
+        Ingredient test2 = new Ingredient("ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", 12, "unit", "TestReallyLongCategories");
+        Ingredient test3 = new Ingredient("Jasmine Rice", 12, "pounds", "Carb");
         ingredients.add(test1);
         ingredients.add(test2);
         ingredients.add(test3);
-        Recipe recipe1 = new Recipe(1, "Yummy title", 4, (float)4, "Dinner", "yummy food for dinner", null, ingredients);
-        Recipe recipe2 = new Recipe(1, "Delicious title", 10, (float)2, "Lunch", "delicious food for lunch wwwaaafawklglkawnglkanwg long string long string long string so many comments wowowowowowowowowowowowowowwoow", null, ingredients);
-        dataList.add(new Recipe(1,"CheeseySauce",10,3,"CAT1","comment", null,ingredients));
-        dataList.add(new Recipe(1,"CheeseySaucey",10,544,"CAT2","comment", null, ingredients));
+        Recipe recipe1 = new Recipe("Yummy title", 4, (float)4, "Dinner", "yummy food for dinner", null, ingredients);
+        Recipe recipe2 = new Recipe("Delicious title", 10, (float)2, "Lunch", "delicious food for lunch wwwaaafawklglkawnglkanwg long string long string long string so many comments wowowowowowowowowowowowowowwoow", null, ingredients);
+        dataList.add(new Recipe("CheeseySauce",10,3,"CAT1","comment", null,ingredients));
+        dataList.add(new Recipe("CheeseySaucey",10,544,"CAT2","comment", null, ingredients));
         dataList.add(recipe1);
         dataList.add(recipe2);
         //---------------------------------------------------
@@ -131,7 +131,7 @@ public class RecipeListActivity extends AppCompatActivity {
                     String comments = intent.getStringExtra("comments");
                     byte[] image = intent.getByteArrayExtra("image"); //CORRESPONDS TO LINES IN ADDRECIPEACTIVITY
 
-                    Recipe newRecipe = new Recipe(1, title, time, servings, category, comments, image, ingredients);
+                    Recipe newRecipe = new Recipe(title, time, servings, category, comments, image, ingredients);
                     dataList.add(newRecipe);
                     recipeAdapter.notifyDataSetChanged();
 

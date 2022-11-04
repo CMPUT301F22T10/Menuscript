@@ -1,28 +1,15 @@
 package com.example.menuscript;
 
-public class StoredIngredient {
-    private int key;
-    private float amount;
+public class StoredIngredient extends Ingredient {
     private String date;
-    private String unit;
+    private String location;
 
-    public StoredIngredient () {
-        ;
-    }
-
-    public StoredIngredient (int key, float amount, String date, String unit) {
-        this.key = key;
-        this.amount = amount;
+    public StoredIngredient (String description, float amount, String unit, String  category, String date, String location) {
+        super(description, amount, unit, category);
         this.date = date;
-        this.unit = unit;
+        this.location = location;
     }
 
-    public int getKey () {return this.key;}
-    public float getAmount () {return this.amount;}
     public String getDate () {return this.date;}
-    public String getUnit () {return this.unit;}
-
-    public StoredIngredient clone () {
-        return new StoredIngredient(this.key, this.amount, this.date, this.unit);
-    }
+    public String getLocation () {return this.location;}
 }
