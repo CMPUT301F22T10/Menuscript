@@ -53,6 +53,17 @@ public class IngredientListActivity extends AppCompatActivity {
         CustomSortAdapter<String> sortAdapter = new CustomSortAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortOptions);
         sortButton.setAdapter(sortAdapter);
 
+        ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(IngredientListActivity.this, ViewIngredientActivity.class);
+                StoredIngredient clickedIngredient = (StoredIngredient) ingredientAdapter.getItem(i);
+                intent.putExtra("INGREDIENT", clickedIngredient);
+                startActivity(intent);
+            }
+        });
+
+
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override

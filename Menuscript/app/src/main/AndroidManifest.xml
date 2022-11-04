@@ -34,6 +34,10 @@
             android:parentActivityName=".IngredientListActivity"
             android:exported="false" />
         <activity
+            android:name=".ViewIngredientActivity"
+            android:parentActivityName=".IngredientListActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainMenu"
             android:exported="true"
             android:theme="@style/Theme.Menuscript.NoActionBar">
