@@ -15,6 +15,8 @@ import androidx.navigation.ui.AppBarConfiguration;
 
 public class MainMenu extends AppCompatActivity {
 
+    DatabaseManager db = new DatabaseManager();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

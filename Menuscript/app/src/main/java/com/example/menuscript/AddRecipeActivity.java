@@ -79,6 +79,7 @@ public class AddRecipeActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (intent.resolveActivity(getPackageManager()) != null){
+                    intent.putExtra("android.intent.extras.CAMERA_FACING", 1);
                     activityResultLauncher.launch(intent);
                 } else {
                     Toast.makeText(AddRecipeActivity.this,"No camera found!", Toast.LENGTH_SHORT).show();
