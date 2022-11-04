@@ -38,6 +38,7 @@ public class RecipeListActivity extends AppCompatActivity {
     ArrayList<Recipe> dataList;
     TextView header;
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    Recipe selectedRecipe;
 //_____________________TESTING_______________________
     ArrayList<Ingredient> ingredients;
 //---------------------------------------------------
@@ -75,7 +76,7 @@ public class RecipeListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(RecipeListActivity.this, ViewRecipeActivity.class);
-                Recipe selectedRecipe = recipeAdapter.getItem(i);
+                selectedRecipe = recipeAdapter.getItem(i);
                 intent.putExtra("NAME", selectedRecipe.getTitle());
                 intent.putExtra("TIME", selectedRecipe.getTime());
                 intent.putExtra("CATEGORY", selectedRecipe.getCategory());
@@ -86,9 +87,11 @@ public class RecipeListActivity extends AppCompatActivity {
                 args.putSerializable("INGREDIENTS", selectedRecipe.getIngredients());
                 intent.putExtra("INGREDIENTS_BUNDLE", args);
 
-                startActivity(intent);
+                //startActivity(intent);
+                activityResultLauncher.launch(intent);
             }
         });
+
 
         Spinner sortButton = findViewById(R.id.sort_button);
         String[] sortOptions = new String[]{ "Title", "Preparation time", "Number of servings", "Category"};
@@ -121,7 +124,7 @@ public class RecipeListActivity extends AppCompatActivity {
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
-                if(result.getResultCode() == 420 && result.getData() != null){
+                if(result.getData() != null){
                     //Toast.makeText(RecipeListActivity.this, "TEST",Toast.LENGTH_SHORT).show();
                     Intent intent = result.getData();
                     String title = intent.getStringExtra("title");
@@ -130,9 +133,18 @@ public class RecipeListActivity extends AppCompatActivity {
                     String category = intent.getStringExtra("category");
                     String comments = intent.getStringExtra("comments");
                     byte[] image = intent.getByteArrayExtra("image"); //CORRESPONDS TO LINES IN ADDRECIPEACTIVITY
+                    if(result.getResultCode() == 420) {
+                        Recipe newRecipe = new Recipe(1, title, time, servings, category, comments, image, ingredients);
+                        dataList.add(newRecipe);
 
-                    Recipe newRecipe = new Recipe(1, title, time, servings, category, comments, image, ingredients);
-                    dataList.add(newRecipe);
+                    } else if (result.getResultCode() == 421){
+                        selectedRecipe.setTitle(title);
+                        selectedRecipe.setTime(time);
+                        selectedRecipe.setServings(servings);
+                        selectedRecipe.setCategory(category);
+                        selectedRecipe.setComments(comments);
+                        selectedRecipe.setImage(image);
+                    }
                     recipeAdapter.notifyDataSetChanged();
 
                 }

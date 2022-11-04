@@ -7,7 +7,14 @@
     android:orientation="vertical"
     android:paddingTop="50dp">
 
-    <TextView
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/recipeConfirmEdit"
+        android:layout_width="26dp"
+        android:layout_height="23dp"
+        android:clickable="true"
+        app:srcCompat="@android:drawable/checkbox_on_background" />
+
+    <EditText
         android:id="@+id/recipeEditTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +24,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textSize="75sp" />
 
-    <TextView
+    <EditText
         android:id="@+id/recipeEditName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +45,7 @@
         android:layout_height="160sp">
 
 
-        <TextView
+        <EditText
             android:id="@+id/recipeEditPrepTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,7 +56,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
+        <EditText
             android:id="@+id/recipeEditServings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,7 +67,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipeEditPrepTime" />
 
-        <TextView
+        <EditText
             android:id="@+id/recipeEditCategory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -72,7 +79,7 @@
             app:layout_constraintTop_toBottomOf="@+id/recipeEditServings" />
 
 
-        <ImageView
+        <ImageButton
             android:id="@+id/recipeEditImage"
             android:layout_width="140dp"
             android:layout_height="140dp"
@@ -89,8 +96,8 @@
 
     <ListView
         android:id="@+id/recipeEditIngredientList"
-        android:layout_width="wrap_content"
-        android:layout_height="300sp"
+        android:layout_width="309dp"
+        android:layout_height="217dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginHorizontal="20sp"
         android:background="@drawable/listview_border"
@@ -98,7 +105,7 @@
 
     </ListView>
 
-    <TextView
+    <EditText
         android:id="@+id/recipeEditComment"
         android:layout_width="match_parent"
         android:layout_height="60sp"
@@ -107,6 +114,6 @@
         android:background="@drawable/listview_border"
         android:hint="Add comments here..."
         android:textSize="20sp"
-        android:scrollbars ="vertical"></TextView>
+        android:scrollbars ="vertical"></EditText>
 
 </LinearLayout>
