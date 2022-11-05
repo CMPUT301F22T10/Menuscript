@@ -79,24 +79,7 @@ public class RecipeListActivity extends AppCompatActivity {
         recipeList.setAdapter(recipeAdapter);
         databaseInstance = FirebaseFirestore.getInstance();
         collectionReference = databaseInstance.collection("Recipes");
-
-
-        //_____________________TESTING_______________________
-
-//        ingredients = new ArrayList<Ingredient>();
-//        Ingredient test1 = new Ingredient( "Asparagus", 12, "pounds", "Vegetable");
-//        Ingredient test2 = new Ingredient("ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", 12, "unit", "TestReallyLongCategories");
-//        Ingredient test3 = new Ingredient("Jasmine Rice", 12, "pounds", "Carb");
-//        ingredients.add(test1);
-//        ingredients.add(test2);
-//        ingredients.add(test3);
-//        Recipe recipe1 = new Recipe("Yummy title", 4, (float)4, "Dinner", "yummy food for dinner", null, ingredients);
-//        Recipe recipe2 = new Recipe("Delicious title", 10, (float)2, "Lunch", "delicious food for lunch wwwaaafawklglkawnglkanwg long string long string long string so many comments wowowowowowowowowowowowowowwoow", null, ingredients);
-//        dataList.add(new Recipe("CheeseySauce",10,3,"CAT1","comment", null,ingredients));
-//        dataList.add(new Recipe("CheeseySaucey",10,544,"CAT2","comment", null, ingredients));
-//        dataList.add(recipe1);
-//        dataList.add(recipe2);
-        //---------------------------------------------------
+        
 
 
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
