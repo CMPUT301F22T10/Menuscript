@@ -32,6 +32,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -110,15 +111,17 @@ public class RecipeListActivity extends AppCompatActivity {
                     int time = Math.toIntExact((long) doc.getData().get("time"));
                     byte[] image = android.util.Base64.decode((String) doc.getData().get("image"), Base64.DEFAULT);
 
-                    List<Object> objects = Arrays.asList(doc.getData().get("ingredient"));
-                    Log.d("RECIPT LIST", String.valueOf(doc.getData().get("ingredient")));
-                    for (Object obs : objects){
-                        Log.d("RECIPE LIST", "WFGGWG");
-                        Log.d("RECIPE LIST", String.valueOf( obs));
+                    ArrayList<HashMap<String,String>> ingredientsList = new ArrayList<>();
+                    ingredientsList =(ArrayList<HashMap<String, String>>)doc.get("ingredients");
+                    ArrayList<Ingredient> ingredients = new ArrayList<>();
+                    for(HashMap<String,String> ingredient: ingredientsList){
+                        ingredients.add(new Ingredient(
+                                String.valueOf(ingredient.get("description")),
+                                Float.parseFloat(String.valueOf(ingredient.get("amount"))),
+                                String.valueOf(ingredient.get("unit")),
+                                String.valueOf(ingredient.get("category")) ));
                     }
-                    ArrayList<Ingredient> ingredientsList = new ArrayList<Ingredient>();
-
-                    dataList.add(new Recipe(title, time, servings, category, comments, image, ingredientsList));
+                    dataList.add(new Recipe(title, time, servings, category, comments, image, ingredients));
                 }
                 recipeAdapter.notifyDataSetChanged();
             }
