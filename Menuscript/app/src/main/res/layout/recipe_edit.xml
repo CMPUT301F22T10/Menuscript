@@ -16,29 +16,21 @@
             android:id="@+id/recipeDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            app:backgroundTint="#00FFFFFF"
-            app:elevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:maxImageSize="50dp"
-            app:srcCompat="@android:drawable/ic_delete"
-            app:tint="@color/material_dynamic_neutral_variant40" />
+            android:clickable="true"
+            app:srcCompat="@android:drawable/ic_delete" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/recipeConfirmEdit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            app:backgroundTint="#00000000"
-            app:elevation="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:maxImageSize="40dp"
-            app:srcCompat="@android:drawable/ic_menu_save"
-            app:tint="@color/material_dynamic_neutral_variant40" />
+            android:clickable="true"
+            app:srcCompat="@android:drawable/checkbox_on_background" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -197,6 +189,4 @@
         android:gravity="top"></EditText>
 
 </LinearLayout>
-
-
 

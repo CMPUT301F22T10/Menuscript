@@ -1,17 +1,11 @@
 package com.example.menuscript;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -128,12 +122,16 @@ public class IngredientListActivity extends AppCompatActivity {
                         StoredIngredient newIngredient = new StoredIngredient(description, amount, unit, category, date, location);
                         db.addStoredIngredient(newIngredient);
                         ingredients.add(newIngredient);
+
                     } else if (result.getResultCode() == 401) {
                         db.deleteStoredIngredient(clickedIngredient);
                         ingredients.remove(clickedIngredient);
+
                         clickedIngredient = new StoredIngredient(description, amount, unit, category, date, location);
+
                         db.addStoredIngredient(clickedIngredient);
                         ingredients.add(clickedIngredient);
+
                     } else if (result.getResultCode() == 402) {
                         db.deleteStoredIngredient(clickedIngredient);
                         ingredients.remove(clickedIngredient);

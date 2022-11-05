@@ -5,11 +5,9 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -17,10 +15,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -213,11 +208,19 @@ public class DatabaseManager {
         ;
     }
 
-    public ArrayList<String> getIngredientCategories() {
-        ArrayList<String> cats = new ArrayList<String>();
-        cats.add("Breakfast");
-        cats.add("Lunch");
-        cats.add("Dinner");
-        return cats;
+    public void addIngredientCategory(String category) {
+        DocumentReference categories = databaseInstance.collection("Options").document("Ingredient Categories");
+
+        categories.update(category, category);
+    }
+    public void addLocation(String location) {
+        DocumentReference categories = databaseInstance.collection("Options").document("Locations");
+
+        categories.update(location, location);
+    }
+    public void addUnit(String unit) {
+        DocumentReference categories = databaseInstance.collection("Options").document("Units");
+
+        categories.update(unit, unit);
     }
 }
