@@ -79,7 +79,7 @@ public class RecipeListActivity extends AppCompatActivity {
         recipeList.setAdapter(recipeAdapter);
         databaseInstance = FirebaseFirestore.getInstance();
         collectionReference = databaseInstance.collection("Recipes");
-        
+
 
 
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
