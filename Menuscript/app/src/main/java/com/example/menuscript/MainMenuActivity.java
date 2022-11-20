@@ -68,7 +68,15 @@ public class MainMenuActivity extends AppCompatActivity {
                 startRecipeListActivity();
             }
         });
+
+        viewShoppingListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startShoppingListActivity();
+            }
+        });
     }
+
     public void startIngredientListActivity(){
         Intent intent = new Intent(this, IngredientListActivity.class);
         startActivity(intent);
@@ -76,6 +84,11 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public void startRecipeListActivity(){
         Intent intent = new Intent(this, RecipeListActivity.class);
+        startActivity(intent);
+    }
+
+    public void startShoppingListActivity(){
+        Intent intent = new Intent(this, ShoppingListActivity.class);
         startActivity(intent);
     }
 

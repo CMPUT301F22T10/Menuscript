@@ -28,8 +28,8 @@
             android:name=".AddRecipeActivity"
             android:parentActivityName=".RecipeListActivity"
             android:exported="false"
-
         />
+
         <activity
             android:name=".AddIngredientActivity"
             android:parentActivityName=".IngredientListActivity"
@@ -37,6 +37,11 @@
         <activity
             android:name=".ViewIngredientActivity"
             android:parentActivityName=".IngredientListActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ShoppingListActivity"
+            android:parentActivityName=".MainMenuActivity"
             android:exported="false" />
         <activity
             android:name=".MainMenuActivity"
