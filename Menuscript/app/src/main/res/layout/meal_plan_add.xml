@@ -38,11 +38,11 @@
         android:id="@+id/selectQuantityTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Select Item Quantity"
+        android:text="Select amount:"
         android:gravity="center"/>
 
     <EditText
-        android:id="@+id/planDurationEditText"
+        android:id="@+id/itemAmountEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

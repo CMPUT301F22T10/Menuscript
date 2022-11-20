@@ -27,9 +27,7 @@
         <activity
             android:name=".AddRecipeActivity"
             android:parentActivityName=".RecipeListActivity"
-            android:exported="false"
-
-        />
+            android:exported="false" />
         <activity
             android:name=".AddIngredientActivity"
             android:parentActivityName=".IngredientListActivity"
@@ -37,6 +35,14 @@
         <activity
             android:name=".ViewIngredientActivity"
             android:parentActivityName=".IngredientListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddIngredientMealPlanActivity"
+            android:parentActivityName=".MealPlanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddRecipeMealPlanActivity"
+            android:parentActivityName=".MealPlanActivity"
             android:exported="false" />
         <activity
             android:name=".MainMenuActivity"
