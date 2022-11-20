@@ -5,6 +5,8 @@ import static android.content.ContentValues.TAG;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,14 +36,17 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
     private FirebaseFirestore databaseInstance;
     private CollectionReference ingredientCollectionReference;
     private CollectionReference mealPlanIngredientCollectionReference;
-    private HashMap<String, String> ingredientsList;
+    private ArrayList ingredientsList;
     private ArrayList spinnerArray;
     //meal plan ingredients list  of ingredient keys so ingredients already in the meal plan are not shown in the spinner
     private ArrayList mealPlanIngredientsList;
-
     private ArrayAdapter<String> spinnerAdapter;
 
-    @SuppressLint("MissingInflatedId")
+
+    private String ingredientKeytoAdd;
+    private String ingredientDescriptiontoAdd;
+    private Integer ingredientQuantity;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +60,18 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
         spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,spinnerArray);
         ingredientsSpinner.setAdapter(spinnerAdapter);
 
+        ingredientsList = new ArrayList<>();
+        spinnerArray = new ArrayList<>();
+        ingredientKeytoAdd = null;
+        ingredientDescriptiontoAdd = null;
+        ingredientQuantity = null;
+
+
+
         databaseInstance = FirebaseFirestore.getInstance();
         ingredientCollectionReference = databaseInstance.collection("StoredIngredients");
         mealPlanIngredientCollectionReference = databaseInstance.collection("MealPlanIngredients");
+
 
         //need to pass initial list of meal plan keys
         Bundle bundle = getIntent().getExtras();
@@ -93,7 +107,7 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
                     String ingredientKey = doc.getId();
                     String ingredientDescription = (String) doc.getData().get("description");
                     if (!mealPlanIngredientsList.contains(ingredientKey)){
-                        ingredientsList.put(doc.getId(), ingredientDescription);
+                        ingredientsList.add(doc.getId());
                         spinnerArray.add(ingredientDescription);
                     }
 
@@ -101,8 +115,31 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
             }
         });
 
-        ingredientsSpinner.setOnItemSelectedListener();
+        ingredientsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ingredientDescriptiontoAdd = (String) spinnerArray.get(i);
+                ingredientKeytoAdd = (String) ingredientsList.get(i);
 
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                ingredientDescriptiontoAdd = null;
+                ingredientKeytoAdd = null;
+            }
+
+        });
+
+        selectItemTextView.setText("Select Ingredient");
+        addToMealPlanButton.setText("Add Ingredient to Meal Plan");
+
+        addToMealPlanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
 
 
 
