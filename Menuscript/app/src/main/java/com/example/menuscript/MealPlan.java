@@ -1,6 +1,7 @@
 package com.example.menuscript;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MealPlan {
     private ArrayList<Recipe> recipes;

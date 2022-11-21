@@ -3,6 +3,7 @@ package com.example.menuscript;
 import android.graphics.Bitmap;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This class creates/defines a Recipe object with eight variables:
@@ -102,5 +103,17 @@ public class Recipe {
 
     public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public HashMap<String, Object> asHashMap () {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("title", this.title);
+        data.put("time", this.time);
+        data.put("servings", this.servings);
+        data.put("category", this.category);
+        data.put("comments", this.comments);
+        data.put("image", this.image);
+        data.put("ingredients", this.ingredients);
+        return data;
     }
 }
