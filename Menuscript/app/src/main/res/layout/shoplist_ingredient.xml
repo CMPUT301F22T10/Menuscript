@@ -19,8 +19,8 @@
         android:id="@+id/shopListIngredientName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="32dp"
-        android:layout_marginTop="20dp"
+        android:textSize="35dp"
+        android:layout_marginTop="15dp"
         android:paddingBottom='5dp'
         android:textColor="#363434"
         android:text="Ingredient"
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="2sp"
         android:layout_marginHorizontal="75sp"
-        android:layout_marginBottom="20sp"
+        android:layout_marginBottom="15sp"
         android:background="@android:color/darker_gray"/>
 
     <TextView
@@ -43,7 +43,7 @@
         android:gravity="center"
         android:text="Amount"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="25dp"
         />
 
     <TextView
@@ -69,7 +69,7 @@
         android:gravity="center"
         android:text="Unit"
         android:textStyle="bold"
-        android:textSize="20dp"/>
+        android:textSize="25dp"/>
 
     <TextView
         android:id="@+id/unitEditText"
@@ -92,7 +92,7 @@
         android:gravity="center"
         android:text="Category"
         android:textStyle="bold"
-        android:textSize="20dp"/>
+        android:textSize="25dp"/>
 
     <TextView
         android:id="@+id/categoryEditText"

@@ -33,6 +33,11 @@
         android:entries="@array/shopListSort"
         android:layout_gravity="left" />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:layout_marginHorizontal="25sp"
+        android:background="@android:color/darker_gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
