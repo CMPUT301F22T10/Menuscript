@@ -52,23 +52,21 @@ public class ShopListActivity extends AppCompatActivity {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                     FirebaseFirestoreException error) {
-                ingredientList.clear();
+                ingredientNameList.clear();
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
                     String name = (String) doc.getData().get("description");
-
                     ingredientNameList.add(name);
                 }
                 shoppingAdapter.notifyDataSetChanged();
             }
         });
 
-
         ingredientCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                     FirebaseFirestoreException error) {
-                int i = 0;
+                ingredientList.clear();
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
                     String ingredientName = (String) doc.getData().get("description");
@@ -87,6 +85,7 @@ public class ShopListActivity extends AppCompatActivity {
         shoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
                 Intent intent = new Intent(ShopListActivity.this, ViewShopListIngredientActivity.class);
                 selectedIngredient = shoppingAdapter.getItem(i);
                 intent.putExtra("NAME", selectedIngredient.getDescription());

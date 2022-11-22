@@ -11,9 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 public class ViewShopListIngredientActivity extends AppCompatActivity {
 
     private TextView ingredientName;
-    private EditText ingredientCount;
-    private EditText ingredientUnit;
-    private EditText ingredientCategory;
+    private TextView ingredientCount;
+    private TextView ingredientUnit;
+    private TextView ingredientCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,12 +27,10 @@ public class ViewShopListIngredientActivity extends AppCompatActivity {
         ingredientUnit = findViewById(R.id.unitEditText);
         ingredientCategory = findViewById(R.id.categoryEditText);
 
-        if (bundle.getString("NAME")!= null) {
-            ingredientName.setText(bundle.getString("NAME"));
-        }
+        ingredientName.setText(bundle.getString("NAME"));
         ingredientCount.setText(Float.toString(bundle.getFloat("AMOUNT")));
-        ingredientUnit.setText(bundle.getString("CATEGORY"));
-        ingredientCategory.setText(bundle.getString("UNIT"));
+        ingredientUnit.setText(bundle.getString("UNIT"));
+        ingredientCategory.setText(bundle.getString("CATEGORY"));
 
     }
 }
