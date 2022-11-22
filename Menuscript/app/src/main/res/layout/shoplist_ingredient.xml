@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -9,25 +10,100 @@
         android:id="@+id/shopListIngredientTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="40dp"
         android:paddingVertical="25dp"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:text="Shopping List" />
+        android:text="Shopping List"
+        android:textSize="40dp"
+        style="@style/MainHeader"/>
 
     <TextView
         android:id="@+id/shopListIngredientName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24dp"
-        android:paddingBottom='20dp'
+        android:textSize="32dp"
+        android:layout_marginTop="20dp"
+        android:paddingBottom='5dp'
         android:textColor="#363434"
-        android:text="Ingredient" />
+        android:text="Ingredient"
+        android:textStyle="bold"
+        style="@style/MainBody"/>
 
-    <ListView
-        android:id="@+id/shopListIngredientInfo"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="2sp"
+        android:layout_marginHorizontal="75sp"
+        android:layout_marginBottom="20sp"
+        android:background="@android:color/darker_gray"/>
 
+    <TextView
+        android:id="@+id/countTextView"
+        style="@style/MainBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Amount"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        />
+
+    <TextView
+        android:id="@+id/countEditText"
+        style="@style/MainBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:digits="0123456789"
+        android:ems="8"
+        android:imeOptions="actionNext"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/unitTextView"
+        style="@style/MainBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Unit"
+        android:textStyle="bold"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/unitEditText"
+        style="@style/MainBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="8"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/selectCategoryTextView"
+        style="@style/MainBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Category"
+        android:textStyle="bold"
+        android:textSize="20dp"/>
+
+    <TextView
+        android:id="@+id/categoryEditText"
+        style="@style/MainBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="8"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textAlignment="center"
+        android:textSize="20dp"/>
 
 </LinearLayout>

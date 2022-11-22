@@ -11,9 +11,8 @@
         android:layout_height="wrap_content"
         android:textSize="40dp"
         android:paddingVertical="25dp"
-        android:textColor="#000000"
-        android:textStyle="bold"
-        android:text="Shopping List" />
+        android:text="Shopping List"
+        style="@style/MainHeader"/>
     <TextView
         android:id="@+id/shopListSortBy"
         android:layout_width="wrap_content"
@@ -38,13 +37,18 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <ListView
             android:id="@+id/shopListMainIngredients"
-            android:layout_height="0dip"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:clickable="true"
+            android:choiceMode="singleChoice"
+            android:focusable="true"
+            />
 
         <Button
             android:id="@+id/shopListButton"
@@ -52,7 +56,8 @@
             android:paddingBottom="5dp"
             android:layout_gravity="center"
             android:text="Confirm"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            />
 
     </LinearLayout>
 

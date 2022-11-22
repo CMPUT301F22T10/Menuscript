@@ -7,67 +7,63 @@ public class ShoppingListActivity extends AppCompatActivity{
     private final String amountFieldStr = "amount";
     private final String unitFieldStr = "unit";
     private final String categoryFieldStr = "category";
-    private final String dateFieldStr = "date";
-    private final String locationFieldStr = "location";
-    ArrayList<StoredIngredient> ingredients;
+    ArrayList<ShoppingItem> shoppingItems;
     private FirebaseFirestore databaseInstance;
     private CollectionReference collectionReference;
     ShoppingItem clickedShoppingItem;
-    StoredIngredient clickedIngredient;
-    StoredIngredientListAdapter ingredientAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_activity);
-        shoppingList = findViewById(R.id.shopListMainIngredients);
+        shoppingList = findViewById(R.id.item_list);
         databaseInstance = FirebaseFirestore.getInstance();
         collectionReference = databaseInstance.collection("ShoppingItems");
-        //shoppingItems = new ArrayList<>();
-        //shoppingAdapter = new ShoppingListAdapter(this, shoppingItems);
-        //shoppingList.setAdapter(shoppingAdapter);
-        ingredients = new ArrayList<>();
-
-        ingredientAdapter = new StoredIngredientListAdapter(this, ingredients);
-
-        ingredientList.setAdapter(ingredientAdapter);
+        shoppingItems = new ArrayList<>();
+        shoppingAdapter = new ShoppingListAdapter(this, shoppingItems);
+        shoppingList.setAdapter(shoppingAdapter);
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
-            if (result.getResultCode() == RESULT_OK) {
+            if (result.getResultCode()!= null) {
                 Intent data = result.getData();
-                if (data != null) {
-                    String description = data.getStringExtra("description");
-                    String amount = data.getStringExtra("amount", 0.0f);
-                    String unit = data.getStringExtra("unit");
-                    String category = data.getStringExtra("category");
-                    String date = data.getStringExtra("date");
-                    String location = data.getStringExtra("location");
-                    if (description != null && amount != null && unit != null && category != null && date != null && location != null) {
-                        StoredIngredient newIngredient = new StoredIngredient(description, amount, unit, category, date, location);
-                        db.addStoredIngredient(newIngredient);
-                        ingredients.add(newIngredient);
-                        //ShoppingItem shoppingItem = new ShoppingItem(description, amount, unit, category, date, location);
-                        //shoppingItems.add(shoppingItem);
-                        //shoppingAdapter.notifyDataSetChanged();
-                        //db.addShoppingItem(shoppingItem);
-                    }
+                String description = intent.getStringExtra("description");
+                float amount = intent.getFloatExtra("amount", 0.0f);
+                String unit = intent.getStringExtra("unit");
+                String date = intent.getStringExtra("date");
+                String category = intent.getStringExtra("category");
+                String location = intent.getStringExtra("location");
+                if (result.getResultCode() == 400) {
+                    StoredIngredient newIngredient = new StoredIngredient(description, amount, unit, category, date, location);
+                    db.addStoredIngredient(newIngredient);
+                    ingredients.add(newIngredient);
+                    ingredientAdapter.notifyDataSetChanged();
+                    ShoppingItem shoppingItem = new ShoppingItem(description, amount, unit, category);
+                    shoppingItems.add(shoppingItem);
+                    shoppingAdapter.notifyDataSetChanged();
+                    db.addShoppingItem(shoppingItem);
                 }
             }
         });
         FloatingActionButton fab = findViewById(R.id.shopListButton);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ShoppingListActivity.this, AddIngredientActivity.class);
-                activityResultLauncher.launch(intent);
-            }
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(ShoppingListActivity.this, AddIngredientActivity.class);
+            activityResultLauncher.launch(intent);
         });
-        shoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), ViewIngredientActivity.class);
-                clickedIngredient = (StoredIngredient) ingredientAdapter.getItem(i);
-                intent.putExtra("INGREDIENT", clickedIngredient);
-                activityResultLauncher.launch(intent);
-            }    
+        shoppingList.setOnItemClickListener((parent, view, position, id) -> {
+            clickedShoppingItem = shoppingItems.get(position);
+            Intent intent = new Intent(ShoppingListActivity.this, AddShoppingItemActivity.class);
+            intent.putExtra(descriptionFieldStr, clickedShoppingItem.getDescription());
+            intent.putExtra(amountFieldStr, clickedShoppingItem.getAmount());
+            intent.putExtra(unitFieldStr, clickedShoppingItem.getUnit());
+            intent.putExtra(categoryFieldStr, clickedShoppingItem.getCategory());
+            intent.putExtra(dateFieldStr, clickedShoppingItem.getDate());
+            intent.putExtra(locationFieldStr, clickedShoppingItem.getLocation());
+            activityResultLauncher.launch(intent);
+        });
+        shoppingList.setOnItemLongClickListener((parent, view, position, id) -> {
+            clickedShoppingItem = shoppingItems.get(position);
+            db.deleteShoppingItem(clickedShoppingItem);
+            shoppingItems.remove(position);
+            shoppingAdapter.notifyDataSetChanged();
+            return true;
         });
 
 
