@@ -185,7 +185,6 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
                     ingredientLocation.setSelection(i);
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
