@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -11,6 +12,9 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+
+import java.util.Objects;
+
 /**
  * This class controls the addition of a new category, unit, or location.
  * Users can input desired attributes (within restrictions) and click confirm to add the option.
@@ -25,7 +29,7 @@ public class AddOptionFragment extends DialogFragment {
     EditText editOption;
 
     public interface OnFragmentInteractionListener {
-        void onAddOKPressed(String newOption);
+        void onAddOKPressed(String newOption, int tag);
     }
 
     public AddOptionFragment() {
@@ -49,17 +53,43 @@ public class AddOptionFragment extends DialogFragment {
         editOption = view.findViewById(R.id.prompt_text);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setView(view)
-                .setTitle("Add category")
-                .setNegativeButton("Cancel", null)
-                .setPositiveButton("OK", (dialogInterface, i) -> {
 
-                    String option = editOption.getText().toString();
+        if (Objects.equals(this.getTag(), "ADD CATEGORY")) {
+            builder.setView(view)
+                    .setTitle("Add category")
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("OK", (dialogInterface, i) -> {
 
-                    listener.onAddOKPressed(option);
-                });
-        return builder.create();
+                        String option = editOption.getText().toString();
 
+                        listener.onAddOKPressed(option, 1);
+                    });
+            return builder.create();
+        } else if (Objects.equals(this.getTag(), "ADD LOCATION")) {
+            editOption.setHint("Location");
+            builder.setView(view)
+                    .setTitle("Add location")
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("OK", (dialogInterface, i) -> {
+
+                        String option = editOption.getText().toString();
+
+                        listener.onAddOKPressed(option, 2);
+                    });
+            return builder.create();
+        } else {
+            editOption.setHint("Unit");
+            builder.setView(view)
+                    .setTitle("Add unit")
+                    .setNegativeButton("Cancel", null)
+                    .setPositiveButton("OK", (dialogInterface, i) -> {
+
+                        String option = editOption.getText().toString();
+
+                        listener.onAddOKPressed(option, 3);
+                    });
+            return builder.create();
+        }
     }
 
 }
