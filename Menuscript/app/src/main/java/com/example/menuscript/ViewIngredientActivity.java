@@ -93,39 +93,40 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         ingredientAmount = findViewById(R.id.countEditText);
         ingredientDate = findViewById(R.id.bestBeforeEditText);
         ingredientUnit = findViewById(R.id.unitEditText);
-        ingredientLocation = (Spinner) findViewById(R.id.locationSpinner);
-        ingredientCategory = (Spinner) findViewById(R.id.categorySpinner);
+        ingredientLocation = findViewById(R.id.locationSpinner);
+        ingredientCategory = findViewById(R.id.categorySpinner);
 
         StoredIngredient viewedIngredient = (StoredIngredient) getIntent().getSerializableExtra("INGREDIENT");
+        catOptions = (ArrayList<String>) getIntent().getSerializableExtra("CATEGORIES");
 
         locOptions = new ArrayList<>();
-        catOptions = new ArrayList<>();
+//        catOptions = new ArrayList<>();
 
         final String addOption = "Add new item";
 
-        locOptions.add(addOption);
-        catOptions.add(0, "");
+        locOptions.add("");
+//        catOptions.add(0, "");
 
-        final DocumentReference catRef = collectionReference.document("Ingredient Categories");
-        catRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
-                if (snapshot != null && snapshot.exists()) {
-                    catOptions.clear();
-                    catOptions.add(addOption);
-                    catOptions.addAll(0, snapshot.getData().keySet());
-                    Log.d(TAG, "Current data: " + snapshot.getData());
-                } else {
-                    Log.d(TAG, "Current data: null");
-                }
-                catAdapter.notifyDataSetChanged();
-            }
-        });
+//        final DocumentReference catRef = collectionReference.document("Ingredient Categories");
+//        catRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable DocumentSnapshot snapshot,
+//                                @Nullable FirebaseFirestoreException e) {
+//                if (e != null) {
+//                    Log.w(TAG, "Listen failed.", e);
+//                    return;
+//                }
+//                if (snapshot != null && snapshot.exists()) {
+//                    catOptions.clear();
+//                    catOptions.add(addOption);
+//                    catOptions.addAll(0, snapshot.getData().keySet());
+//                    Log.d(TAG, "Current data: " + snapshot.getData());
+//                } else {
+//                    Log.d(TAG, "Current data: null");
+//                }
+//                catAdapter.notifyDataSetChanged();
+//            }
+//        });
 
         ingredientDescription.setText(viewedIngredient.getDescription());
         ingredientAmount.setText((String.valueOf(viewedIngredient.getAmount())));
@@ -133,7 +134,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         ingredientUnit.setText(viewedIngredient.getUnit());
 
         Log.d("i hate tgis", catOptions.toString());
-        ingredientCategory.setSelection(catOptions.indexOf(viewedIngredient.getCategory()));
+
 
 
         locAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locOptions);
@@ -145,11 +146,13 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         ingredientLocation.setAdapter(locAdapter);
         ingredientCategory.setAdapter(catAdapter);
 
+        ingredientCategory.setSelection(catOptions.indexOf(viewedIngredient.getCategory()));
+
         DatePickerDialog.OnDateSetListener datePicker = (datePicker1, year, month, day) -> {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
             calendar.set(Calendar.DAY_OF_MONTH, day);
-            updateLabel();
+            updateLabel();cd cd
         };
 
         ingredientDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -168,14 +171,15 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
                 .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
         ).show());
-
+        Log.d("TEST", catOptions.get(1));
         ingredientCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (adapterView.getItemAtPosition(i) == addOption) {
+                if (adapterView.getItemAtPosition(i) == catOptions.get(catOptions.size()-1)) {
+                    Log.d("WHAT WHY", "made it in here at least");
                     new AddOptionFragment().show(getSupportFragmentManager(), "ADD CATEGORY");
                 } else {
-//                    ingredientCategory.setSelection(i);
+                    ingredientCategory.setSelection(i);
                 }
             }
 
@@ -248,6 +252,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
     public void onAddOKPressed(String option) {
         if (option != null) {
             db.addIngredientCategory(option);
+            catOptions.add(0,option);
             catAdapter.notifyDataSetChanged();
         }
     }

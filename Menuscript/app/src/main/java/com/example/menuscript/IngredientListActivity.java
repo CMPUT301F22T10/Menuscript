@@ -1,7 +1,10 @@
 package com.example.menuscript;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -24,6 +29,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 
 /**
@@ -101,6 +107,31 @@ public class IngredientListActivity extends AppCompatActivity {
                 ingredientAdapter.notifyDataSetChanged();
             }
         });
+        ArrayList<String> catOptions = new ArrayList<>();
+        final String addOption = "Add new item";
+
+        CollectionReference catColRef = databaseInstance.collection("Options");
+        final DocumentReference catDocRef = catColRef.document("Ingredient Categories");
+        catDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    catOptions.clear();
+                    catOptions.add(addOption);
+                    catOptions.addAll(0, snapshot.getData().keySet());
+                    Log.d("category data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("category data", "Current data: null");
+                }
+            }
+        });
+
+        Log.d("CATEGORIES FROM LIST ACTIVITY", String.valueOf(catOptions));
 
         ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -108,6 +139,7 @@ public class IngredientListActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), ViewIngredientActivity.class);
                 clickedIngredient = (StoredIngredient) ingredientAdapter.getItem(i);
                 intent.putExtra("INGREDIENT", clickedIngredient);
+                intent.putExtra("CATEGORIES", catOptions);
                 activityResultLauncher.launch(intent);
             }
         });
