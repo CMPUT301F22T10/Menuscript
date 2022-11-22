@@ -40,12 +40,12 @@
             android:exported="false" />
 
         <activity
-            android:name=".ShoppingListActivity"
+            android:name=".ShopListActivity"
             android:parentActivityName=".MainMenuActivity"
             android:exported="false" />
         <activity
-            android:name=".ViewShoppingListIngredientActivity"
-            android:parentActivityName=".ShoppingListActivity"
+            android:name=".ViewShopListIngredientActivity"
+            android:parentActivityName=".ShopListActivity"
             android:exported="false" />
         <activity
             android:name=".MainMenuActivity"

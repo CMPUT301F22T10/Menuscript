@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
@@ -19,15 +20,84 @@
         android:id="@+id/shopListIngredientName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24dp"
+        android:textSize="32dp"
         android:paddingBottom='20dp'
         android:textColor="#363434"
         android:text="Ingredient" />
 
-    <ListView
-        android:id="@+id/shopListIngredientInfo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+    <TextView
+        android:id="@+id/itemDescriptionEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="8"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textAlignment="center" />
 
+    <TextView
+        android:id="@+id/countTextView"
+        style="@style/MainBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Amount"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/countEditText"
+        style="@style/MainBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:digits="0123456789"
+        android:ems="8"
+        android:imeOptions="actionNext"
+        android:importantForAutofill="no"
+        android:inputType="numberDecimal"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/unitTextView"
+        style="@style/MainBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Unit"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/unitEditText"
+        style="@style/MainBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="8"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:id="@+id/selectCategoryTextView"
+        style="@style/MainBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center"
+        android:text="Category"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/categoryEditText"
+        style="@style/MainBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:ems="8"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textAlignment="center"/>
 
 </LinearLayout>
