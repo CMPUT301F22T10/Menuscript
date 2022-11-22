@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -23,6 +24,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class ShopListActivity extends AppCompatActivity {
     ArrayAdapter<Ingredient> shoppingAdapter;
@@ -96,5 +98,25 @@ public class ShopListActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+//        Spinner sortCategoryButton = findViewById(R.id.shopListMainSpinner);
+//        sortCategoryButton.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                if (adapterView.getItemAtPosition(i) == "Category") {
+//                    ingredientList.sort(Comparator.comparing(Ingredient::getCategory));
+//                    Log.d("TEST", "hi");
+//                } else if (adapterView.getItemAtPosition(i) == "Description") {
+//                    ingredientList.sort(Comparator.comparing(Ingredient::getDescription));
+//                    Log.d("TEST", "bye");
+//                }
+//                shoppingAdapter.notifyDataSetChanged();
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//        });
     }
 }
