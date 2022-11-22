@@ -44,6 +44,10 @@
             android:parentActivityName=".MainMenuActivity"
             android:exported="false" />
         <activity
+            android:name=".ViewShoppingListIngredientActivity"
+            android:parentActivityName=".ShoppingListActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainMenuActivity"
             android:exported="true"
             android:theme="@style/Theme.Menuscript.NoActionBar">
