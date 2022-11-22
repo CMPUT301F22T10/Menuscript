@@ -36,7 +36,7 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     private EditText ingredientDescription;
     private EditText ingredientAmount;
-    private EditText ingredientUnit;
+    private Spinner ingredientUnit;
     private EditText ingredientDate;
     private Spinner ingredientLocation;
     private Spinner ingredientCategory;
@@ -72,7 +72,7 @@ public class AddIngredientActivity extends AppCompatActivity {
 
         ingredientDescription = findViewById(R.id.itemDescriptionEditText);
         ingredientAmount = findViewById(R.id.countEditText);
-        ingredientUnit = findViewById(R.id.unitEditText);
+        ingredientUnit = findViewById(R.id.unitSpinner);
         ingredientDate = findViewById(R.id.bestBeforeEditText);
         ingredientLocation = findViewById(R.id.locationSpinner);
         ingredientCategory = findViewById(R.id.categorySpinner);
@@ -131,8 +131,8 @@ public class AddIngredientActivity extends AppCompatActivity {
         } else {
             intent.putExtra("amount", 0.0f);
         }
-        if(!ingredientUnit.getText().toString().equals("")){
-            intent.putExtra("unit", ingredientUnit.getText().toString());
+        if(!ingredientUnit.getSelectedItem().toString().equals("")){
+            intent.putExtra("unit", ingredientUnit.getSelectedItem().toString());
         } else {
             intent.putExtra("unit","No Unit");
         }

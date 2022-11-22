@@ -31,6 +31,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * This class displays a list of ingredients:
@@ -65,22 +66,12 @@ public class IngredientListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_activity);
 
-        ingredientList = findViewById(R.id.item_list);
-
         databaseInstance = FirebaseFirestore.getInstance();
         collectionReference = databaseInstance.collection("StoredIngredients");
+
+        ingredientList = findViewById(R.id.item_list);
         ingredients = new ArrayList<>();
-
-//        StoredIngredient test1 = new StoredIngredient( "Asparagus", 12, "pounds", "Vegetable", "05/11/2022", "fridge");
-//        StoredIngredient test2 = new StoredIngredient("ThisIsToTestVeryLongCharacterStringsLikeReallyReallyReallyLongOnesIsThisLongEnough?", 12, "unit", "TestReallyLongCategories", "05/11/2023", "ThisIsAReallyLongLocation");
-//        StoredIngredient test3 = new StoredIngredient("Jasmine Rice", 12, "pounds", "Carb", "01/12/2030", "cellar");
-
-//        dataList.add(test1);
-//        dataList.add(test2);
-//        dataList.add(test3);
-
         ingredientAdapter = new StoredIngredientListAdapter(this, ingredients);
-
         ingredientList.setAdapter(ingredientAdapter);
 
         Spinner sortButton = findViewById(R.id.sort_button);
@@ -88,6 +79,9 @@ public class IngredientListActivity extends AppCompatActivity {
         CustomSortAdapter<String> sortAdapter = new CustomSortAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortOptions);
         sortButton.setAdapter(sortAdapter);
 
+        /**
+         * fetches Ingredient list from Firestore
+         */
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
@@ -107,11 +101,16 @@ public class IngredientListActivity extends AppCompatActivity {
                 ingredientAdapter.notifyDataSetChanged();
             }
         });
-        ArrayList<String> catOptions = new ArrayList<>();
+
         final String addOption = "Add new item";
 
+        /**
+         * fetches Categories from Firestore
+         */
+        ArrayList<String> catOptions = new ArrayList<>();
         CollectionReference catColRef = databaseInstance.collection("Options");
         final DocumentReference catDocRef = catColRef.document("Ingredient Categories");
+
         catDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
@@ -123,7 +122,7 @@ public class IngredientListActivity extends AppCompatActivity {
                 if (snapshot != null && snapshot.exists()) {
                     catOptions.clear();
                     catOptions.add(addOption);
-                    catOptions.addAll(0, snapshot.getData().keySet());
+                    catOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
                     Log.d("category data", "Current data: " + snapshot.getData());
                 } else {
                     Log.d("category data", "Current data: null");
@@ -131,8 +130,62 @@ public class IngredientListActivity extends AppCompatActivity {
             }
         });
 
-        Log.d("CATEGORIES FROM LIST ACTIVITY", String.valueOf(catOptions));
+        /**
+         * fetches Locations from Firestore
+         */
+        ArrayList<String> locOptions = new ArrayList<>();
+        CollectionReference locColRef = databaseInstance.collection("Options");
+        final DocumentReference locDocRef = locColRef.document("Locations");
 
+        locDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    locOptions.clear();
+                    locOptions.add(addOption);
+                    locOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("location data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("location data", "Current data: null");
+                }
+            }
+        });
+
+        /**
+         * fetches Units from Firestore
+         */
+        ArrayList<String> unitOptions = new ArrayList<>();
+        CollectionReference unitColRef = databaseInstance.collection("Options");
+        final DocumentReference unitDocRef = unitColRef.document("Units");
+
+        unitDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    unitOptions.clear();
+                    unitOptions.add(addOption);
+                    unitOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("unit data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("unit data", "Current data: null");
+                }
+            }
+        });
+
+
+        /**
+         * listener for each Ingredient in list
+         */
         ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -140,11 +193,16 @@ public class IngredientListActivity extends AppCompatActivity {
                 clickedIngredient = (StoredIngredient) ingredientAdapter.getItem(i);
                 intent.putExtra("INGREDIENT", clickedIngredient);
                 intent.putExtra("CATEGORIES", catOptions);
+                intent.putExtra("LOCATIONS", locOptions);
+                intent.putExtra("UNITS", unitOptions);
                 activityResultLauncher.launch(intent);
             }
         });
 
 
+        /**
+         * handles returning from editing, adding, or deleting and Ingredient
+         */
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
@@ -192,6 +250,9 @@ public class IngredientListActivity extends AppCompatActivity {
         });
 
 
+        /**
+         * sorting Ingredient list
+         */
         sortButton.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
