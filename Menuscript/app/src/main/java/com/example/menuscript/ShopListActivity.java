@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -26,13 +27,22 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+/**
+ * This class displays a list of ingredients that are currently in the meal plan.
+ * Clicking on an ingredient shows some of the details relevant to shopping.
+ * User can check off multiple ingredients and click the confirm button on the bottom
+ * to
+ *
+ * @author Josh
+ */
 public class ShopListActivity extends AppCompatActivity {
     ArrayAdapter<Ingredient> shoppingAdapter;
     ArrayList<Ingredient> ingredientList;
+    ArrayList<Ingredient> ingredientNeededList;
     ArrayList<String> ingredientNameList;
     ListView shoppingList;
     Ingredient selectedIngredient;
-    private ActivityResultLauncher<Intent> activityResultLauncher;
+    Spinner sortButton;
     private FirebaseFirestore databaseInstance;
     private CollectionReference mealPlanCollection;
     private CollectionReference ingredientCollection;
@@ -42,8 +52,10 @@ public class ShopListActivity extends AppCompatActivity {
         setContentView(R.layout.shoplist_main);
 
         ingredientList = new ArrayList<Ingredient>();
+        ingredientNeededList = new ArrayList<Ingredient>();
         ingredientNameList = new ArrayList<String>();
         shoppingList = findViewById(R.id.shopListMainIngredients);
+        sortButton = findViewById(R.id.shopListMainSpinner);
         shoppingAdapter = new ShopListAdapter(this, ingredientList);
         shoppingList.setAdapter(shoppingAdapter);
         databaseInstance = FirebaseFirestore.getInstance();
@@ -58,6 +70,11 @@ public class ShopListActivity extends AppCompatActivity {
                 for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
                 {
                     String name = (String) doc.getData().get("description");
+
+                    // TESTING
+//                    float amount = Float.parseFloat(String.valueOf((doc.getData().get("amount"))));
+//                    ingredientNeededList.add(new Ingredient(name, amount, "", ""));
+
                     ingredientNameList.add(name);
                 }
                 shoppingAdapter.notifyDataSetChanged();
@@ -76,6 +93,15 @@ public class ShopListActivity extends AppCompatActivity {
                         String name = (String) doc.getData().get("description");
                         String unit = (String) doc.getData().get("unit");
                         float servings = Float.parseFloat(String.valueOf((doc.getData().get("amount"))));
+
+                        // TESTING
+//                        for(int i = 0; i < ingredientNeededList.size(); i++) {
+//                            if(ingredientNeededList.get(i).getDescription().equals(ingredientName)) {
+//                                float amount = servings - ingredientNeededList.get(i).getAmount();
+//                                break;
+//                            }
+//                        }
+
                         String category = (String) doc.getData().get("category");
                         ingredientList.add(new Ingredient(name, servings, unit, category));
                     }
@@ -99,24 +125,23 @@ public class ShopListActivity extends AppCompatActivity {
             }
         });
 
-//        Spinner sortCategoryButton = findViewById(R.id.shopListMainSpinner);
-//        sortCategoryButton.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                if (adapterView.getItemAtPosition(i) == "Category") {
-//                    ingredientList.sort(Comparator.comparing(Ingredient::getCategory));
-//                    Log.d("TEST", "hi");
-//                } else if (adapterView.getItemAtPosition(i) == "Description") {
-//                    ingredientList.sort(Comparator.comparing(Ingredient::getDescription));
-//                    Log.d("TEST", "bye");
-//                }
-//                shoppingAdapter.notifyDataSetChanged();
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//
-//            }
-//        });
+        sortButton.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                String test = String.valueOf(adapterView.getItemAtPosition(i));
+                if(test.equals("Category")) {
+                    ingredientList.sort(Comparator.comparing(Ingredient::getCategory));
+                } else if(test.equals("Description")){
+                    ingredientList.sort(Comparator.comparing(Ingredient::getDescription));
+                }
+                shoppingAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
     }
 }
