@@ -16,8 +16,8 @@ public class ShoppingListActivity extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_activity);
-        shoppingList = findViewById(R.id.item_list);
+        setContentView(R.layout.shoplist_main);
+        shoppingList = findViewById(R.id.shopListMainIngredients);
         databaseInstance = FirebaseFirestore.getInstance();
         shoppingItems = new ArrayList<>();
         shoppingAdapter = new ShoppingListAdapter(this, shoppingItems);
