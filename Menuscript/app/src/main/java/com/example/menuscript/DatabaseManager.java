@@ -36,63 +36,10 @@ public class DatabaseManager {
     ArrayList<StoredIngredient> ingredients = new ArrayList<>();
     Context context;
 
-    private String descriptionFieldStr = "description";
-    private String amountFieldStr = "amount";
-    private String unitFieldStr = "unit";
-    private String categoryFieldStr = "category";
-    private String dateFieldStr = "date";
-    private String locationFieldStr = "location";
-
-
     public DatabaseManager(Context _context) {
         this.databaseInstance = FirebaseFirestore.getInstance();
         context = _context;
         Log.d("DATABASE MANAGER", "DATABASE MANAGER CREATED");
-    }
-
-    /**
-     * Returns an array from database of user stored ingredients.
-     *
-     * @return ingredients {@link ArrayList<StoredIngredient>}
-     */
-    public ArrayList<StoredIngredient> getStoredIngredients() {
-
-        collectionReference = databaseInstance.collection("StoredIngredients");
-
-        collectionReference.get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Map<String, Object> data = document.getData();
-                                ingredients.add(new StoredIngredient(
-                                        (String) data.get(descriptionFieldStr),
-                                        Float.parseFloat(String.valueOf(data.get(amountFieldStr))),
-                                        (String) data.get(unitFieldStr),
-                                        (String) data.get(categoryFieldStr),
-                                        (String) data.get(dateFieldStr),
-                                        (String) data.get(locationFieldStr)
-                                ));
-                                if (ingredients.isEmpty()) {
-                                    Log.d("INGREDIENT LIST", "EMPTY");
-                                } else {
-                                    Log.d("INGREDIENT LIST", "NOT EMPTY");
-                                }
-
-                                Activity activity = (Activity) context;
-                            }
-                        } else {
-                            Log.d(TAG, "Error Getting StoredIngredients from database.");
-                        }
-                    }
-                });
-        if (ingredients.isEmpty()) {
-            Log.d("INGREDIENT LIST", "EMPTY");
-        } else {
-            Log.d("INGREDIENT LIST", "NOT EMPTY");
-        }
-        return ingredients;
     }
 
     /**
@@ -170,16 +117,18 @@ public class DatabaseManager {
 
     }
 
-    public ArrayList<Recipe> getRecipes() {
-        return new ArrayList<Recipe>();
-    }
-
     public void addRecipe(Recipe recipe) {
         ;
     }
 
     public void deleteRecipe(Recipe recipe) {
         ;
+    }
+
+    public void addRecipeCategory(String category) {
+        DocumentReference categories = databaseInstance.collection("Options").document("Recipe Categories");
+
+        categories.update(category, category);
     }
 
     public void addIngredientCategory(String category) {

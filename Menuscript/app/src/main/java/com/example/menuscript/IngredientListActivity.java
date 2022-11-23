@@ -43,9 +43,6 @@ import java.util.Objects;
  * @see AddIngredientActivity
  */
 public class IngredientListActivity extends AppCompatActivity {
-
-    ListView ingredientList;
-    StoredIngredientListAdapter ingredientAdapter;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     DatabaseManager db = new DatabaseManager(this);
 
@@ -55,9 +52,10 @@ public class IngredientListActivity extends AppCompatActivity {
     private final String categoryFieldStr = "category";
     private final String dateFieldStr = "date";
     private final String locationFieldStr = "location";
+
     ArrayList<StoredIngredient> ingredients;
-    private FirebaseFirestore databaseInstance;
-    private CollectionReference collectionReference;
+    ListView ingredientList;
+    StoredIngredientListAdapter ingredientAdapter;
 
     StoredIngredient clickedIngredient;
 
@@ -66,10 +64,10 @@ public class IngredientListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_activity);
 
-        databaseInstance = FirebaseFirestore.getInstance();
-        collectionReference = databaseInstance.collection("StoredIngredients");
+        FirebaseFirestore databaseInstance = FirebaseFirestore.getInstance();
 
         ingredientList = findViewById(R.id.item_list);
+
         ingredients = new ArrayList<>();
         ingredientAdapter = new StoredIngredientListAdapter(this, ingredients);
         ingredientList.setAdapter(ingredientAdapter);
@@ -82,13 +80,14 @@ public class IngredientListActivity extends AppCompatActivity {
         /**
          * fetches Ingredient list from Firestore
          */
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        CollectionReference ingredientReference = databaseInstance.collection("StoredIngredients");
+        ingredientReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                     FirebaseFirestoreException error) {
                 ingredients.clear();
-                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
-                {
+                assert queryDocumentSnapshots != null;
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     String description = (String) doc.getData().get(descriptionFieldStr);
                     float amount = Float.parseFloat(String.valueOf(doc.getData().get(amountFieldStr)));
                     String unit = (String) doc.getData().get(unitFieldStr);
@@ -186,6 +185,7 @@ public class IngredientListActivity extends AppCompatActivity {
         /**
          * listener for each Ingredient in list
          */
+        ArrayList<String> what;
         ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -251,7 +251,6 @@ public class IngredientListActivity extends AppCompatActivity {
                 activityResultLauncher.launch(intent);
             }
         });
-
 
         /**
          * sorting Ingredient list
