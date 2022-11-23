@@ -60,30 +60,6 @@ public class DatabaseManager {
         collectionReference = databaseInstance.collection("StoredIngredients");
 
         Log.d("DATABASE MANAGER", "called getStoredIngredients");
-//        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
-//            @Override
-//            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
-//                    FirebaseFirestoreException error) {
-//
-//                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
-//                {
-//                    Log.d(TAG, String.valueOf(doc.getData().get("description")));
-//                    String description = (String) doc.getData().get(descriptionFieldStr);
-//                    float amount = Float.parseFloat(String.valueOf(doc.getData().get(amountFieldStr)));
-//                    String unit = (String) doc.getData().get(unitFieldStr);
-//                    String category = (String) doc.getData().get(categoryFieldStr);
-//                    String date = (String) doc.getData().get(dateFieldStr);
-//                    String location = (String) doc.getData().get(locationFieldStr);
-//
-//                    ingredients.add(new StoredIngredient(description, amount, unit, category, date, location));
-//                    if (ingredients.isEmpty()){
-//                        Log.d("INGREDIENT LIST", "EMPTY");
-//                    }else {
-//                        Log.d("INGREDIENT LIST", "NOT EMPTY");
-//                    }
-//                }
-//            }
-//        });
 
         collectionReference.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

@@ -32,6 +32,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 public class MainMenuActivity extends AppCompatActivity {
 
     //DatabaseManager db = new DatabaseManager();
+    String days;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,9 @@ public class MainMenuActivity extends AppCompatActivity {
         final Button viewRecipesButton = findViewById(R.id.recipe_button);
         final Button viewMealPlanButton = findViewById(R.id.meal_plan_button);
         final Button viewShoppingListButton = findViewById(R.id.shopping_list_button);
+        FirebaseFirestore databaseInstance;
+        CollectionReference daysCollectionReference;
+        days = "0";
 
         /**
          * Switches to the ingredient list activity.
@@ -68,6 +72,32 @@ public class MainMenuActivity extends AppCompatActivity {
                 startRecipeListActivity();
             }
         });
+        /**
+         * Switches to the meal plan activity.
+         *
+         * @see MealPlanActivity
+         */
+        viewMealPlanButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startMealPlanActivity();
+            }
+        });
+
+        /**
+         *getting meal plan days for meal plan activity
+         */
+        databaseInstance = FirebaseFirestore.getInstance();
+        daysCollectionReference = databaseInstance.collection("MealPlanDays");
+
+        daysCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                for(QueryDocumentSnapshot doc: value){
+                    days = (String) doc.getData().get("days");
+                }
+            }
+        });
     }
     public void startIngredientListActivity(){
         Intent intent = new Intent(this, IngredientListActivity.class);
@@ -76,6 +106,13 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public void startRecipeListActivity(){
         Intent intent = new Intent(this, RecipeListActivity.class);
+        startActivity(intent);
+    }
+
+    public void startMealPlanActivity(){
+
+        Intent intent = new Intent(this, MealPlanActivity.class);
+        intent.putExtra("Days", days);
         startActivity(intent);
     }
 
