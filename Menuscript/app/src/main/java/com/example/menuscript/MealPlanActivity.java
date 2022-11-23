@@ -2,10 +2,13 @@ package com.example.menuscript;
 
 import static android.content.ContentValues.TAG;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +19,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -126,6 +130,54 @@ public class MealPlanActivity extends AppCompatActivity {
                     CharSequence text = "Invalid input";
                     Toast.makeText(MealPlanActivity.this, text, Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        ingredientListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int indextoDelete = i;
+                AlertDialog.Builder builder = new AlertDialog.Builder(MealPlanActivity.this);
+                builder
+                        .setMessage("Delete ingredient from meal plan?")
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mealPlanIngredientCollectionReference.document(mealPlanIngredientKeys.get(indextoDelete)).delete();
+                            }
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
+            }
+        });
+
+        recipesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                int indextoDelete = i;
+                AlertDialog.Builder builder = new AlertDialog.Builder(MealPlanActivity.this);
+                builder
+                        .setMessage("Delete recipe from meal plan?")
+                        .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                mealPlanRecipesCollectionReference.document(mealPlanRecipeKeys.get(indextoDelete)).delete();
+                            }
+                        }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                            }
+                        });
+                AlertDialog dialog = builder.create();
+                dialog.show();
+
             }
         });
 

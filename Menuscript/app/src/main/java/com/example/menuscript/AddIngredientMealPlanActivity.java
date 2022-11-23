@@ -168,7 +168,7 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
                 ingredientAmount = ingredientAmountEditText.getText().toString();
                 HashMap<String, String> data = new HashMap<>();
 
-                if (ingredientDescriptiontoAdd.length() > 0 && ingredientKeytoAdd.length() > 0 && ingredientAmount.length() > 0) {
+                if (ingredientDescriptiontoAdd != null && ingredientKeytoAdd.length() > 0 && ingredientAmount.length() > 0) {
                     data.put("amount", ingredientAmount);
                     data.put("description", ingredientDescriptiontoAdd);
 

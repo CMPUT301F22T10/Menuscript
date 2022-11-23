@@ -159,7 +159,7 @@ public class AddRecipeMealPlanActivity extends AppCompatActivity {
                 recipeServings = recipeServingsEditText.getText().toString();
                 HashMap<String, String> data = new HashMap<>();
 
-                if (recipeTitletoAdd.length() > 0 && recipeKeytoAdd.length() > 0 && recipeServings.length() > 0) {
+                if (recipeTitletoAdd != null && recipeKeytoAdd.length() > 0 && recipeServings.length() > 0) {
                     data.put("servings", recipeServings);
                     data.put("title", recipeTitletoAdd);
 
