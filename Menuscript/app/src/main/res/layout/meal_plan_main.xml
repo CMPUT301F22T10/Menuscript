@@ -95,6 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:ems="3"
+            android:maxLength="3"
             android:inputType="number"
             android:digits="0123456789"/>
 

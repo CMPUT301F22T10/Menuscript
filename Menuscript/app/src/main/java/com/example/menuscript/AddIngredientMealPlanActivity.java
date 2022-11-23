@@ -87,13 +87,17 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
 
         //need to pass initial list of meal plan keys
         Bundle bundle = getIntent().getExtras();
-        if (bundle != null && bundle.getString("IngredientKeys")!=null){
+        if (bundle != null && bundle.getStringArrayList("IngredientKeys")!=null){
             mealPlanIngredientsList.clear();
-            mealPlanIngredientsList.addAll(bundle.getStringArrayList("IngredientKeys"));
+            mealPlanIngredientsList = (bundle.getStringArrayList("IngredientKeys"));
+
         }else{
-            Log.d(TAG,"NO MEAL PLAN INGREDIENT KEY PASSED");
+            Log.d("ADDINGREDIENT","NO MEAL PLAN INGREDIENT KEY PASSED");
         }
 
+        for (Object ingredientkey : mealPlanIngredientsList) {
+            Log.d("ADDINGREDIENT", (String) ingredientkey);
+        }
         //get meal plan ingredients
         mealPlanIngredientCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -105,7 +109,9 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
                     String ingredientKey = doc.getId();
                     mealPlanIngredientsList.add(ingredientKey);
                 }
-
+                for (Object ingredientkey : mealPlanIngredientsList) {
+                    Log.d("ADDINGREDIENT2", (String) ingredientkey);
+                }
             }
         });
 
@@ -120,10 +126,17 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
 
                     String ingredientKey = doc.getId();
                     String ingredientDescription = (String) doc.getData().get("description");
-                    if (!mealPlanIngredientsList.contains(ingredientKey)){
+                    if (!(mealPlanIngredientsList.contains( ingredientKey))){
                         ingredientsList.add(doc.getId());
                         spinnerArray.add(ingredientDescription);
                     }
+
+                }
+                for (Object ingredientkey : spinnerArray) {
+                    Log.d("SPINNERARRAY", (String) ingredientkey);
+                }
+                for (Object ingredientkey : ingredientsList) {
+                    Log.d("ingredients", (String) ingredientkey);
                 }
                 spinnerAdapter.notifyDataSetChanged();
             }

@@ -86,9 +86,8 @@ public class MealPlanActivity extends AppCompatActivity {
         if (bundle.getString("Days")!=null){
             days = (bundle.getString("Days"));
         }else{
-            days = "";
+            days = "0";
         }
-        Log.d("MEAL PLAN", "days are : " + days);
 
 
         daysEditText.setText(days);
