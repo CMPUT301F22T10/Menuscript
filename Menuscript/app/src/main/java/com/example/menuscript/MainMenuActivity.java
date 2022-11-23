@@ -26,19 +26,16 @@ import com.google.firebase.firestore.QuerySnapshot;
  * This screen is the main navigation page for users to explore all
  * functionalities of the application.
  *
+ * @author Micheal
  * @see IngredientListActivity
  * @see RecipeListActivity
  */
 public class MainMenuActivity extends AppCompatActivity {
 
-    //DatabaseManager db = new DatabaseManager();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu);
-
-
 
         final Button viewIngredientsButton = findViewById(R.id.ingredient_button);
         final Button viewRecipesButton = findViewById(R.id.recipe_button);
@@ -69,6 +66,7 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
     }
+
     public void startIngredientListActivity(){
         Intent intent = new Intent(this, IngredientListActivity.class);
         startActivity(intent);

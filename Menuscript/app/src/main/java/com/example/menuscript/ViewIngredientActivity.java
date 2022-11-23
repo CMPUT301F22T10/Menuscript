@@ -30,6 +30,7 @@ import java.util.Locale;
  * ingredientCategory {@link Spinner}
  * calendar {@link Calendar}
  *
+ * @author Micheal
  * @see Ingredient
  */
 public class ViewIngredientActivity extends AppCompatActivity implements AddOptionFragment.OnFragmentInteractionListener {
@@ -134,6 +135,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             ingredientUnit.setSelection(0);
         }
 
+        //  deals with selecting date
         DatePickerDialog.OnDateSetListener datePicker = (datePicker1, year, month, day) -> {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
@@ -158,7 +160,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
                 calendar.get(Calendar.DAY_OF_MONTH)
         ).show());
 
-
+        //  listens for selection of category
         ingredientCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -176,6 +178,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             }
         });
 
+        //  listens for selection of location
         ingredientLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -193,6 +196,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             }
         });
 
+        //  listens for selection of unit
         ingredientUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -210,6 +214,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             }
         });
 
+        //  confirms editing of Ingredient
         Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,6 +226,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             }
         });
 
+        //  delete ingredient button
         Button deleteButton = findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -233,6 +239,11 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         });
     }
 
+    /**
+     * Handles returning to the Ingredient list after editing.
+     *
+     * @param intent
+     */
     private void onButtonClick(Intent intent) {
 
         if (!ingredientDescription.getText().toString().equals("")) {
@@ -267,6 +278,12 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         }
     }
 
+    /**
+     * Handles returning from AddOptionFragment when adding a new category, location, or unit
+     *
+     * @param option
+     * @param tag
+     */
     public void onAddOKPressed(String option, int tag) {
         if (option != null) {
             if (tag == 1) {

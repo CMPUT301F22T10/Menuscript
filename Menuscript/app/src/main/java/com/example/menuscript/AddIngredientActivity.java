@@ -30,6 +30,7 @@ import java.util.Locale;
  * ingredientLocation {@link Spinner}
  * ingredientCategory {@link Spinner}
  *
+ * @author Micheal
  * @see Ingredient
  * @see StoredIngredient
  * @see IngredientListActivity

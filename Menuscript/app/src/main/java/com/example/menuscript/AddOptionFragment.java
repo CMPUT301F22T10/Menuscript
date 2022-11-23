@@ -21,7 +21,7 @@ import java.util.Objects;
  * Currently, adding of specific units or locations is not implemented.
  * editOption {@link EditText}
  *
- * @author Micheal Chow
+ * @author Micheal
  */
 
 public class AddOptionFragment extends DialogFragment {
