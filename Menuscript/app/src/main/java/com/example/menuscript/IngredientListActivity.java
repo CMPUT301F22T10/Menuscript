@@ -245,6 +245,9 @@ public class IngredientListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // add ingredient activity
                 Intent intent = new Intent(getApplicationContext(), AddIngredientActivity.class);
+                intent.putExtra("CATEGORIES", catOptions);
+                intent.putExtra("LOCATIONS", locOptions);
+                intent.putExtra("UNITS", unitOptions);
                 activityResultLauncher.launch(intent);
             }
         });

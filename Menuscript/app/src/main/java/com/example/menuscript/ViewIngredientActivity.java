@@ -36,7 +36,6 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
 
 
     private EditText ingredientDescription;
-
     private EditText ingredientAmount;
     private EditText ingredientDate;
     private Spinner ingredientUnit;
@@ -166,11 +165,12 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (adapterView.getItemAtPosition(i) == catOptions.get(catOptions.size() - 1)) {
                     new AddOptionFragment().show(getSupportFragmentManager(), "ADD CATEGORY");
-                } else {
+                } else if (adapterView.getItemAtPosition(i) != "") {
+                    catOptions.remove("");
+                    catAdapter.notifyDataSetChanged();
                     ingredientCategory.setSelection(i);
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
@@ -181,7 +181,9 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (adapterView.getItemAtPosition(i) == locOptions.get(locOptions.size() - 1)) {
                     new AddOptionFragment().show(getSupportFragmentManager(), "ADD LOCATION");
-                } else {
+                } else if (adapterView.getItemAtPosition(i) != "") {
+                    locOptions.remove("");
+                    locAdapter.notifyDataSetChanged();
                     ingredientLocation.setSelection(i);
                 }
             }
@@ -195,11 +197,12 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (adapterView.getItemAtPosition(i) == unitOptions.get(unitOptions.size() - 1)) {
                     new AddOptionFragment().show(getSupportFragmentManager(), "ADD UNIT");
-                } else {
+                } else if (adapterView.getItemAtPosition(i) != "") {
+                    unitOptions.remove("");
+                    unitAdapter.notifyDataSetChanged();
                     ingredientUnit.setSelection(i);
                 }
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }

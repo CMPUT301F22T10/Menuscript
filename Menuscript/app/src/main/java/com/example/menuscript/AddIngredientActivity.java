@@ -4,6 +4,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 /**
@@ -36,18 +38,22 @@ public class AddIngredientActivity extends AppCompatActivity {
 
     private EditText ingredientDescription;
     private EditText ingredientAmount;
-    private Spinner ingredientUnit;
     private EditText ingredientDate;
+    private Spinner ingredientUnit;
     private Spinner ingredientLocation;
     private Spinner ingredientCategory;
 
     ArrayAdapter<String> locAdapter;
     ArrayAdapter<String> catAdapter;
+    ArrayAdapter<String> unitAdapter;
 
-    private static final String[] locOptions = {"Pantry", "Fridge", "Freezer"};
-    private static final String[] catOptions = {"Protein", "Carb", "Veg"};
+    ArrayList<String> locOptions;
+    ArrayList<String> catOptions;
+    ArrayList<String> unitOptions;
 
     Calendar calendar = Calendar.getInstance();
+
+    DatabaseManager db = new DatabaseManager(this);
 
     /**
      * Obtains date from the user to set date for the date attribute in the ingredient class.
@@ -77,11 +83,33 @@ public class AddIngredientActivity extends AppCompatActivity {
         ingredientLocation = findViewById(R.id.locationSpinner);
         ingredientCategory = findViewById(R.id.categorySpinner);
 
-        locAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, locOptions);
-        catAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, catOptions);
+        catOptions = (ArrayList<String>) getIntent().getSerializableExtra("CATEGORIES");
+        locOptions = (ArrayList<String>) getIntent().getSerializableExtra("LOCATIONS");
+        unitOptions = (ArrayList<String>) getIntent().getSerializableExtra("UNITS");
+
+        locAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locOptions);
+        catAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, catOptions);
+        unitAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, unitOptions);
+
+        locAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        unitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ingredientLocation.setAdapter(locAdapter);
         ingredientCategory.setAdapter(catAdapter);
+        ingredientUnit.setAdapter(unitAdapter);
+
+        catOptions.add(0, "");
+        catAdapter.notifyDataSetChanged();
+        ingredientCategory.setSelection(0);
+
+        locOptions.add(0, "");
+        locAdapter.notifyDataSetChanged();
+        ingredientLocation.setSelection(0);
+
+        unitOptions.add(0, "");
+        unitAdapter.notifyDataSetChanged();
+        ingredientUnit.setSelection(0);
 
         DatePickerDialog.OnDateSetListener datePicker = (datePicker1, year, month, day) -> {
             calendar.set(Calendar.YEAR, year);
@@ -118,6 +146,55 @@ public class AddIngredientActivity extends AppCompatActivity {
 
             }
         });
+
+        ingredientCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (adapterView.getItemAtPosition(i) == catOptions.get(catOptions.size() - 1)) {
+                    new AddOptionFragment().show(getSupportFragmentManager(), "ADD CATEGORY");
+                } else if (adapterView.getItemAtPosition(i) != "") {
+                    catOptions.remove("");
+                    catAdapter.notifyDataSetChanged();
+                    ingredientCategory.setSelection(i);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        ingredientLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (adapterView.getItemAtPosition(i) == locOptions.get(locOptions.size() - 1)) {
+                    new AddOptionFragment().show(getSupportFragmentManager(), "ADD LOCATION");
+                } else if (adapterView.getItemAtPosition(i) != "") {
+                    locOptions.remove("");
+                    locAdapter.notifyDataSetChanged();
+                    ingredientLocation.setSelection(i);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        ingredientUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (adapterView.getItemAtPosition(i) == unitOptions.get(unitOptions.size() - 1)) {
+                    new AddOptionFragment().show(getSupportFragmentManager(), "ADD UNIT");
+                } else if (adapterView.getItemAtPosition(i) != "") {
+                    unitOptions.remove("");
+                    unitAdapter.notifyDataSetChanged();
+                    ingredientUnit.setSelection(i);
+                }
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
     }
     private Intent onButtonClick(Intent intent){
 
@@ -152,5 +229,29 @@ public class AddIngredientActivity extends AppCompatActivity {
             intent.putExtra("location","No Location");
         }
         return intent;
+    }
+
+    public void onAddOKPressed(String option, int tag) {
+        if (option != null) {
+            if (tag == 1) {
+                db.addIngredientCategory(option);
+                catOptions.remove("");
+                catOptions.add(0, option);
+                catAdapter.notifyDataSetChanged();
+                ingredientCategory.setSelection(0);
+            } else if (tag == 2) {
+                db.addLocation(option);
+                locOptions.remove("");
+                locOptions.add(0, option);
+                locAdapter.notifyDataSetChanged();
+                ingredientLocation.setSelection(0);
+            } else {
+                db.addUnit(option);
+                unitOptions.remove("");
+                unitOptions.add(0, option);
+                unitAdapter.notifyDataSetChanged();
+                ingredientUnit.setSelection(0);
+            }
+        }
     }
 }
