@@ -2,15 +2,16 @@ public class ShoppingListActivity extends AppCompatActivity{
     ListView shoppingList;
     ShoppingListAdapter shoppingAdapter;
     private ActivityResultLauncher<Intent> activityResultLauncher;
+    StoredIngredientListAdapter ingredientAdapter;
     DatabaseManager db = new DatabaseManager(this);
     private final String descriptionFieldStr = "description";
     private final String amountFieldStr = "amount";
     private final String unitFieldStr = "unit";
     private final String categoryFieldStr = "category";
-    ArrayList<ShoppingItem> shoppingItems;
+    ArrayList<Ingredient> shoppingItems;
     private FirebaseFirestore databaseInstance;
     private CollectionReference collectionReference;
-    ShoppingItem clickedShoppingItem;
+    Ingredient clickedShoppingItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +22,8 @@ public class ShoppingListActivity extends AppCompatActivity{
         shoppingItems = new ArrayList<>();
         shoppingAdapter = new ShoppingListAdapter(this, shoppingItems);
         shoppingList.setAdapter(shoppingAdapter);
+        ingredientAdapter = new StoredIngredientListAdapter(this, shoppingItems);
+        ingredientList.setAdapter(ingredientAdapter);
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode()!= null) {
                 Intent data = result.getData();
