@@ -92,16 +92,6 @@ public class ShoppingListActivity extends AppCompatActivity{
             }
         });
 
-        ingredientList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                clickedIngredient = ingredientAdapter.getItem(i);
-                ingredients.remove(clickedIngredient);
-                ingredientAdapter.notifyDataSetChanged();
-                db.deleteStoredIngredient(clickedIngredient);
-                return true;
-            }
-        });
 
         mealPlanCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override

@@ -146,6 +146,30 @@ public class DatabaseManager {
                 });
     }
 
+    /**
+     * Add ingredient to shopping list
+     * @param storedIngredient
+     */
+    public void addShoppingItem(Ingredient ingredient){
+        collectionReference = databaseInstance.collection("ShoppingList");
+
+        HashMap<String, Object> data = ingredient.asHashMap();
+
+        collectionReference.document().set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Data added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Data could not be added" + e.toString());
+                    }
+                });
+    }
+
     public void deleteStoredIngredient(StoredIngredient storedIngredient) {
         collectionReference = databaseInstance.collection("StoredIngredients");
 
