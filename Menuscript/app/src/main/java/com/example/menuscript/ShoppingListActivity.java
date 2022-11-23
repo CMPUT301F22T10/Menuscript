@@ -10,7 +10,8 @@ public class ShoppingListActivity extends AppCompatActivity{
     private final String categoryFieldStr = "category";
     ArrayList<Ingredient> shoppingItems;
     private FirebaseFirestore databaseInstance;
-    private CollectionReference collectionReference;
+    private CollectionReference mealPlanCollection;
+    private CollectionReference storedIngredientCollection;
     Ingredient clickedShoppingItem;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,12 +19,13 @@ public class ShoppingListActivity extends AppCompatActivity{
         setContentView(R.layout.list_activity);
         shoppingList = findViewById(R.id.item_list);
         databaseInstance = FirebaseFirestore.getInstance();
-        collectionReference = databaseInstance.collection("ShoppingItems");
         shoppingItems = new ArrayList<>();
         shoppingAdapter = new ShoppingListAdapter(this, shoppingItems);
         shoppingList.setAdapter(shoppingAdapter);
         ingredientAdapter = new StoredIngredientListAdapter(this, shoppingItems);
         ingredientList.setAdapter(ingredientAdapter);
+        mealPlanCollection = databaseInstance.collection("MealPlanIngredients");
+        storedIngredientCollection = databaseInstance.collection("StoredIngredients");
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (result.getResultCode()!= null) {
                 Intent data = result.getData();
@@ -38,7 +40,7 @@ public class ShoppingListActivity extends AppCompatActivity{
                     db.addStoredIngredient(newIngredient);
                     ingredients.add(newIngredient);
                     ingredientAdapter.notifyDataSetChanged();
-                    ShoppingItem shoppingItem = new ShoppingItem(description, amount, unit, category);
+                    Ingredient shoppingItem = new Ingredient(description, amount, unit, category);
                     shoppingItems.add(shoppingItem);
                     shoppingAdapter.notifyDataSetChanged();
                     db.addShoppingItem(shoppingItem);
@@ -50,25 +52,120 @@ public class ShoppingListActivity extends AppCompatActivity{
             Intent intent = new Intent(ShoppingListActivity.this, AddIngredientActivity.class);
             activityResultLauncher.launch(intent);
         });
-        shoppingList.setOnItemClickListener((parent, view, position, id) -> {
-            clickedShoppingItem = shoppingItems.get(position);
-            Intent intent = new Intent(ShoppingListActivity.this, AddShoppingItemActivity.class);
-            intent.putExtra(descriptionFieldStr, clickedShoppingItem.getDescription());
-            intent.putExtra(amountFieldStr, clickedShoppingItem.getAmount());
-            intent.putExtra(unitFieldStr, clickedShoppingItem.getUnit());
-            intent.putExtra(categoryFieldStr, clickedShoppingItem.getCategory());
-            intent.putExtra(dateFieldStr, clickedShoppingItem.getDate());
-            intent.putExtra(locationFieldStr, clickedShoppingItem.getLocation());
-            activityResultLauncher.launch(intent);
-        });
-        shoppingList.setOnItemLongClickListener((parent, view, position, id) -> {
-            clickedShoppingItem = shoppingItems.get(position);
-            db.deleteShoppingItem(clickedShoppingItem);
-            shoppingItems.remove(position);
-            shoppingAdapter.notifyDataSetChanged();
-            return true;
+        shoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                Intent intent = new Intent(ShopListActivity.this, ViewShopListIngredientActivity.class);
+                clickedShoppingItem = shoppingAdapter.getItem(i);
+                intent.putExtra("NAME", clickedShoppingItem.getDescription());
+                intent.putExtra("AMOUNT", clickedShoppingItem.getAmount());
+                intent.putExtra("UNIT", clickedShoppingItem.getUnit());
+                intent.putExtra("CATEGORY", clickedShoppingItem.getCategory());
+                startActivity(intent);
+            }    
         });
 
+        shoppingList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                clickedShoppingItem = shoppingAdapter.getItem(i);
+                shoppingItems.remove(clickedShoppingItem);
+                shoppingAdapter.notifyDataSetChanged();
+                db.deleteShoppingItem(clickedShoppingItem);
+                return true;
+            }
+        });
 
+        ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(ShopListActivity.this, ViewStoredIngredientActivity.class);
+                clickedIngredient = ingredientAdapter.getItem(i);
+                intent.putExtra("NAME", clickedIngredient.getDescription());
+                intent.putExtra("AMOUNT", clickedIngredient.getAmount());
+                intent.putExtra("UNIT", clickedIngredient.getUnit());
+                intent.putExtra("CATEGORY", clickedIngredient.getCategory());
+                intent.putExtra("DATE", clickedIngredient.getDate());
+                intent.putExtra("LOCATION", clickedIngredient.getLocation());
+                startActivity(intent);
+            }
+        });
+
+        ingredientList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                clickedIngredient = ingredientAdapter.getItem(i);
+                ingredients.remove(clickedIngredient);
+                ingredientAdapter.notifyDataSetChanged();
+                db.deleteStoredIngredient(clickedIngredient);
+                return true;
+            }
+        });
+
+        mealPlanCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.w("TAG", "Listen failed.", error);
+                    return;
+                }
+                for (DocumentChange dc : value.getDocumentChanges()) {
+                    switch (dc.getType()) {
+                        case ADDED:
+                            Log.d("TAG", "New meal plan ingredient: " + dc.getDocument().getData());
+                            String description = dc.getDocument().getString(descriptionFieldStr);
+                            float amount = dc.getDocument().getFloat(amountFieldStr);
+                            String unit = dc.getDocument().getString(unitFieldStr);
+                            String category = dc.getDocument().getString(categoryFieldStr);
+                            Ingredient shoppingItem = new Ingredient(description, amount, unit, category);
+                            shoppingItems.add(shoppingItem);
+                            shoppingAdapter.notifyDataSetChanged();
+                            db.addShoppingItem(shoppingItem);
+                            break;
+                        case MODIFIED:
+                            Log.d("TAG", "Modified meal plan ingredient: " + dc.getDocument().getData());
+                            break;
+                        case REMOVED:
+                            Log.d("TAG", "Removed meal plan ingredient: " + dc.getDocument().getData());
+                            break;
+                    }
+                }
+            }
+        });
+
+        storedIngredientCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.w("TAG", "Listen failed.", error);
+                    return;
+                }
+                for (DocumentChange dc : value.getDocumentChanges()) {
+                    switch (dc.getType()) {
+                        case ADDED:
+                            Log.d("TAG", "New stored ingredient: " + dc.getDocument().getData());
+                            String description = dc.getDocument().getString(descriptionFieldStr);
+                            float amount = dc.getDocument().getFloat(amountFieldStr);
+                            String unit = dc.getDocument().getString(unitFieldStr);
+                            String category = dc.getDocument().getString(categoryFieldStr);
+                            String date = dc.getDocument().getString(dateFieldStr);
+                            String location = dc.getDocument().getString(locationFieldStr);
+                            StoredIngredient newIngredient = new StoredIngredient(description, amount, unit, category, date, location);
+                            ingredients.add(newIngredient);
+                            ingredientAdapter.notifyDataSetChanged();
+                            db.addStoredIngredient(newIngredient);
+                            break;
+                        case MODIFIED:
+                            Log.d("TAG", "Modified stored ingredient: " + dc.getDocument().getData());
+                            break;
+                        case REMOVED:
+                            Log.d("TAG", "Removed stored ingredient: " + dc.getDocument().getData());
+                            break;
+                    }
+                }
+            }
+        });
+    }    
     
 }
