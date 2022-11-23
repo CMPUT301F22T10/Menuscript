@@ -19,6 +19,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+
 /**
  * AddIngredientActivity displays multiple fields that are editable for users.
  * The activity returns all attributes from the user for that instance of the Ingredient object.
@@ -34,8 +35,7 @@ import java.util.Locale;
  * @see IngredientListActivity
  */
 
-public class AddIngredientActivity extends AppCompatActivity {
-
+public class AddIngredientActivity extends AppCompatActivity implements AddOptionFragment.OnFragmentInteractionListener {
     private EditText ingredientDescription;
     private EditText ingredientAmount;
     private EditText ingredientDate;
@@ -135,18 +135,6 @@ public class AddIngredientActivity extends AppCompatActivity {
                 calendar.get(Calendar.DAY_OF_MONTH)
         ).show());
 
-        Button addIngredientButton = findViewById(R.id.submitButton);
-        addIngredientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent();
-                intent = onButtonClick(intent);
-                setResult(400, intent);
-                finish();
-
-            }
-        });
-
         ingredientCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -158,6 +146,7 @@ public class AddIngredientActivity extends AppCompatActivity {
                     ingredientCategory.setSelection(i);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
@@ -174,6 +163,7 @@ public class AddIngredientActivity extends AppCompatActivity {
                     ingredientLocation.setSelection(i);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
@@ -190,43 +180,55 @@ public class AddIngredientActivity extends AppCompatActivity {
                     ingredientUnit.setSelection(i);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
 
+        Button addIngredientButton = findViewById(R.id.submitButton);
+        addIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent();
+                intent = onButtonClick(intent);
+                setResult(400, intent);
+                finish();
+            }
+        });
     }
-    private Intent onButtonClick(Intent intent){
 
-        if(!ingredientDescription.getText().toString().equals("")) {
+    private Intent onButtonClick(Intent intent) {
+
+        if (!ingredientDescription.getText().toString().equals("")) {
             intent.putExtra("description", ingredientDescription.getText().toString());
         } else {
             intent.putExtra("description", "Unnamed Ingredient");
         }
-        if(!ingredientAmount.getText().toString().equals("")) {
+        if (!ingredientAmount.getText().toString().equals("")) {
             intent.putExtra("amount", Float.valueOf(ingredientAmount.getText().toString()));
         } else {
             intent.putExtra("amount", 0.0f);
         }
-        if(!ingredientUnit.getSelectedItem().toString().equals("")){
+        if (!ingredientUnit.getSelectedItem().toString().equals("")) {
             intent.putExtra("unit", ingredientUnit.getSelectedItem().toString());
         } else {
-            intent.putExtra("unit","No Unit");
+            intent.putExtra("unit", "No Unit");
         }
-        if(!ingredientDate.getText().toString().equals("")){
+        if (!ingredientDate.getText().toString().equals("")) {
             intent.putExtra("date", ingredientDate.getText().toString());
         } else {
-            intent.putExtra("category","No Best Before Date");
+            intent.putExtra("category", "No Best Before Date");
         }
-        if(!ingredientCategory.getSelectedItem().toString().equals("")) {
-            intent.putExtra("category",ingredientCategory.getSelectedItem().toString());
+        if (!ingredientCategory.getSelectedItem().toString().equals("")) {
+            intent.putExtra("category", ingredientCategory.getSelectedItem().toString());
         } else {
-            intent.putExtra("category","Uncategorized");
+            intent.putExtra("category", "Uncategorized");
         }
-        if(!ingredientLocation.getSelectedItem().toString().equals("")) {
-            intent.putExtra("location",ingredientLocation.getSelectedItem().toString());
+        if (!ingredientLocation.getSelectedItem().toString().equals("")) {
+            intent.putExtra("location", ingredientLocation.getSelectedItem().toString());
         } else {
-            intent.putExtra("location","No Location");
+            intent.putExtra("location", "No Location");
         }
         return intent;
     }

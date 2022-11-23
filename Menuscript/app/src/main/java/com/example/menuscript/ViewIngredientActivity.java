@@ -33,8 +33,6 @@ import java.util.Locale;
  * @see Ingredient
  */
 public class ViewIngredientActivity extends AppCompatActivity implements AddOptionFragment.OnFragmentInteractionListener {
-
-
     private EditText ingredientDescription;
     private EditText ingredientAmount;
     private EditText ingredientDate;
@@ -54,6 +52,12 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
 
     DatabaseManager db = new DatabaseManager(this);
 
+    /**
+     * Obtains date from the user to set date for the date attribute in the ingredient class.
+     * format {@link String}
+     *
+     * @see Ingredient
+     */
     private void updateLabel() {
         String format = "yyyy-MM-dd";
         SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.CANADA);
@@ -66,9 +70,6 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_ingredients);
 
-        FirebaseFirestore databaseInstance = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = databaseInstance.collection("Options");
-
         ingredientDescription = findViewById(R.id.itemDescriptionEditText);
         ingredientAmount = findViewById(R.id.countEditText);
         ingredientDate = findViewById(R.id.bestBeforeEditText);
@@ -76,15 +77,9 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         ingredientLocation = findViewById(R.id.locationSpinner);
         ingredientCategory = findViewById(R.id.categorySpinner);
 
-        StoredIngredient viewedIngredient = (StoredIngredient) getIntent().getSerializableExtra("INGREDIENT");
-
         catOptions = (ArrayList<String>) getIntent().getSerializableExtra("CATEGORIES");
         locOptions = (ArrayList<String>) getIntent().getSerializableExtra("LOCATIONS");
         unitOptions = (ArrayList<String>) getIntent().getSerializableExtra("UNITS");
-
-        ingredientDescription.setText(viewedIngredient.getDescription());
-        ingredientAmount.setText((String.valueOf(viewedIngredient.getAmount())));
-        ingredientDate.setText(viewedIngredient.getDate());
 
         locAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locOptions);
         catAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, catOptions);
@@ -98,6 +93,11 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         ingredientCategory.setAdapter(catAdapter);
         ingredientUnit.setAdapter(unitAdapter);
 
+        StoredIngredient viewedIngredient = (StoredIngredient) getIntent().getSerializableExtra("INGREDIENT");
+        ingredientDescription.setText(viewedIngredient.getDescription());
+        ingredientAmount.setText((String.valueOf(viewedIngredient.getAmount())));
+        ingredientDate.setText(viewedIngredient.getDate());
+
         if (viewedIngredient.getCategory() != null) {
             ingredientCategory.setSelection(catOptions.indexOf(viewedIngredient.getCategory()));
         } else if (!catOptions.contains(viewedIngredient.getCategory())) {
@@ -110,10 +110,9 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             ingredientCategory.setSelection(0);
         }
 
-
         if (viewedIngredient.getLocation() != null) {
             ingredientLocation.setSelection(locOptions.indexOf(viewedIngredient.getLocation()));
-        }  else if (!locOptions.contains(viewedIngredient.getLocation())) {
+        } else if (!locOptions.contains(viewedIngredient.getLocation())) {
             locOptions.add(0, viewedIngredient.getCategory());
             locAdapter.notifyDataSetChanged();
             ingredientLocation.setSelection(0);
@@ -125,11 +124,11 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
 
         if (viewedIngredient.getUnit() != null) {
             ingredientUnit.setSelection(unitOptions.indexOf(viewedIngredient.getUnit()));
-        }  else if (!unitOptions.contains(viewedIngredient.getUnit())) {
+        } else if (!unitOptions.contains(viewedIngredient.getUnit())) {
             unitOptions.add(0, viewedIngredient.getCategory());
             unitAdapter.notifyDataSetChanged();
             ingredientUnit.setSelection(0);
-        }  else {
+        } else {
             unitOptions.add(0, "");
             unitAdapter.notifyDataSetChanged();
             ingredientUnit.setSelection(0);
@@ -171,6 +170,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
                     ingredientCategory.setSelection(i);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
@@ -187,6 +187,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
                     ingredientLocation.setSelection(i);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
@@ -203,11 +204,11 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
                     ingredientUnit.setSelection(i);
                 }
             }
+
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
             }
         });
-
 
         Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -217,7 +218,6 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
                 onButtonClick(intent);
                 setResult(401, intent);
                 finish();
-
             }
         });
 
@@ -229,7 +229,6 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
                 onButtonClick(intent);
                 setResult(402, intent);
                 finish();
-
             }
         });
     }
