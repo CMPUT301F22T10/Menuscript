@@ -95,18 +95,32 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:ems="3"
-            android:inputType="number"/>
+            android:inputType="number"
+            android:digits="0123456789"/>
+
+        <Button
+            android:id="@+id/saveDaysButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="save days"
+            android:layout_gravity="center"
+            android:backgroundTint="@android:color/darker_gray"
+            android:textColor="@color/black"
+            android:textSize="10sp"/>
+
 
     </LinearLayout>
 
     <Button
-        android:id="@+id/completeMealPlanButton"
+        android:id="@+id/clearMealPlanButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Add Recipe"
+        android:text="Clear Meal Plan"
         android:layout_gravity="center"
         android:backgroundTint="@android:color/darker_gray"
         android:textColor="@color/black"
         android:textSize="12sp"/>
+
+
     
 </LinearLayout>

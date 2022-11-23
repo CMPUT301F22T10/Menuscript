@@ -39,10 +39,17 @@
         <activity
             android:name=".AddIngredientMealPlanActivity"
             android:parentActivityName=".MealPlanActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"
             android:exported="false" />
         <activity
             android:name=".AddRecipeMealPlanActivity"
             android:parentActivityName=".MealPlanActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"
+            android:exported="false" />
+        <activity
+            android:name=".MealPlanActivity"
+            android:parentActivityName=".MainMenuActivity"
+            android:windowSoftInputMode="adjustPan|adjustResize"
             android:exported="false" />
         <activity
             android:name=".MainMenuActivity"

@@ -29,7 +29,11 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
+/**
+ * class for adding a recipe to meal plan.
+ * need to pass initial list of meal plan recipe keys from previous activity
+ * @author Wanlin
+ */
 public class AddRecipeMealPlanActivity extends AppCompatActivity {
 
     private TextView recipeServingsTextView;
@@ -58,6 +62,7 @@ public class AddRecipeMealPlanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.meal_plan_add);
 
+        mealPlanRecipesList = new ArrayList<>();
         recipesList = new ArrayList<>();
         spinnerArray = new ArrayList<>();
         recipeKeytoAdd = null;
@@ -81,10 +86,13 @@ public class AddRecipeMealPlanActivity extends AppCompatActivity {
         mealPlanRecipesCollectionReference = databaseInstance.collection("MealPlanRecipes");
 
 
+
         //need to pass initial list of meal plan keys
         Bundle bundle = getIntent().getExtras();
-        if (bundle.getString("RecipeKeys")!=null){
-            mealPlanRecipesList = bundle.getStringArrayList("IngredientKeys");
+
+        if (bundle != null && bundle.getString("RecipeKeys")!=null){
+            mealPlanRecipesList.clear();
+            mealPlanRecipesList.addAll(bundle.getStringArrayList("RecipeKeys"));
         }else{
             Log.d(TAG,"NO MEAL PLAN Recipe KEY PASSED");
         }
@@ -120,6 +128,7 @@ public class AddRecipeMealPlanActivity extends AppCompatActivity {
                     }
 
                 }
+                spinnerAdapter.notifyDataSetChanged();
             }
         });
 

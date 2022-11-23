@@ -36,6 +36,7 @@ import java.util.HashMap;
 
 /**
  * class for adding a ingredient to meal plan.
+ * need to pass initial list of meal plan  ingredient keys from previous activity
  * @author Wanlin
  */
 
@@ -65,12 +66,12 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.meal_plan_add);
 
+        mealPlanIngredientsList = new ArrayList<>();
         ingredientsList = new ArrayList<>();
         spinnerArray = new ArrayList<>();
         ingredientKeytoAdd = null;
         ingredientDescriptiontoAdd = null;
         ingredientAmount = null;
-
         selectItemTextView = findViewById(R.id.selectItemTextView);
         addNewIngredientButton = findViewById(R.id.NewItemButton);
         ingredientAmountEditText = findViewById(R.id.itemAmountEditText);
@@ -79,9 +80,6 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
         spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item,spinnerArray);
         ingredientsSpinner.setAdapter(spinnerAdapter);
 
-
-
-
         databaseInstance = FirebaseFirestore.getInstance();
         ingredientCollectionReference = databaseInstance.collection("StoredIngredients");
         mealPlanIngredientCollectionReference = databaseInstance.collection("MealPlanIngredients");
@@ -89,8 +87,9 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
 
         //need to pass initial list of meal plan keys
         Bundle bundle = getIntent().getExtras();
-        if (bundle.getString("IngredientKeys")!=null){
-            mealPlanIngredientsList = bundle.getStringArrayList("IngredientKeys");
+        if (bundle != null && bundle.getString("IngredientKeys")!=null){
+            mealPlanIngredientsList.clear();
+            mealPlanIngredientsList.addAll(bundle.getStringArrayList("IngredientKeys"));
         }else{
             Log.d(TAG,"NO MEAL PLAN INGREDIENT KEY PASSED");
         }
@@ -106,6 +105,7 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
                     String ingredientKey = doc.getId();
                     mealPlanIngredientsList.add(ingredientKey);
                 }
+
             }
         });
 
@@ -124,8 +124,8 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
                         ingredientsList.add(doc.getId());
                         spinnerArray.add(ingredientDescription);
                     }
-
                 }
+                spinnerAdapter.notifyDataSetChanged();
             }
         });
 
