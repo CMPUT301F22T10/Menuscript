@@ -23,6 +23,8 @@ public class StoredIngredient extends Ingredient {
     public String getDate () {return this.date;}
     public String getLocation () {return this.location;}
 
+
+
     /**
      * Method to return a hashmap filled with data of the ingredient with
      * the keys as what values represent

@@ -135,11 +135,19 @@ public class RecipeListActivity extends AppCompatActivity {
                     String category = intent.getStringExtra("category");
                     String comments = intent.getStringExtra("comments");
                     byte[] image = intent.getByteArrayExtra("image"); //CORRESPONDS TO LINES IN ADDRECIPEACTIVITY
+
+                    //ALL THIS STUFF BELOW NEEDS TO BE UPDATED FOR RECIPEDATABASE
+                    //
+                    //
+                    //
+                    //
                     if(result.getResultCode() == 420) {
+                        //addRecipe
                         Recipe newRecipe = new Recipe(title, time, servings, category, comments, image, ingredients);
                         dataList.add(newRecipe);
 
                     } else if (result.getResultCode() == 421){
+                        //edit/view Recipe
                         selectedRecipe.setTitle(title);
                         selectedRecipe.setTime(time);
                         selectedRecipe.setServings(servings);
@@ -147,6 +155,7 @@ public class RecipeListActivity extends AppCompatActivity {
                         selectedRecipe.setComments(comments);
                         selectedRecipe.setImage(image);
                     } else if (result.getResultCode() == 422){
+                        //deleteRecipe
                         dataList.remove(selectedRecipe);
                     }
                     recipeAdapter.notifyDataSetChanged();
