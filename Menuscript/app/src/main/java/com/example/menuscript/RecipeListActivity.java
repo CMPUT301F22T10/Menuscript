@@ -183,10 +183,13 @@ public class RecipeListActivity extends AppCompatActivity {
                     if(result.getResultCode() == 420) {
                         //addRecipe
                         Recipe newRecipe = new Recipe(title, time, servings, category, comments, image, (ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
+                        //dataList.add(newRecipe); //FROM PRE-DATEBASE DAYS DELETE ONCE THATS DEFINITELY WORKING
+                        db.addRecipe(newRecipe);
                         dataList.add(newRecipe);
 
                     } else if (result.getResultCode() == 421){
                         //edit/view Recipe
+                        /* FROM THE PRE-DATABASE DAYS, DELETE ONCE DATABASE FUNCTIONAL
                         selectedRecipe.setTitle(title);
                         selectedRecipe.setTime(time);
                         selectedRecipe.setServings(servings);
@@ -194,8 +197,20 @@ public class RecipeListActivity extends AppCompatActivity {
                         selectedRecipe.setComments(comments);
                         selectedRecipe.setImage(image);
                         selectedRecipe.setIngredients((ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
+                        */
+                        db.deleteRecipe(selectedRecipe);
+                        dataList.remove(selectedRecipe);
+
+                        selectedRecipe = new Recipe(title, time, servings, category, comments, image, (ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
+
+                        db.addRecipe(selectedRecipe);
+                        dataList.add(selectedRecipe);
+
+
                     } else if (result.getResultCode() == 422){
-                        //deleteRecipe
+                        //deleteRecipe FROM THE PRE-DATABASE DAYS, DELETE ONCE DATABASE FUNCTIONAL
+                        //dataList.remove(selectedRecipe);
+                        db.deleteRecipe(selectedRecipe);
                         dataList.remove(selectedRecipe);
                     }
                     recipeAdapter.notifyDataSetChanged();

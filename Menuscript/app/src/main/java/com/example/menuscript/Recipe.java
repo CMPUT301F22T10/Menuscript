@@ -1,8 +1,11 @@
 package com.example.menuscript;
 
 import android.graphics.Bitmap;
+import android.os.Build;
 
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
 
 /**
  * This class creates/defines a Recipe object with eight variables:
@@ -103,4 +106,32 @@ public class Recipe {
     public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
+
+    public HashMap<String, Object> asHashMap () {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("title", this.title);
+        data.put("time", this.time); //its a number in the database? maybe shouldn't string valueof it?
+        data.put("servings", String.valueOf(this.servings));
+        data.put("category", this.category);
+        data.put("comments", this.comments);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            data.put("image", Base64.getEncoder().encodeToString(this.image));
+        }
+
+
+        ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+
+        for(Ingredient ingredient : this.ingredients) {
+            HashMap<String,String> hm = new HashMap<String,String>();
+            hm.put("amount", String.valueOf(ingredient.getAmount()));
+            hm.put("category", ingredient.getCategory());
+            hm.put("description", ingredient.getDescription());
+            hm.put("unit", ingredient.getUnit());
+            list.add(hm);
+        }
+
+        data.put("ingredients",list);
+        return data;
+    }
+
 }
