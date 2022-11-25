@@ -135,6 +135,7 @@ public class RecipeListActivity extends AppCompatActivity {
                     String category = intent.getStringExtra("category");
                     String comments = intent.getStringExtra("comments");
                     byte[] image = intent.getByteArrayExtra("image"); //CORRESPONDS TO LINES IN ADDRECIPEACTIVITY
+                    Bundle args = intent.getBundleExtra("BUNDLE");
 
                     //ALL THIS STUFF BELOW NEEDS TO BE UPDATED FOR RECIPEDATABASE
                     //
@@ -143,7 +144,7 @@ public class RecipeListActivity extends AppCompatActivity {
                     //
                     if(result.getResultCode() == 420) {
                         //addRecipe
-                        Recipe newRecipe = new Recipe(title, time, servings, category, comments, image, ingredients);
+                        Recipe newRecipe = new Recipe(title, time, servings, category, comments, image, (ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
                         dataList.add(newRecipe);
 
                     } else if (result.getResultCode() == 421){
@@ -154,6 +155,7 @@ public class RecipeListActivity extends AppCompatActivity {
                         selectedRecipe.setCategory(category);
                         selectedRecipe.setComments(comments);
                         selectedRecipe.setImage(image);
+                        selectedRecipe.setIngredients((ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
                     } else if (result.getResultCode() == 422){
                         //deleteRecipe
                         dataList.remove(selectedRecipe);

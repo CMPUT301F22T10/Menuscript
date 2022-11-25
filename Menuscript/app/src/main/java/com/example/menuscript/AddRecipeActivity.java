@@ -29,6 +29,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -215,6 +216,12 @@ public class AddRecipeActivity extends AppCompatActivity {
                 byte[] imageByteArray = stream.toByteArray();
                 intent.putExtra("image", imageByteArray);
                 //_____________CORRESPONDS TO LINES IN RECIPELISTACTIVITY's activityResultLauncher_____________
+
+                Bundle args = new Bundle();
+                args.putSerializable("INGREDIENTSLIST",addedIngredientList);
+                intent.putExtra("BUNDLE",args);
+
+
                 setResult(420,intent);
                 finish();
 

@@ -33,6 +33,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -137,10 +138,7 @@ public class ViewRecipeActivity extends AppCompatActivity {
         }
 
 
-        //TEMP *********************
-        Bundle args = getIntent().getBundleExtra("INGREDIENTS_BUNDLE");
-        //ingredientList = (ArrayList<Ingredient>) args.getSerializable("INGREDIENTS");
-        //TEMPORARY VIEW OF INGREDIENT LIST **************
+
         databaseInstance = FirebaseFirestore.getInstance();
         collectionReference = databaseInstance.collection("StoredIngredients");
         ingredientList = new ArrayList<>();
@@ -149,8 +147,14 @@ public class ViewRecipeActivity extends AppCompatActivity {
 
         addedIngredientList = new ArrayList<>();
         addedIngredientAdapter = new RecipeIngredientListAdapter(this, addedIngredientList);
-
         recipeAddedIngredientList.setAdapter(addedIngredientAdapter);
+
+
+        Bundle args = getIntent().getBundleExtra("INGREDIENTS_BUNDLE");
+        ArrayList<Ingredient> importedIngredients = (ArrayList<Ingredient>) args.getSerializable("INGREDIENTS");
+
+        addedIngredientList.addAll(importedIngredients);
+        addedIngredientAdapter.notifyDataSetChanged();
 
         collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -290,7 +294,9 @@ public class ViewRecipeActivity extends AppCompatActivity {
         byte[] imageByteArray = stream.toByteArray();
         intent.putExtra("image", imageByteArray);
 
-        //ADD THE RETURN OF THE INGREDIENTS LIST ITSELF
+        Bundle args = new Bundle();
+        args.putSerializable("INGREDIENTSLIST", addedIngredientList);
+        intent.putExtra("BUNDLE",args);
 
         return intent;
     }
