@@ -208,8 +208,6 @@ public class AddRecipeActivity extends AppCompatActivity {
                     intent.putExtra("comments","");
                 }
 
-
-                //_____________CHECK IF IMAGE FUNCTIONALITY WORKING______________
                 Bitmap bitmap = ((BitmapDrawable)recipeImage.getDrawable()).getBitmap();
                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                 bitmap.compress(Bitmap.CompressFormat.PNG,10,stream); //THE QUALITY HERE IS THE 2nd PARAMETER, THINK IT GOES FROM 1-100? MESS AROUND WITH IF NEEDED

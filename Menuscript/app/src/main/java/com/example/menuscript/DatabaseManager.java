@@ -230,15 +230,14 @@ public class DatabaseManager {
 
         ArrayList<String> docID = new ArrayList<>();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             collectionReference
                     .whereEqualTo("title",recipe.getTitle())
                     .whereEqualTo("time",recipe.getTime())
                     .whereEqualTo("servings",String.valueOf(recipe.getServings()))
                     .whereEqualTo("category",recipe.getCategory())
                     .whereEqualTo("comments",recipe.getComments())
-                    //.whereEqualTo("image", Base64.getEncoder().encodeToString(recipe.getImage()))
-                    //.whereEqualTo("ingredients",recipe.getIngredients())
+                    //.whereEqualTo("image", recipe.getEncodedImage())
+                    .whereEqualTo("ingredients",recipe.getHashedIngredients())
                     .get()
                     .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -246,33 +245,33 @@ public class DatabaseManager {
                             if (task.isSuccessful()){
                                 for(QueryDocumentSnapshot document : task.getResult()){
                                     docID.add(document.getId());
-                                    Log.d("test", document.getId() +"=>"+document.getData());
+                                    Log.d("myTag", document.getId() +"=>"+document.getData());
 
                                     String toDelete = docID.get(0);
-                                    Log.d("delete",toDelete);
-                                    Log.d("mm?",docID.toString());
+                                    Log.d("myTag",toDelete);
+                                    Log.d("myTag",docID.toString());
                                     collectionReference
                                             .document(toDelete)
                                             .delete()
                                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                                 @Override
                                                 public void onSuccess(Void unused) {
-                                                    Log.d(TAG, "DocumentSnapshot successfully deleted");
+                                                    Log.d("myTag", "DocumentSnapshot successfully deleted");
                                                 }
                                             }).addOnFailureListener(new OnFailureListener() {
                                                 @Override
                                                 public void onFailure(@NonNull Exception e) {
-                                                    Log.w(TAG,"Error deleting document",e);
+                                                    Log.w("myTag","Error deleting document",e);
                                                 }
                                             });
                                 }
                             }
                             else {
-                                Log.d(TAG, "Error getting documents: ", task.getException());
+                                Log.d("myTag", "Error getting documents: ", task.getException());
                             }
                         }
                     });
-        }
+
 
     }
 

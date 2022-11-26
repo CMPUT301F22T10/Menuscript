@@ -165,7 +165,6 @@ public class RecipeListActivity extends AppCompatActivity {
             @Override
             public void onActivityResult(ActivityResult result) {
                 if(result.getData() != null){
-                    //Toast.makeText(RecipeListActivity.this, "TEST",Toast.LENGTH_SHORT).show();
                     Intent intent = result.getData();
                     String title = intent.getStringExtra("title");
                     int time = intent.getIntExtra("time",0);
@@ -175,29 +174,14 @@ public class RecipeListActivity extends AppCompatActivity {
                     byte[] image = intent.getByteArrayExtra("image"); //CORRESPONDS TO LINES IN ADDRECIPEACTIVITY
                     Bundle args = intent.getBundleExtra("BUNDLE");
 
-                    //ALL THIS STUFF BELOW NEEDS TO BE UPDATED FOR RECIPEDATABASE
-                    //
-                    //
-                    //
-                    //
                     if(result.getResultCode() == 420) {
                         //addRecipe
                         Recipe newRecipe = new Recipe(title, time, servings, category, comments, image, (ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
-                        //dataList.add(newRecipe); //FROM PRE-DATEBASE DAYS DELETE ONCE THATS DEFINITELY WORKING
                         db.addRecipe(newRecipe);
                         dataList.add(newRecipe);
 
                     } else if (result.getResultCode() == 421){
                         //edit/view Recipe
-                        /* FROM THE PRE-DATABASE DAYS, DELETE ONCE DATABASE FUNCTIONAL
-                        selectedRecipe.setTitle(title);
-                        selectedRecipe.setTime(time);
-                        selectedRecipe.setServings(servings);
-                        selectedRecipe.setCategory(category);
-                        selectedRecipe.setComments(comments);
-                        selectedRecipe.setImage(image);
-                        selectedRecipe.setIngredients((ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
-                        */
                         db.deleteRecipe(selectedRecipe);
                         dataList.remove(selectedRecipe);
 
@@ -208,8 +192,6 @@ public class RecipeListActivity extends AppCompatActivity {
 
 
                     } else if (result.getResultCode() == 422){
-                        //deleteRecipe FROM THE PRE-DATABASE DAYS, DELETE ONCE DATABASE FUNCTIONAL
-                        //dataList.remove(selectedRecipe);
                         db.deleteRecipe(selectedRecipe);
                         dataList.remove(selectedRecipe);
                     }
@@ -224,7 +206,6 @@ public class RecipeListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // add recipe activity
-                //Bundle ingredients = new Bundle();
                 Intent intent = new Intent(getApplicationContext(),AddRecipeActivity.class);
                 intent.putExtra("ingredients",ingredients); //NOTE: USING TEMPORARY ingredients ARRAYLIST -- PLEASE NOTE FOR FULL IMPLEMENTATION
                 activityResultLauncher.launch(intent);
