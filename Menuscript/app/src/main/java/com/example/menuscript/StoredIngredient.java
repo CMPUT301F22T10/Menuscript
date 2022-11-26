@@ -14,6 +14,8 @@ public class StoredIngredient extends Ingredient {
     private String date;
     private String location;
 
+    public StoredIngredient() {}
+
     public StoredIngredient (String description, float amount, String unit, String  category, String date, String location) {
         super(description, amount, unit, category);
         this.date = date;
@@ -23,7 +25,25 @@ public class StoredIngredient extends Ingredient {
     public String getDate () {return this.date;}
     public String getLocation () {return this.location;}
 
+    @Override
+    public float getAmount() {
+        return super.getAmount();
+    }
 
+    @Override
+    public String getCategory() {
+        return super.getCategory();
+    }
+
+    @Override
+    public String getDescription() {
+        return super.getDescription();
+    }
+
+    @Override
+    public String getUnit() {
+        return super.getUnit();
+    }
 
     /**
      * Method to return a hashmap filled with data of the ingredient with

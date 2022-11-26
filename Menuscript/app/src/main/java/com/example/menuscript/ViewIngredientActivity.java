@@ -166,8 +166,11 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (adapterView.getItemAtPosition(i) == catOptions.get(catOptions.size() - 1)) {
                     new AddOptionFragment().show(getSupportFragmentManager(), "ADD CATEGORY");
-                } else if (adapterView.getItemAtPosition(i) != "") {
+                } else if (adapterView.getItemAtPosition(i) != "" && catOptions.contains("")) {
                     catOptions.remove("");
+                    catAdapter.notifyDataSetChanged();
+                    ingredientCategory.setSelection(i - 1);
+                } else {
                     catAdapter.notifyDataSetChanged();
                     ingredientCategory.setSelection(i);
                 }
@@ -184,8 +187,11 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (adapterView.getItemAtPosition(i) == locOptions.get(locOptions.size() - 1)) {
                     new AddOptionFragment().show(getSupportFragmentManager(), "ADD LOCATION");
-                } else if (adapterView.getItemAtPosition(i) != "") {
+                } else if (adapterView.getItemAtPosition(i) != "" && locOptions.contains("")) {
                     locOptions.remove("");
+                    locAdapter.notifyDataSetChanged();
+                    ingredientLocation.setSelection(i - 1);
+                } else {
                     locAdapter.notifyDataSetChanged();
                     ingredientLocation.setSelection(i);
                 }
@@ -202,8 +208,11 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (adapterView.getItemAtPosition(i) == unitOptions.get(unitOptions.size() - 1)) {
                     new AddOptionFragment().show(getSupportFragmentManager(), "ADD UNIT");
-                } else if (adapterView.getItemAtPosition(i) != "") {
+                } else if (adapterView.getItemAtPosition(i) != "" && unitOptions.contains("")) {
                     unitOptions.remove("");
+                    unitAdapter.notifyDataSetChanged();
+                    ingredientUnit.setSelection(i - 1);
+                } else {
                     unitAdapter.notifyDataSetChanged();
                     ingredientUnit.setSelection(i);
                 }

@@ -76,8 +76,6 @@ public class DatabaseManager {
 
         ArrayList<String> docID = new ArrayList<>();
 
-        Log.d("THIS IS WHAT THE HASHMAP READS AS", String.valueOf(data.keySet()));
-
         collectionReference
                 .whereEqualTo("description", storedIngredient.getDescription())
                 .whereEqualTo("category", storedIngredient.getCategory())

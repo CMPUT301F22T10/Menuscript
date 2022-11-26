@@ -315,8 +315,11 @@ public class ViewRecipeActivity extends AppCompatActivity implements AddOptionFr
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (adapterView.getItemAtPosition(i) == catOptions.get(catOptions.size() - 1)) {
                     new AddOptionFragment().show(getSupportFragmentManager(), "ADD CATEGORY");
-                } else if (adapterView.getItemAtPosition(i) != "") {
+                } else if (adapterView.getItemAtPosition(i) != "" && catOptions.contains("")) {
                     catOptions.remove("");
+                    catAdapter.notifyDataSetChanged();
+                    recipeCategory.setSelection(i - 1);
+                } else {
                     catAdapter.notifyDataSetChanged();
                     recipeCategory.setSelection(i);
                 }

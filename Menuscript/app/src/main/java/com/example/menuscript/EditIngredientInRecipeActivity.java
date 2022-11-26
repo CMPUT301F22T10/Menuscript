@@ -110,6 +110,47 @@ public class EditIngredientInRecipeActivity extends AppCompatActivity implements
             ingredientUnit.setSelection(0);
         }
 
+        //  listens for selection of category
+        ingredientCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (adapterView.getItemAtPosition(i) == catOptions.get(catOptions.size() - 1)) {
+                    new AddOptionFragment().show(getSupportFragmentManager(), "ADD CATEGORY");
+                } else if (adapterView.getItemAtPosition(i) != "" && catOptions.contains("")) {
+                    catOptions.remove("");
+                    catAdapter.notifyDataSetChanged();
+                    ingredientCategory.setSelection(i - 1);
+                } else {
+                    catAdapter.notifyDataSetChanged();
+                    ingredientCategory.setSelection(i);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        //  listens for selection of unit
+        ingredientUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (adapterView.getItemAtPosition(i) == unitOptions.get(unitOptions.size() - 1)) {
+                    new AddOptionFragment().show(getSupportFragmentManager(), "ADD UNIT");
+                } else if (adapterView.getItemAtPosition(i) != "" && unitOptions.contains("")) {
+                    unitOptions.remove("");
+                    unitAdapter.notifyDataSetChanged();
+                    ingredientUnit.setSelection(i - 1);
+                } else {
+                    unitAdapter.notifyDataSetChanged();
+                    ingredientUnit.setSelection(i);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         Button submitButton = findViewById(R.id.submitButton_recipe);
         submitButton.setOnClickListener(new View.OnClickListener() {
