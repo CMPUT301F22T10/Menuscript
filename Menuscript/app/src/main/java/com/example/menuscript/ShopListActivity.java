@@ -146,6 +146,34 @@ public class ShopListActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton fab = findViewById(R.id.shopListButton);
+        fab.setOnClickListener(view -> {
+            Intent intent = new Intent(ShoppingListActivity.this, AddIngredientActivity.class);
+            activityResultLauncher.launch(intent);
+        });
+
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode()!= null) {
+                Intent data = result.getData();
+                String description = intent.getStringExtra("description");
+                float amount = intent.getFloatExtra("amount", 0.0f);
+                String unit = intent.getStringExtra("unit");
+                String date = intent.getStringExtra("date");
+                String category = intent.getStringExtra("category");
+                String location = intent.getStringExtra("location");
+                if (result.getResultCode() == 400) {
+                    StoredIngredient newIngredient = new StoredIngredient(description, amount, unit, category, date, location);
+                    db.addStoredIngredient(newIngredient);
+                    ingredients.add(newIngredient);
+                    ingredientAdapter.notifyDataSetChanged();
+                    Ingredient shoppingItem = new Ingredient(description, amount, unit, category);
+                    shoppingItems.add(shoppingItem);
+                    shoppingAdapter.notifyDataSetChanged();
+                    db.addShoppingItem(shoppingItem);
+                }
+            }
+        });
+
     //As a meal planner, I want to note that I have picked up an ingredient on the shopping list.
     //As a meal planner, I want to be able to sort the shopping list by category or description.
 
