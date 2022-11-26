@@ -42,7 +42,6 @@ public class ShopListActivity extends AppCompatActivity {
     ArrayList<String> ingredientNameList;
     ListView shoppingList;
     Ingredient selectedIngredient;
-    Spinner sortButton;
     private FirebaseFirestore databaseInstance;
     private CollectionReference mealPlanCollection;
     private CollectionReference ingredientCollection;
@@ -125,13 +124,17 @@ public class ShopListActivity extends AppCompatActivity {
             }
         });
 
+        //sort button
+        Spinner sortButton=findViewById(R.id.shopListMainSpinner);
+        String sortOptions[]={"Sort by Category", "Sort by Description"};
+        CustomSortAdapter<String> sortAdapter=new CustomSortAdapter<>(this,android.R.layout.simple_spinner_dropdown_item, sortOptions);
+        sortButton.setAdapter(sortAdapter);
         sortButton.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String test = String.valueOf(adapterView.getItemAtPosition(i));
-                if(test.equals("Category")) {
+                if(adapterView.getItemAtPosition(i)=="Category") {
                     ingredientList.sort(Comparator.comparing(Ingredient::getCategory));
-                } else if(test.equals("Description")){
+                } else if(dapterView.getItemAtPosition(i)=="Description"){
                     ingredientList.sort(Comparator.comparing(Ingredient::getDescription));
                 }
                 shoppingAdapter.notifyDataSetChanged();
@@ -142,6 +145,11 @@ public class ShopListActivity extends AppCompatActivity {
 
             }
         });
+
+    //As a meal planner, I want to note that I have picked up an ingredient on the shopping list.
+    //As a meal planner, I want to be able to sort the shopping list by category or description.
+
+
 
     }
 }
