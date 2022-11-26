@@ -60,4 +60,23 @@ public class Ingredient implements Serializable {
      * @return  the Ingredient's category.
      */
     public String getCategory () {return this.category;}
+
+    /**
+     * Method to return a hashmap filled with data of the ingredient with
+     * the keys as what values represent
+     * data {@link HashMap<String, Object>}
+     *
+     * @return  data    a hashmap containing all the details of ingredients
+     *                  associated with right keys.
+     */
+    public HashMap<String, Object> asHashMap () {
+        HashMap<String, Object> data  = new HashMap<>();
+        data.put("description", this.description);
+        data.put("amount", this.amount);
+        data.put("unit", this.unit);
+        data.put("category", this.category);
+        return data;
+    }
 }
+
+
