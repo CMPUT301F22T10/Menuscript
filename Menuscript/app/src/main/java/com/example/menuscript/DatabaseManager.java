@@ -5,6 +5,7 @@ import static android.content.ContentValues.TAG;
 
 import android.app.Activity;
 import android.content.Context;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -20,6 +21,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -172,16 +174,83 @@ public class DatabaseManager {
 
     }
 
-    public ArrayList<Recipe> getRecipes() {
-        return new ArrayList<Recipe>();
-    }
-
     public void addRecipe(Recipe recipe) {
-        ;
+        collectionReference = databaseInstance.collection("Recipes");
+
+        HashMap<String,Object> data = recipe.asHashMap();
+
+        collectionReference.document().set(data)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d(TAG, "Data added successfully");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG, "Data could not be added" + e.toString());
+                    }
+                });
+
     }
 
     public void deleteRecipe(Recipe recipe) {
-        ;
+        collectionReference = databaseInstance.collection("Recipes");
+
+        //HashMap<String,Object> data = recipe.asHashMap();
+
+        ArrayList<String> docID = new ArrayList<>();
+
+            collectionReference
+                    .whereEqualTo("title",recipe.getTitle())
+                    .whereEqualTo("time",recipe.getTime())
+                    .whereEqualTo("servings",String.valueOf(recipe.getServings()))
+                    .whereEqualTo("category",recipe.getCategory())
+                    .whereEqualTo("comments",recipe.getComments())
+                    //.whereEqualTo("image", recipe.getEncodedImage())
+                    .whereEqualTo("ingredients",recipe.getHashedIngredients())
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()){
+                                for(QueryDocumentSnapshot document : task.getResult()){
+                                    docID.add(document.getId());
+                                    Log.d("what", document.getId() + " => " + document.getData());
+
+                                    String toDelete = docID.get(0);
+                                    Log.d("myTag",toDelete);
+                                    Log.d("myTag",docID.toString());
+                                    collectionReference
+                                            .document(toDelete)
+                                            .delete()
+                                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                                @Override
+                                                public void onSuccess(Void unused) {
+                                                    Log.d("myTag", "DocumentSnapshot successfully deleted");
+                                                }
+                                            }).addOnFailureListener(new OnFailureListener() {
+                                                @Override
+                                                public void onFailure(@NonNull Exception e) {
+                                                    Log.w("myTag","Error deleting document",e);
+                                                }
+                                            });
+                                }
+                            }
+                            else {
+                                Log.d("myTag", "Error getting documents: ", task.getException());
+                            }
+                        }
+                    });
+
+
+    }
+
+    public void addRecipeCategory(String category) {
+        DocumentReference categories = databaseInstance.collection("Options").document("Recipe Categories");
+
+        categories.update(category, category);
     }
 
     public void addIngredientCategory(String category) {

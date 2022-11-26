@@ -1,5 +1,7 @@
 package com.example.menuscript;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Base64;
@@ -21,6 +23,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,6 +39,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * This class controls the view recipes list activity:
@@ -112,6 +117,29 @@ public class RecipeListActivity extends AppCompatActivity {
             }
         });
 
+        //  fetches Categories from Firestore
+        ArrayList<String> catOptions = new ArrayList<>();
+        CollectionReference catColRef = databaseInstance.collection("Options");
+        final DocumentReference catDocRef = catColRef.document("Recipe Categories");
+        catDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    catOptions.clear();
+                    catOptions.add("Add new item");
+                    catOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("category data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("category data", "Current data: null");
+                }
+            }
+        });
+
         recipeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -123,6 +151,7 @@ public class RecipeListActivity extends AppCompatActivity {
                 intent.putExtra("SERVINGS", selectedRecipe.getServings());
                 intent.putExtra("COMMENTS", selectedRecipe.getComments());
                 intent.putExtra("IMAGE", selectedRecipe.getImage());
+                intent.putExtra("CATEGORY LIST", catOptions);
                 Bundle args = new Bundle();
                 args.putSerializable("INGREDIENTS", selectedRecipe.getIngredients());
                 intent.putExtra("INGREDIENTS_BUNDLE", args);
@@ -165,7 +194,6 @@ public class RecipeListActivity extends AppCompatActivity {
             @Override
             public void onActivityResult(ActivityResult result) {
                 if(result.getData() != null){
-                    //Toast.makeText(RecipeListActivity.this, "TEST",Toast.LENGTH_SHORT).show();
                     Intent intent = result.getData();
                     String title = intent.getStringExtra("title");
                     int time = intent.getIntExtra("time",0);
@@ -173,18 +201,27 @@ public class RecipeListActivity extends AppCompatActivity {
                     String category = intent.getStringExtra("category");
                     String comments = intent.getStringExtra("comments");
                     byte[] image = intent.getByteArrayExtra("image"); //CORRESPONDS TO LINES IN ADDRECIPEACTIVITY
+                    Bundle args = intent.getBundleExtra("BUNDLE");
+
                     if(result.getResultCode() == 420) {
-                        Recipe newRecipe = new Recipe(title, time, servings, category, comments, image, ingredients);
+                        //addRecipe
+                        Recipe newRecipe = new Recipe(title, time, servings, category, comments, image, (ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
+                        db.addRecipe(newRecipe);
                         dataList.add(newRecipe);
 
                     } else if (result.getResultCode() == 421){
-                        selectedRecipe.setTitle(title);
-                        selectedRecipe.setTime(time);
-                        selectedRecipe.setServings(servings);
-                        selectedRecipe.setCategory(category);
-                        selectedRecipe.setComments(comments);
-                        selectedRecipe.setImage(image);
+                        //edit/view Recipe
+                        db.deleteRecipe(selectedRecipe);
+                        dataList.remove(selectedRecipe);
+
+                        selectedRecipe = new Recipe(title, time, servings, category, comments, image, (ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
+
+                        db.addRecipe(selectedRecipe);
+                        dataList.add(selectedRecipe);
+
+
                     } else if (result.getResultCode() == 422){
+                        db.deleteRecipe(selectedRecipe);
                         dataList.remove(selectedRecipe);
                     }
                     recipeAdapter.notifyDataSetChanged();
@@ -198,9 +235,9 @@ public class RecipeListActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // add recipe activity
-                //Bundle ingredients = new Bundle();
                 Intent intent = new Intent(getApplicationContext(),AddRecipeActivity.class);
                 intent.putExtra("ingredients",ingredients); //NOTE: USING TEMPORARY ingredients ARRAYLIST -- PLEASE NOTE FOR FULL IMPLEMENTATION
+                intent.putExtra("CATEGORIES", catOptions);
                 activityResultLauncher.launch(intent);
             }
         });
