@@ -1,7 +1,10 @@
 package com.example.menuscript;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -24,7 +29,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
+import java.util.Objects;
 
 /**
  * This class displays a list of ingredients:
@@ -32,13 +39,11 @@ import java.util.Comparator;
  * ingredientAdapter {@link StoredIngredientListAdapter}
  * ingredients {@link ArrayList<StoredIngredient>}
  *
+ * @author Micheal
  * @see Ingredient
  * @see AddIngredientActivity
  */
 public class IngredientListActivity extends AppCompatActivity {
-
-    ListView ingredientList;
-    StoredIngredientListAdapter ingredientAdapter;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     DatabaseManager db = new DatabaseManager(this);
 
@@ -48,9 +53,10 @@ public class IngredientListActivity extends AppCompatActivity {
     private final String categoryFieldStr = "category";
     private final String dateFieldStr = "date";
     private final String locationFieldStr = "location";
+
     ArrayList<StoredIngredient> ingredients;
-    private FirebaseFirestore databaseInstance;
-    private CollectionReference collectionReference;
+    ListView ingredientList;
+    StoredIngredientListAdapter ingredientAdapter;
 
     StoredIngredient clickedIngredient;
 
@@ -59,14 +65,12 @@ public class IngredientListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_activity);
 
+        FirebaseFirestore databaseInstance = FirebaseFirestore.getInstance();
+
         ingredientList = findViewById(R.id.item_list);
 
-        databaseInstance = FirebaseFirestore.getInstance();
-        collectionReference = databaseInstance.collection("StoredIngredients");
         ingredients = new ArrayList<>();
-
         ingredientAdapter = new StoredIngredientListAdapter(this, ingredients);
-
         ingredientList.setAdapter(ingredientAdapter);
 
         Spinner sortButton = findViewById(R.id.sort_button);
@@ -74,13 +78,15 @@ public class IngredientListActivity extends AppCompatActivity {
         CustomSortAdapter<String> sortAdapter = new CustomSortAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortOptions);
         sortButton.setAdapter(sortAdapter);
 
-        collectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        //  fetches Ingredient list from Firestore
+        CollectionReference ingredientReference = databaseInstance.collection("StoredIngredients");
+        ingredientReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
                     FirebaseFirestoreException error) {
                 ingredients.clear();
-                for(QueryDocumentSnapshot doc: queryDocumentSnapshots)
-                {
+                assert queryDocumentSnapshots != null;
+                for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
                     String description = (String) doc.getData().get(descriptionFieldStr);
                     float amount = Float.parseFloat(String.valueOf(doc.getData().get(amountFieldStr)));
                     String unit = (String) doc.getData().get(unitFieldStr);
@@ -94,17 +100,97 @@ public class IngredientListActivity extends AppCompatActivity {
             }
         });
 
+        final String addOption = "Add new item";
+
+        //  fetches Categories from Firestore
+        ArrayList<String> catOptions = new ArrayList<>();
+        CollectionReference catColRef = databaseInstance.collection("Options");
+        final DocumentReference catDocRef = catColRef.document("Ingredient Categories");
+        catDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    catOptions.clear();
+                    catOptions.add(addOption);
+                    catOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("category data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("category data", "Current data: null");
+                }
+            }
+        });
+
+        //  fetches Locations from Firestore
+        ArrayList<String> locOptions = new ArrayList<>();
+        CollectionReference locColRef = databaseInstance.collection("Options");
+        final DocumentReference locDocRef = locColRef.document("Locations");
+
+        locDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    locOptions.clear();
+                    locOptions.add(addOption);
+                    locOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("location data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("location data", "Current data: null");
+                }
+            }
+        });
+
+        //  fetches Units from Firestore
+        ArrayList<String> unitOptions = new ArrayList<>();
+        CollectionReference unitColRef = databaseInstance.collection("Options");
+        final DocumentReference unitDocRef = unitColRef.document("Units");
+
+        unitDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    unitOptions.clear();
+                    unitOptions.add(addOption);
+                    unitOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("unit data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("unit data", "Current data: null");
+                }
+            }
+        });
+
+
+
+        //  listener for each Ingredient in list
+        ArrayList<String> what;
         ingredientList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), ViewIngredientActivity.class);
                 clickedIngredient = (StoredIngredient) ingredientAdapter.getItem(i);
                 intent.putExtra("INGREDIENT", clickedIngredient);
+                intent.putExtra("CATEGORIES", catOptions);
+                intent.putExtra("LOCATIONS", locOptions);
+                intent.putExtra("UNITS", unitOptions);
                 activityResultLauncher.launch(intent);
             }
         });
 
-
+        //  handles returning from editing, adding, or deleting and Ingredient
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
@@ -141,17 +227,21 @@ public class IngredientListActivity extends AppCompatActivity {
             }
         });
 
+        //  add new Ingredient button
         FloatingActionButton addIngredientButton = findViewById(R.id.add_item_button);
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 // add ingredient activity
                 Intent intent = new Intent(getApplicationContext(), AddIngredientActivity.class);
+                intent.putExtra("CATEGORIES", catOptions);
+                intent.putExtra("LOCATIONS", locOptions);
+                intent.putExtra("UNITS", unitOptions);
                 activityResultLauncher.launch(intent);
             }
         });
 
-
+        //  sorting Ingredient list
         sortButton.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {

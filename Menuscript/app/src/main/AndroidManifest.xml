@@ -23,11 +23,13 @@
         <activity
             android:name=".ViewRecipeActivity"
             android:parentActivityName=".RecipeListActivity"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".AddRecipeActivity"
             android:parentActivityName=".RecipeListActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".AddIngredientActivity"
             android:parentActivityName=".IngredientListActivity"
@@ -50,6 +52,10 @@
             android:name=".MealPlanActivity"
             android:parentActivityName=".MainMenuActivity"
             android:windowSoftInputMode="adjustPan"
+            android:exported="false" />
+        <activity
+            android:name=".EditIngredientInRecipeActivity"
+            android:parentActivityName=".ViewRecipeActivity"
             android:exported="false" />
         <activity
             android:name=".MainMenuActivity"
