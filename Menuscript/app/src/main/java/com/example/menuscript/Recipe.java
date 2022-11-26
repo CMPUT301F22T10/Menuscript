@@ -1,8 +1,12 @@
 package com.example.menuscript;
 
 import android.graphics.Bitmap;
+import android.os.Build;
+import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.HashMap;
 
 /**
  * This class creates/defines a Recipe object with eight variables:
@@ -38,7 +42,6 @@ public class Recipe {
      */
 
     public Recipe(String title, int time, float servings, String category, String comments, byte[] image, ArrayList<Ingredient> ingredients) {
-        //ADD BYTE[] BACK TO CONSTRUCTOR
         this.title = title;
         this.time = time;
         this.servings = servings;
@@ -80,6 +83,31 @@ public class Recipe {
         return ingredients;
     }
 
+    public ArrayList<HashMap<String,String>> getHashedIngredients() {
+        ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
+
+        for(Ingredient ingredient : this.ingredients) {
+            HashMap<String,String> hm = new HashMap<String,String>();
+            hm.put("amount", String.valueOf(ingredient.getAmount()));
+            hm.put("category", ingredient.getCategory());
+            hm.put("description", ingredient.getDescription());
+            hm.put("unit", ingredient.getUnit());
+            list.add(hm);
+        }
+
+        return list;
+    }
+
+    public String getEncodedImage(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            //Log.d("myTag", "This is it: " + Base64.getEncoder().encodeToString(this.image));
+            return Base64.getEncoder().encodeToString(this.image);
+        }
+        else{
+            return null;
+        }
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
@@ -103,4 +131,18 @@ public class Recipe {
     public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
+
+    public HashMap<String, Object> asHashMap () {
+        HashMap<String, Object> data = new HashMap<>();
+        data.put("title", this.title);
+        data.put("time", this.time); //its a number in the database? maybe shouldn't string valueof it?
+        data.put("servings", String.valueOf(this.servings));
+        data.put("category", this.category);
+        data.put("comments", this.comments);
+        data.put("image", getEncodedImage());
+        ArrayList<HashMap<String,String>> list = getHashedIngredients();
+        data.put("ingredients",list);
+        return data;
+    }
+
 }

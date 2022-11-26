@@ -1,5 +1,5 @@
 *.iml
-.gradle
+/Menuscript/.gradle
 /Menuscript/local.properties
 /Menuscript/.idea/
 /Menuscript/.idea/caches
