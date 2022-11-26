@@ -101,7 +101,7 @@ public class EditIngredientInRecipeActivity extends AppCompatActivity implements
         if (viewedIngredient.getUnit() != null && unitOptions.contains(viewedIngredient.getUnit())) {
             ingredientUnit.setSelection(unitOptions.indexOf(viewedIngredient.getUnit()));
         } else if (!unitOptions.contains(viewedIngredient.getUnit())) {
-            unitOptions.add(0, viewedIngredient.getCategory());
+            unitOptions.add(0, viewedIngredient.getUnit());
             unitAdapter.notifyDataSetChanged();
             ingredientUnit.setSelection(0);
         } else {
@@ -162,7 +162,7 @@ public class EditIngredientInRecipeActivity extends AppCompatActivity implements
     }
 
     /**
-     * Handles returning from AddOptionFragment when adding a new category, location, or unit
+     * Handles returning from AddOptionFragment when adding a new category or unit
      *
      * @param option
      * @param tag
@@ -176,7 +176,7 @@ public class EditIngredientInRecipeActivity extends AppCompatActivity implements
                 catAdapter.notifyDataSetChanged();
                 ingredientCategory.setSelection(0);
             } else if (tag == 3) {
-                db.addLocation(option);
+                db.addUnit(option);
                 unitOptions.remove("");
                 unitOptions.add(0, option);
                 unitAdapter.notifyDataSetChanged();

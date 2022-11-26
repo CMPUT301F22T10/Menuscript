@@ -393,7 +393,7 @@ public class ViewRecipeActivity extends AppCompatActivity implements AddOptionFr
 
     public void onAddOKPressed(String option, int tag) {
         if (option != null) {
-            db.addIngredientCategory(option);
+            db.addRecipeCategory(option);
             catOptions.remove("");
             catOptions.add(0, option);
             catAdapter.notifyDataSetChanged();
