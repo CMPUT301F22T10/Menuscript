@@ -54,42 +54,37 @@ public class AddOptionFragment extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
+        builder.setView(view);
         if (Objects.equals(this.getTag(), "ADD CATEGORY")) {
-            builder.setView(view)
-                    .setTitle("Add category")
-                    .setNegativeButton("Cancel", null)
+            builder.setTitle("Add category")
                     .setPositiveButton("OK", (dialogInterface, i) -> {
 
                         String option = editOption.getText().toString();
 
                         listener.onAddOKPressed(option, 1);
                     });
-            return builder.create();
         } else if (Objects.equals(this.getTag(), "ADD LOCATION")) {
             editOption.setHint("Location");
-            builder.setView(view)
-                    .setTitle("Add location")
-                    .setNegativeButton("Cancel", null)
+            builder.setTitle("Add location")
                     .setPositiveButton("OK", (dialogInterface, i) -> {
 
                         String option = editOption.getText().toString();
 
                         listener.onAddOKPressed(option, 2);
                     });
-            return builder.create();
         } else {
             editOption.setHint("Unit");
-            builder.setView(view)
-                    .setTitle("Add unit")
-                    .setNegativeButton("Cancel", null)
+            builder.setTitle("Add unit")
                     .setPositiveButton("OK", (dialogInterface, i) -> {
 
                         String option = editOption.getText().toString();
 
                         listener.onAddOKPressed(option, 3);
                     });
-            return builder.create();
         }
+
+        builder.setNegativeButton("Cancel", null);
+        return builder.create();
     }
 
 }

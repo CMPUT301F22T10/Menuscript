@@ -85,18 +85,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/countEditText_recipe" />
 
-    <EditText
-        android:id="@+id/unitEditText_recipe"
+    <Spinner
+        android:id="@+id/unitSpinner_recipe"
         style="@style/MainBody"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:ems="8"
-        android:importantForAutofill="no"
-        android:inputType="text"
+        android:background="@android:drawable/edit_text"
+        android:gravity="center"
+        android:spinnerMode="dropdown"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/countEditText_recipe"
+        app:layout_constraintStart_toStartOf="@+id/countEditText_recipe"
         app:layout_constraintTop_toBottomOf="@id/unitTextView_recipe" />
 
 
@@ -111,7 +110,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/unitEditText_recipe" />
+        app:layout_constraintTop_toBottomOf="@+id/unitSpinner_recipe" />
 
     <Spinner
         android:id="@+id/categorySpinner_recipe"
@@ -122,8 +121,8 @@
         android:gravity="center"
         android:spinnerMode="dropdown"
         android:textAlignment="center"
-        app:layout_constraintEnd_toEndOf="@+id/unitEditText_recipe"
-        app:layout_constraintStart_toStartOf="@+id/unitEditText_recipe"
+        app:layout_constraintEnd_toEndOf="@+id/countEditText_recipe"
+        app:layout_constraintStart_toStartOf="@+id/countEditText_recipe"
         app:layout_constraintTop_toBottomOf="@id/selectCategoryTextView_recipe" />
 
 

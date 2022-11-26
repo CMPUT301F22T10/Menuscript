@@ -99,7 +99,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         ingredientAmount.setText((String.valueOf(viewedIngredient.getAmount())));
         ingredientDate.setText(viewedIngredient.getDate());
 
-        if (viewedIngredient.getCategory() != null) {
+        if (viewedIngredient.getCategory() != null && catOptions.contains(viewedIngredient.getCategory())) {
             ingredientCategory.setSelection(catOptions.indexOf(viewedIngredient.getCategory()));
         } else if (!catOptions.contains(viewedIngredient.getCategory())) {
             catOptions.add(0, viewedIngredient.getCategory());
@@ -111,7 +111,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             ingredientCategory.setSelection(0);
         }
 
-        if (viewedIngredient.getLocation() != null) {
+        if (viewedIngredient.getLocation() != null && locOptions.contains(viewedIngredient.getLocation())) {
             ingredientLocation.setSelection(locOptions.indexOf(viewedIngredient.getLocation()));
         } else if (!locOptions.contains(viewedIngredient.getLocation())) {
             locOptions.add(0, viewedIngredient.getCategory());
@@ -123,7 +123,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             ingredientLocation.setSelection(0);
         }
 
-        if (viewedIngredient.getUnit() != null) {
+        if (viewedIngredient.getUnit() != null && unitOptions.contains(viewedIngredient.getUnit())) {
             ingredientUnit.setSelection(unitOptions.indexOf(viewedIngredient.getUnit()));
         } else if (!unitOptions.contains(viewedIngredient.getUnit())) {
             unitOptions.add(0, viewedIngredient.getCategory());

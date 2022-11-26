@@ -38,36 +38,22 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Locale;
 
-public class EditIngredientInRecipeActivity extends AppCompatActivity implements AddOptionFragment.OnFragmentInteractionListener  {
+public class EditIngredientInRecipeActivity extends AppCompatActivity implements AddOptionFragment.OnFragmentInteractionListener {
 
     private EditText ingredientDescription;
-
     private EditText ingredientAmount;
-    //private EditText ingredientDate;
-    private EditText ingredientUnit;
-    //private Spinner ingredientLocation;
+    private Spinner ingredientUnit;
     private Spinner ingredientCategory;
 
-    //ArrayAdapter<String> locAdapter;
     ArrayAdapter<String> catAdapter;
-
-    //ArrayList<String> locOptions;
     ArrayList<String> catOptions;
 
-    //Calendar calendar = Calendar.getInstance();
+    ArrayAdapter<String> unitAdapter;
+    ArrayList<String> unitOptions;
 
     private FirebaseFirestore databaseInstance;
     private CollectionReference collectionReference;
     DatabaseManager db = new DatabaseManager(this);
-
-    /*
-    private void updateLabel() {
-        String format = "yyyy-MM-dd";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.CANADA);
-
-        ingredientDate.setText(dateFormat.format(calendar.getTime()));
-    }
-     */
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,110 +65,58 @@ public class EditIngredientInRecipeActivity extends AppCompatActivity implements
 
         ingredientDescription = findViewById(R.id.itemDescriptionEditText_recipe);
         ingredientAmount = findViewById(R.id.countEditText_recipe);
-        //ingredientDate = findViewById(R.id.bestBeforeEditText_recipe); //to be excluded
-        ingredientUnit = findViewById(R.id.unitEditText_recipe);
-        //ingredientLocation = (Spinner) findViewById(R.id.locationSpinner_recipe); //to be excluded
-        ingredientCategory = (Spinner) findViewById(R.id.categorySpinner_recipe);
+        ingredientUnit = findViewById(R.id.unitSpinner_recipe);
+        ingredientCategory = findViewById(R.id.categorySpinner_recipe);
+
+
+        catOptions = (ArrayList<String>) getIntent().getSerializableExtra("CATEGORIES");
+        unitOptions = (ArrayList<String>) getIntent().getSerializableExtra("UNITS");
+
+        catAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, catOptions);
+        unitAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, unitOptions);
+
+        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        unitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        ingredientCategory.setAdapter(catAdapter);
+        ingredientUnit.setAdapter(unitAdapter);
 
         Ingredient viewedIngredient = (Ingredient) getIntent().getSerializableExtra("INGREDIENT");
 
-        //locOptions = new ArrayList<>();
-        catOptions = new ArrayList<>();
-
-        final String addOption = "Add new item";
-
-        //locOptions.add(addOption);
-        catOptions.add(0, "");
-
-        final DocumentReference catRef = collectionReference.document("Ingredient Categories");
-        catRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
-                if (snapshot != null && snapshot.exists()) {
-                    catOptions.clear();
-                    catOptions.add(addOption);
-                    catOptions.addAll(0, snapshot.getData().keySet());
-                    Log.d(TAG, "Current data: " + snapshot.getData());
-                } else {
-                    Log.d(TAG, "Current data: null");
-                }
-                catAdapter.notifyDataSetChanged();
-            }
-        });
-
         ingredientDescription.setText(viewedIngredient.getDescription());
         ingredientAmount.setText((String.valueOf(viewedIngredient.getAmount())));
-        //ingredientDate.setText(viewedIngredient.getDate());
-        ingredientUnit.setText(viewedIngredient.getUnit());
 
-        Log.d("i hate tgis", catOptions.toString());
-        ingredientCategory.setSelection(catOptions.indexOf(viewedIngredient.getCategory()));
+        if (viewedIngredient.getCategory() != null && catOptions.contains(viewedIngredient.getCategory())) {
+            ingredientCategory.setSelection(catOptions.indexOf(viewedIngredient.getCategory()));
+        } else if (!catOptions.contains(viewedIngredient.getCategory())) {
+            catOptions.add(0, viewedIngredient.getCategory());
+            catAdapter.notifyDataSetChanged();
+            ingredientCategory.setSelection(0);
+        } else {
+            catOptions.add(0, "");
+            catAdapter.notifyDataSetChanged();
+            ingredientCategory.setSelection(0);
+        }
 
+        if (viewedIngredient.getUnit() != null && unitOptions.contains(viewedIngredient.getUnit())) {
+            ingredientUnit.setSelection(unitOptions.indexOf(viewedIngredient.getUnit()));
+        } else if (!unitOptions.contains(viewedIngredient.getUnit())) {
+            unitOptions.add(0, viewedIngredient.getCategory());
+            unitAdapter.notifyDataSetChanged();
+            ingredientUnit.setSelection(0);
+        } else {
+            unitOptions.add(0, "");
+            unitAdapter.notifyDataSetChanged();
+            ingredientUnit.setSelection(0);
+        }
 
-        //locAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locOptions);
-        catAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, catOptions);
-
-        //locAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        //ingredientLocation.setAdapter(locAdapter);
-        ingredientCategory.setAdapter(catAdapter);
-
-        /*
-        DatePickerDialog.OnDateSetListener datePicker = (datePicker1, year, month, day) -> {
-            calendar.set(Calendar.YEAR, year);
-            calendar.set(Calendar.MONTH, month);
-            calendar.set(Calendar.DAY_OF_MONTH, day);
-            updateLabel();
-        };
-
-        ingredientDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View view, boolean b) {
-                if (b) {
-                    new DatePickerDialog(EditIngredientInRecipeActivity.this, datePicker, calendar
-                            .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                            calendar.get(Calendar.DAY_OF_MONTH)
-                    ).show();
-                }
-            }
-        });
-
-
-
-        ingredientDate.setOnClickListener(v -> new DatePickerDialog(this, datePicker, calendar
-                .get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-        ).show());
-        */
-
-        ingredientCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (adapterView.getItemAtPosition(i) == addOption) {
-                    new AddOptionFragment().show(getSupportFragmentManager(), "ADD CATEGORY");
-                } else {
-//                    ingredientCategory.setSelection(i);
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
 
         Button submitButton = findViewById(R.id.submitButton_recipe);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent = onButtonClick(intent);
+                onButtonClick(intent);
                 setResult(401, intent);
                 finish();
 
@@ -194,7 +128,7 @@ public class EditIngredientInRecipeActivity extends AppCompatActivity implements
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent = onButtonClick(intent);
+                onButtonClick(intent);
                 setResult(402, intent);
                 finish();
 
@@ -214,8 +148,8 @@ public class EditIngredientInRecipeActivity extends AppCompatActivity implements
         } else {
             intent.putExtra("amount", 0.0f);
         }
-        if (!ingredientUnit.getText().toString().equals("")) {
-            intent.putExtra("unit", ingredientUnit.getText().toString());
+        if (!ingredientUnit.getSelectedItem().toString().equals("")) {
+            intent.putExtra("unit", ingredientUnit.getSelectedItem().toString());
         } else {
             intent.putExtra("unit", "No Unit");
         }
@@ -227,10 +161,27 @@ public class EditIngredientInRecipeActivity extends AppCompatActivity implements
         return intent;
     }
 
-    public void onAddOKPressed(String option) {
+    /**
+     * Handles returning from AddOptionFragment when adding a new category, location, or unit
+     *
+     * @param option
+     * @param tag
+     */
+    public void onAddOKPressed(String option, int tag) {
         if (option != null) {
-            db.addIngredientCategory(option);
-            catAdapter.notifyDataSetChanged();
+            if (tag == 1) {
+                db.addIngredientCategory(option);
+                catOptions.remove("");
+                catOptions.add(0, option);
+                catAdapter.notifyDataSetChanged();
+                ingredientCategory.setSelection(0);
+            } else if (tag == 3) {
+                db.addLocation(option);
+                unitOptions.remove("");
+                unitOptions.add(0, option);
+                unitAdapter.notifyDataSetChanged();
+                ingredientUnit.setSelection(0);
+            }
         }
     }
 }

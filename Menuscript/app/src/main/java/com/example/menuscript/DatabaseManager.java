@@ -76,6 +76,8 @@ public class DatabaseManager {
 
         ArrayList<String> docID = new ArrayList<>();
 
+        Log.d("THIS IS WHAT THE HASHMAP READS AS", String.valueOf(data.keySet()));
+
         collectionReference
                 .whereEqualTo("description", storedIngredient.getDescription())
                 .whereEqualTo("category", storedIngredient.getCategory())
@@ -162,7 +164,7 @@ public class DatabaseManager {
                             if (task.isSuccessful()){
                                 for(QueryDocumentSnapshot document : task.getResult()){
                                     docID.add(document.getId());
-                                    Log.d("myTag", document.getId() +"=>"+document.getData());
+                                    Log.d("what", document.getId() + " => " + document.getData());
 
                                     String toDelete = docID.get(0);
                                     Log.d("myTag",toDelete);
