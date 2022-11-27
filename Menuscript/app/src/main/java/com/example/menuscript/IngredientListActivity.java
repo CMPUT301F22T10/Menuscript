@@ -205,9 +205,12 @@ public class IngredientListActivity extends AppCompatActivity {
                     String location = intent.getStringExtra("location");
 
                     if (result.getResultCode() == 400) {
-                        StoredIngredient newIngredient = new StoredIngredient(description, amount, unit, category, date, location);
-                        db.addStoredIngredient(newIngredient);
-                        ingredients.add(newIngredient);
+                        /**
+                         * Moved to AddIngredientActivity class so that database is updated in that activity
+                         */
+                        //StoredIngredient newIngredient = new StoredIngredient(description, amount, unit, category, date, location);
+                        //db.addStoredIngredient(newIngredient);
+                        //ingredients.add(newIngredient);
 
                     } else if (result.getResultCode() == 401) {
                         StoredIngredient edittedIngredient = new StoredIngredient(description, amount, unit, category, date, location);

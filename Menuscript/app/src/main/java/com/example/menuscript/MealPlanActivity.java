@@ -217,7 +217,7 @@ public class MealPlanActivity extends AppCompatActivity {
                     Log.d(TAG,String.valueOf(doc.getData().get("title")));
                     String recipeTitle = (String) doc.getData().get("title");
                     String recipeKey = doc.getId();
-                    mealPlanRecipesList.add(recipeTitle);
+                    mealPlanRecipesList.add(recipeTitle + " (" + doc.getData().get("servings") + " servings)");
                     mealPlanRecipeKeys.add(recipeKey);
                 }
                 recipesAdapter.notifyDataSetChanged();
@@ -233,14 +233,46 @@ public class MealPlanActivity extends AppCompatActivity {
                     Log.d(TAG,String.valueOf(doc.getData().get("description")));
                     String ingredientDescription = (String) doc.getData().get("description");
                     String ingredientKey = doc.getId();
-                    mealPlanIngredientsList.add(ingredientDescription);
+                    String ingredientUnit = (String) doc.getData().get("unit");
+                    String ingredientAmount = (String) doc.getData().get("amount");
+                    mealPlanIngredientsList.add(ingredientDescription +" (" + ingredientAmount + " " + ingredientUnit + ")");
                     mealPlanIngredientKeys.add(ingredientKey);
                 }
                 ingredientsAdapter.notifyDataSetChanged();
             }
         });
 
+    clearMealPlanButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MealPlanActivity.this);
+            builder
+                    .setMessage("Delete entire meal plan?")
+                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            daysCollectionReference.document("Days").update("days","0");
+                            days = "0";
+                            daysEditText.setText(days);
 
+                            for (String recipeKey : mealPlanRecipeKeys) {
+                                mealPlanRecipesCollectionReference.document(recipeKey).delete();
+                            }
+
+                            for (String ingredientKey : mealPlanIngredientKeys){
+                                mealPlanIngredientCollectionReference.document(ingredientKey).delete();
+                            }
+                        }
+                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+    });
 
     }
 }

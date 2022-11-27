@@ -2,6 +2,7 @@ package com.example.menuscript;
 
 
 import static android.content.ContentValues.TAG;
+import static android.provider.MediaStore.MediaColumns.DOCUMENT_ID;
 
 import android.app.Activity;
 import android.content.Context;
@@ -126,10 +127,12 @@ public class DatabaseManager {
 
     public void deleteStoredIngredient(StoredIngredient storedIngredient) {
         collectionReference = databaseInstance.collection("StoredIngredients");
+        CollectionReference  mealPlanIngredientsCollectionReference = databaseInstance.collection("MealPlanIngredients");
 
         HashMap<String, Object> data = storedIngredient.asHashMap();
 
         ArrayList<String> docID = new ArrayList<>();
+
 
         collectionReference
                 .whereEqualTo("description", storedIngredient.getDescription())
@@ -147,6 +150,16 @@ public class DatabaseManager {
                                 Log.d("what", document.getId() + " => " + document.getData());
 
                                 String toDelete = docID.get(0);
+                                //delete ingredient from meal plan
+                                mealPlanIngredientsCollectionReference
+                                        .whereEqualTo(DOCUMENT_ID, toDelete)
+                                        .get()
+                                        .addOnCompleteListener(task2 -> {
+                                            if (task2.isSuccessful()){
+                                                mealPlanIngredientsCollectionReference.document(toDelete).delete();
+                                            }
+                                        });
+
                                 Log.d("non nonono", toDelete);
                                 Log.d("mmm", docID.toString());
                                 collectionReference
@@ -172,10 +185,12 @@ public class DatabaseManager {
                     }
                 });
 
+
     }
 
     public void editIngredient(StoredIngredient original, StoredIngredient replacement) {
         collectionReference = databaseInstance.collection("StoredIngredients");
+        CollectionReference  mealPlanIngredientsCollectionReference = databaseInstance.collection("MealPlanIngredients");
 
         ArrayList<String> docID = new ArrayList<>();
 
@@ -193,6 +208,18 @@ public class DatabaseManager {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 docID.add(document.getId());
                                 String toEdit = docID.get(0);
+
+                                //update meal plan as well if description or unit is changed
+                                mealPlanIngredientsCollectionReference
+                                        .whereEqualTo(DOCUMENT_ID, toEdit )
+                                        .get()
+                                        .addOnCompleteListener(task2 -> {
+                                            if (task2.isSuccessful()){
+                                                mealPlanIngredientsCollectionReference.document(toEdit).update("description", replacement.getDescription());
+                                                mealPlanIngredientsCollectionReference.document(toEdit).update("unit", replacement.getUnit());
+                                            }
+                                        });
+
                                 collectionReference
                                         .document(toEdit)
                                         .set(replacement)
@@ -241,6 +268,7 @@ public class DatabaseManager {
 
     public void deleteRecipe(Recipe recipe) {
         collectionReference = databaseInstance.collection("Recipes");
+        CollectionReference mealPlanRecipesCollectionReference = databaseInstance.collection("MealPlanRecipes");
 
         //HashMap<String,Object> data = recipe.asHashMap();
 
@@ -261,9 +289,22 @@ public class DatabaseManager {
                             if (task.isSuccessful()){
                                 for(QueryDocumentSnapshot document : task.getResult()){
                                     docID.add(document.getId());
+
+
                                     Log.d("what", document.getId() + " => " + document.getData());
 
                                     String toDelete = docID.get(0);
+
+                                    //delete recipe from meal plan
+                                    mealPlanRecipesCollectionReference
+                                            .whereEqualTo(DOCUMENT_ID, toDelete)
+                                            .get()
+                                            .addOnCompleteListener(task2 -> {
+                                                if (task2.isSuccessful()){
+                                                    mealPlanRecipesCollectionReference.document(toDelete).delete();
+                                                }
+                                            });
+
                                     Log.d("myTag",toDelete);
                                     Log.d("myTag",docID.toString());
                                     collectionReference
@@ -293,7 +334,7 @@ public class DatabaseManager {
 
     public void editRecipe(Recipe recipe, Recipe edittedRecipe) {
         collectionReference = databaseInstance.collection("Recipes");
-
+        CollectionReference mealPlanRecipesCollectionReference = databaseInstance.collection("MealPlanRecipes");
         //HashMap<String,Object> data = recipe.asHashMap();
 
         ArrayList<String> docID = new ArrayList<>();
@@ -313,8 +354,20 @@ public class DatabaseManager {
                         if (task.isSuccessful()){
                             for(QueryDocumentSnapshot document : task.getResult()){
                                 docID.add(document.getId());
+
                                 Log.d("myTag", document.getId() +"=>"+document.getData());
                                 String toEdit = docID.get(0);
+
+                                //update meal plan as well if description changed
+                                mealPlanRecipesCollectionReference
+                                        .whereEqualTo(DOCUMENT_ID, toEdit  )
+                                        .get()
+                                        .addOnCompleteListener(task2 -> {
+                                            if (task2.isSuccessful()){
+                                                mealPlanRecipesCollectionReference.document(toEdit ).update("title", edittedRecipe.getTitle());
+                                            }
+                                        });
+
                                 Log.d("myTag",toEdit);
                                 Log.d("myTag",docID.toString());
                                 collectionReference

@@ -1,6 +1,7 @@
 package com.example.menuscript;
 
 import static android.content.ContentValues.TAG;
+import static android.view.accessibility.AccessibilityEvent.INVALID_POSITION;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -25,6 +26,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -33,6 +36,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * class for adding a ingredient to meal plan.
@@ -43,6 +47,7 @@ import java.util.HashMap;
 public class AddIngredientMealPlanActivity extends AppCompatActivity {
 
     private TextView selectItemTextView;
+    private TextView selectAmountTextView;
     private Button addNewIngredientButton;
     private EditText ingredientAmountEditText;
     private Button addToMealPlanButton;
@@ -51,6 +56,7 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
     private CollectionReference ingredientCollectionReference;
     private CollectionReference mealPlanIngredientCollectionReference;
     private ArrayList ingredientsList;
+    private ArrayList ingredientUnitList;
     private ArrayList spinnerArray;
     //meal plan ingredients list  of ingredient keys so ingredients already in the meal plan are not shown in the spinner
     private ArrayList mealPlanIngredientsList;
@@ -60,6 +66,7 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
     private String ingredientKeytoAdd;
     private String ingredientDescriptiontoAdd;
     private String ingredientAmount;
+    private String ingredientUnittoAdd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -69,10 +76,12 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
         mealPlanIngredientsList = new ArrayList<>();
         ingredientsList = new ArrayList<>();
         spinnerArray = new ArrayList<>();
+        ingredientUnitList = new ArrayList<>();
         ingredientKeytoAdd = null;
         ingredientDescriptiontoAdd = null;
         ingredientAmount = null;
         selectItemTextView = findViewById(R.id.selectItemTextView);
+        selectAmountTextView = findViewById(R.id.selectQuantityTextView);
         addNewIngredientButton = findViewById(R.id.NewItemButton);
         ingredientAmountEditText = findViewById(R.id.itemAmountEditText);
         addToMealPlanButton = findViewById(R.id.addButton);
@@ -95,9 +104,6 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
             Log.d("ADDINGREDIENT","NO MEAL PLAN INGREDIENT KEY PASSED");
         }
 
-        for (Object ingredientkey : mealPlanIngredientsList) {
-            Log.d("ADDINGREDIENT", (String) ingredientkey);
-        }
         //get meal plan ingredients
         mealPlanIngredientCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -109,9 +115,6 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
                     String ingredientKey = doc.getId();
                     mealPlanIngredientsList.add(ingredientKey);
                 }
-                for (Object ingredientkey : mealPlanIngredientsList) {
-                    Log.d("ADDINGREDIENT2", (String) ingredientkey);
-                }
             }
         });
 
@@ -120,23 +123,20 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
             public void onEvent(@Nullable QuerySnapshot queryDocumentsSnapshots, @Nullable FirebaseFirestoreException error) {
                 spinnerArray.clear();
                 ingredientsList.clear();
+                ingredientUnitList.clear();
 
                 for (QueryDocumentSnapshot doc : queryDocumentsSnapshots) {
                     Log.d(TAG,String.valueOf(doc.getData().get("description")));
 
                     String ingredientKey = doc.getId();
                     String ingredientDescription = (String) doc.getData().get("description");
+                    String ingredientUnit = (String) doc.getData().get("unit");
                     if (!(mealPlanIngredientsList.contains( ingredientKey))){
                         ingredientsList.add(doc.getId());
                         spinnerArray.add(ingredientDescription);
+                        ingredientUnitList.add(ingredientUnit);
                     }
 
-                }
-                for (Object ingredientkey : spinnerArray) {
-                    Log.d("SPINNERARRAY", (String) ingredientkey);
-                }
-                for (Object ingredientkey : ingredientsList) {
-                    Log.d("ingredients", (String) ingredientkey);
                 }
                 spinnerAdapter.notifyDataSetChanged();
             }
@@ -147,13 +147,14 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 ingredientDescriptiontoAdd = (String) spinnerArray.get(i);
                 ingredientKeytoAdd = (String) ingredientsList.get(i);
+                ingredientUnittoAdd = (String) ingredientUnitList.get(i);
+                selectAmountTextView.setText("Select amount (" + ingredientUnittoAdd + ") :");
 
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
                 ingredientDescriptiontoAdd = null;
-                ingredientKeytoAdd = null;
             }
 
         });
@@ -166,11 +167,23 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ingredientAmount = ingredientAmountEditText.getText().toString();
+                int index = ingredientsSpinner.getSelectedItemPosition();
+                if (index != INVALID_POSITION){
+                    ingredientDescriptiontoAdd = (String) spinnerArray.get(index);
+                    ingredientKeytoAdd = (String) ingredientsList.get(index);
+                    ingredientUnittoAdd = (String) ingredientUnitList.get(index);
+                }
+                else{
+                    ingredientDescriptiontoAdd = null;
+                    ingredientKeytoAdd = null;
+                    ingredientUnittoAdd = null;
+                }
                 HashMap<String, String> data = new HashMap<>();
 
                 if (ingredientDescriptiontoAdd != null && ingredientKeytoAdd.length() > 0 && ingredientAmount.length() > 0) {
                     data.put("amount", ingredientAmount);
                     data.put("description", ingredientDescriptiontoAdd);
+                    data.put("unit", ingredientUnittoAdd);
 
                     mealPlanIngredientCollectionReference
                             .document(ingredientKeytoAdd)
@@ -200,13 +213,90 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
             }
         });
 
+
+        //  fetches Categories from Firestore
+        final String addOption = "Add new item";
+        ArrayList<String> catOptions = new ArrayList<>();
+        CollectionReference catColRef = databaseInstance.collection("Options");
+        final DocumentReference catDocRef = catColRef.document("Ingredient Categories");
+        catDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    catOptions.clear();
+                    catOptions.add(addOption);
+                    catOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("category data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("category data", "Current data: null");
+                }
+            }
+        });
+
+        //  fetches Locations from Firestore
+        ArrayList<String> locOptions = new ArrayList<>();
+        CollectionReference locColRef = databaseInstance.collection("Options");
+        final DocumentReference locDocRef = locColRef.document("Locations");
+
+        locDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    locOptions.clear();
+                    locOptions.add(addOption);
+                    locOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("location data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("location data", "Current data: null");
+                }
+            }
+        });
+        //  fetches Units from Firestore
+        ArrayList<String> unitOptions = new ArrayList<>();
+        CollectionReference unitColRef = databaseInstance.collection("Options");
+        final DocumentReference unitDocRef = unitColRef.document("Units");
+
+        unitDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    unitOptions.clear();
+                    unitOptions.add(addOption);
+                    unitOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("unit data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("unit data", "Current data: null");
+                }
+            }
+        });
+
         addNewIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent addIngredientIntent = new Intent(AddIngredientMealPlanActivity.this, AddIngredientActivity.class);
+                addIngredientIntent.putExtra("CATEGORIES", catOptions);
+                addIngredientIntent.putExtra("LOCATIONS", locOptions);
+                addIngredientIntent.putExtra("UNITS", unitOptions);
                 AddIngredientMealPlanActivity.this.startActivity(addIngredientIntent);
             }
         });
+
+
 
 
     }

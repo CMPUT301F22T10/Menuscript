@@ -1,6 +1,7 @@
 package com.example.menuscript;
 
 import static android.content.ContentValues.TAG;
+import static android.view.accessibility.AccessibilityEvent.INVALID_POSITION;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -29,6 +32,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
+
 /**
  * class for adding a recipe to meal plan.
  * need to pass initial list of meal plan recipe keys from previous activity
@@ -132,7 +137,7 @@ public class AddRecipeMealPlanActivity extends AppCompatActivity {
             }
         });
 
-        recipesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+/*        recipesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 recipeTitletoAdd = (String) spinnerArray.get(i);
@@ -146,7 +151,7 @@ public class AddRecipeMealPlanActivity extends AppCompatActivity {
                 recipeKeytoAdd = null;
             }
 
-        });
+        });*/
 
         recipeServingsTextView.setText("Select Number of Servings");
         selectItemTextView.setText("Select Recipe");
@@ -157,6 +162,15 @@ public class AddRecipeMealPlanActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 recipeServings = recipeServingsEditText.getText().toString();
+                int index = recipesSpinner.getSelectedItemPosition();
+                if (index != INVALID_POSITION){
+                    recipeTitletoAdd = (String) spinnerArray.get(index);
+                    recipeKeytoAdd = (String) recipesList.get(index);
+                }
+                else{
+                    recipeTitletoAdd = null;
+                    recipeKeytoAdd = null;
+                }
                 HashMap<String, String> data = new HashMap<>();
 
                 if (recipeTitletoAdd != null && recipeKeytoAdd.length() > 0 && recipeServings.length() > 0) {
@@ -191,10 +205,33 @@ public class AddRecipeMealPlanActivity extends AppCompatActivity {
             }
         });
 
+        //  fetches Categories from Firestore
+        ArrayList<String> catOptions = new ArrayList<>();
+        CollectionReference catColRef = databaseInstance.collection("Options");
+        final DocumentReference catDocRef = catColRef.document("Recipe Categories");
+        catDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    catOptions.clear();
+                    catOptions.add("Add new item");
+                    catOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("category data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("category data", "Current data: null");
+                }
+            }
+        });
         addNewRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent addRecipeIntent = new Intent(AddRecipeMealPlanActivity.this, AddRecipeActivity.class);
+                addRecipeIntent.putExtra("CATEGORIES", catOptions);
                 AddRecipeMealPlanActivity.this.startActivity(addRecipeIntent);
             }
         });

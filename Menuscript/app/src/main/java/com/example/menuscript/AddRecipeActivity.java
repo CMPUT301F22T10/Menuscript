@@ -268,30 +268,42 @@ public class AddRecipeActivity extends AppCompatActivity implements AddOptionFra
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                if (!recipeTitle.getText().toString().equals("")) {
-                    intent.putExtra("title", recipeTitle.getText().toString());
+
+                String title = recipeTitle.getText().toString();
+                String time = recipeTime.getText().toString();
+                String servings = recipeServings.getText().toString();
+                String category = recipeCategory.getSelectedItem().toString();
+                String comments = recipeComments.getText().toString();
+
+                if (!title.equals("")) {
+                    intent.putExtra("title", title);
                 } else {
-                    intent.putExtra("title", "Unnamed Recipe");
+                    title = "Unnamed Recipe";
+                    intent.putExtra("title", title );
                 }
-                if (!recipeTime.getText().toString().equals("")) {
-                    intent.putExtra("time", Integer.valueOf(recipeTime.getText().toString()));
+                if (!time .equals("")) {
+                    intent.putExtra("time", Integer.valueOf(time));
                 } else {
-                    intent.putExtra("time", 0);
+                    time = "0";
+                    intent.putExtra("time", time);
                 }
-                if (!recipeServings.getText().toString().equals("")) {
-                    intent.putExtra("servings", Float.valueOf(recipeServings.getText().toString()));
+                if (!servings.equals("")) {
+                    intent.putExtra("servings", Float.valueOf(servings));
                 } else {
-                    intent.putExtra("servings", 0f);
+                    servings = "0";
+                    intent.putExtra("servings", Float.valueOf(servings));
                 }
-                if (!recipeCategory.getSelectedItem().toString().equals("")) {
-                    intent.putExtra("category", recipeCategory.getSelectedItem().toString());
+                if (!category.equals("")) {
+                    intent.putExtra("category", category);
                 } else {
-                    intent.putExtra("category", "Uncategorized");
+                    category = "Uncategorized";
+                    intent.putExtra("category", category);
                 }
-                if (!recipeComments.getText().toString().equals("")) {
-                    intent.putExtra("comments", recipeComments.getText().toString());
+                if (!comments.equals("")) {
+                    intent.putExtra("comments", comments);
                 } else {
-                    intent.putExtra("comments", "");
+                    comments = "";
+                    intent.putExtra("comments", comments);
                 }
 
                 Bitmap bitmap = ((BitmapDrawable) recipeImage.getDrawable()).getBitmap();
@@ -307,6 +319,17 @@ public class AddRecipeActivity extends AppCompatActivity implements AddOptionFra
 
 
                 setResult(420, intent);
+
+                //check for what qualifies as an ingredient entry
+                if (!(title == "Unnamed Recipe")) {
+                    //adding to db
+                    Recipe newRecipe = new Recipe(title, Integer.valueOf(time),  Float.valueOf(servings), category, comments, imageByteArray, (ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
+                    db.addRecipe(newRecipe);
+                } else {
+                    CharSequence text = "Missing recipe name, failure to add.";
+                    Toast.makeText(AddRecipeActivity.this, text, Toast.LENGTH_SHORT).show();
+                }
+
                 finish();
 
             }
