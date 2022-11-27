@@ -22,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -30,6 +32,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
+
 /**
  * class for adding a recipe to meal plan.
  * need to pass initial list of meal plan recipe keys from previous activity
@@ -201,10 +205,33 @@ public class AddRecipeMealPlanActivity extends AppCompatActivity {
             }
         });
 
+        //  fetches Categories from Firestore
+        ArrayList<String> catOptions = new ArrayList<>();
+        CollectionReference catColRef = databaseInstance.collection("Options");
+        final DocumentReference catDocRef = catColRef.document("Recipe Categories");
+        catDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    catOptions.clear();
+                    catOptions.add("Add new item");
+                    catOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("category data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("category data", "Current data: null");
+                }
+            }
+        });
         addNewRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent addRecipeIntent = new Intent(AddRecipeMealPlanActivity.this, AddRecipeActivity.class);
+                addRecipeIntent.putExtra("CATEGORIES", catOptions);
                 AddRecipeMealPlanActivity.this.startActivity(addRecipeIntent);
             }
         });

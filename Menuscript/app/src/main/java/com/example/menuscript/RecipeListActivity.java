@@ -204,10 +204,10 @@ public class RecipeListActivity extends AppCompatActivity {
                     Bundle args = intent.getBundleExtra("BUNDLE");
 
                     if(result.getResultCode() == 420) {
-                        //addRecipe
-                        Recipe newRecipe = new Recipe(title, time, servings, category, comments, image, (ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
-                        db.addRecipe(newRecipe);
-                        dataList.add(newRecipe);
+                        //addRecipe - moved to addRecipeActivity class
+                        //Recipe newRecipe = new Recipe(title, time, servings, category, comments, image, (ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
+                        //db.addRecipe(newRecipe);
+                        //dataList.add(newRecipe);
 
                     } else if (result.getResultCode() == 421){
                         //edit/view Recipe
