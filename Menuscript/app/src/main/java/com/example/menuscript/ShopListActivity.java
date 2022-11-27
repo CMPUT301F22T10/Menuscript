@@ -1,5 +1,8 @@
 package com.example.menuscript;
 
+import static android.content.ContentValues.TAG;
+import static android.provider.MediaStore.MediaColumns.DOCUMENT_ID;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -7,15 +10,23 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -25,6 +36,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * This class displays a list of ingredients that are currently in the meal plan.
@@ -48,6 +60,10 @@ public class ShopListActivity extends AppCompatActivity {
 
     ListView shoppingList;
     Ingredient selectedIngredient;
+    StoredIngredient storedIngredient;
+    Button confirmButton;
+    DatabaseManager db = new DatabaseManager(this);
+    private ActivityResultLauncher<Intent> activityResultLauncher;
 
     private FirebaseFirestore databaseInstance;
     private CollectionReference mealPlanIngredientsCollection;
@@ -55,7 +71,6 @@ public class ShopListActivity extends AppCompatActivity {
     private CollectionReference storedIngredientCollection;
     private CollectionReference recipesCollection;
     private Spinner sortSpinner;
-    private ActivityResultLauncher<Intent> activityResultLauncher;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -85,10 +100,12 @@ public class ShopListActivity extends AppCompatActivity {
 
         shoppingList = findViewById(R.id.shopListMainIngredients);
         sortSpinner = findViewById(R.id.shopListMainSpinner);
+        confirmButton = findViewById(R.id.shopListButton);
         shoppingAdapter = new ShopListAdapter(this, ingredientList);
         shoppingList.setAdapter(shoppingAdapter);
         databaseInstance = FirebaseFirestore.getInstance();
         recipesCollection = databaseInstance.collection("Recipes");
+        storedIngredientCollection = databaseInstance.collection("StoredIngredients");
 
 
         for (String key : mealPlanIngredients.keySet()){
@@ -159,6 +176,9 @@ public class ShopListActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Displays information about ingredient clicked
+         */
         shoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -194,25 +214,174 @@ public class ShopListActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+
         });
 
-/*
-        addIngredientsButton = findViewById(R.id.shopListButton);
-        addIngredientsButton.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), ViewIngredientActivity.class);
-
-            for ( Ingredient ingredient : ingredientToBeAddedList)
-            intent.putExtra("INGREDIENT", ingredient);
-            intent.putExtra("CATEGORIES", catOptions);
-            intent.putExtra("LOCATIONS", locOptions);
-            intent.putExtra("UNITS", unitOptions);
-            activityResultLauncher.launch(intent);
-            activityResultLauncher.launch(intent);
+        //  fetches Categories from Firestore
+        final String addOption = "Add new item";
+        ArrayList<String> catOptions = new ArrayList<>();
+        CollectionReference catColRef = databaseInstance.collection("Options");
+        final DocumentReference catDocRef = catColRef.document("Ingredient Categories");
+        catDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    catOptions.clear();
+                    catOptions.add(addOption);
+                    catOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("category data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("category data", "Current data: null");
+                }
+            }
         });
-*/
+
+        //  fetches Locations from Firestore
+        ArrayList<String> locOptions = new ArrayList<>();
+        CollectionReference locColRef = databaseInstance.collection("Options");
+        final DocumentReference locDocRef = locColRef.document("Locations");
+
+        locDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    locOptions.clear();
+                    locOptions.add(addOption);
+                    locOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("location data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("location data", "Current data: null");
+                }
+            }
+        });
+        //  fetches Units from Firestore
+        ArrayList<String> unitOptions = new ArrayList<>();
+        CollectionReference unitColRef = databaseInstance.collection("Options");
+        final DocumentReference unitDocRef = unitColRef.document("Units");
+
+        unitDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    unitOptions.clear();
+                    unitOptions.add(addOption);
+                    unitOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("unit data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("unit data", "Current data: null");
+                }
+            }
+        });
+
+        /**
+         * Passes information to IngredientViewActivity to create or edit
+         */
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(Ingredient ingredient : shoppingAdapter.getIngredients()) {
+                    String description = ingredient.getDescription();
+                    String unit = ingredient.getUnit();
+                    String category = ingredient.getCategory();
+                    Float amount = ingredient.getAmount();
+                    Float storedIngredientAmount = 0.0f;
+                    ArrayList<String> date = new ArrayList<>();
+                    ArrayList<String> location = new ArrayList<>();
+
+                    String storedIngredientKey = "";
+
+                    //if already a stored ingredient
+                    Boolean inStoredIngredientsList = false;
+                    for (String key : storedIngredientsList.keySet()){
+                        Ingredient storedIngredient = storedIngredientsList.get(key);
+                        if ((storedIngredient.getDescription().equals(description)) && (storedIngredient.getCategory().equals(category)) && (storedIngredient.getUnit().equals(unit))){
+                            amount = amount + storedIngredient.getAmount() ;
+                            storedIngredientAmount = storedIngredient.getAmount();
+                            storedIngredientKey = key;
+                            inStoredIngredientsList = true;
+                        }
+                    }
+                    Log.d("CHECKLIST", storedIngredientKey);
+                    if (inStoredIngredientsList && (storedIngredientKey != "")) {
+                        Log.d("CHECKLIST", "IF STATEMENT");
+                        storedIngredientCollection.document(storedIngredientKey).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        Log.d("CHECKLIST", "ON COMPLETE");
+                                        if (task.isSuccessful()) {
+                                            Log.d("CHECKLIST", "ONCOMPLETE IS SUCCESS");
+                                            DocumentSnapshot document = task.getResult();
+                                            Log.d("CHECKLIST", (String) document.getData().get("location"));
+                                            date.add((String) document.getData().get("location"));
+                                            location.add((String) document.getData().get("date"));
+                                        }
+                                    }
+                                });
 
 
+                        Log.d("CHECKLIST", date.get(0));
+                        storedIngredient = new StoredIngredient(description,storedIngredientAmount,unit,category, date.get(0), location.get(0));
+                    }else {
+                        date.add("");
+                        location.add("");
+                        StoredIngredient newIngredient = new StoredIngredient(description, amount, unit, category,  date.get(0), location.get(0));
+                        db.addStoredIngredient(newIngredient);
+                    }
 
+
+                    StoredIngredient newEditIngredient = new StoredIngredient(description,amount,unit,category, date.get(0), location.get(0));
+                    Intent intent = new Intent(getApplicationContext(), ViewIngredientActivity.class);
+                    intent.putExtra("INGREDIENT", newEditIngredient);
+                    intent.putExtra("CATEGORIES", catOptions);
+                    intent.putExtra("LOCATIONS", locOptions);
+                    intent.putExtra("UNITS", unitOptions);
+                    activityResultLauncher.launch(intent);
+                    }
+
+            }
+        });
+
+
+        //  handles returning from editing, adding, or deleting and Ingredient
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                if (result.getData() != null) {
+                    Intent intent = result.getData();
+
+                    String description = intent.getStringExtra("description");
+                    float amount = intent.getFloatExtra("amount", 0.0f);
+                    String unit = intent.getStringExtra("unit");
+                    String date = intent.getStringExtra("date");
+                    String category = intent.getStringExtra("category");
+                    String location = intent.getStringExtra("location");
+
+                    if (result.getResultCode() == 401) {
+                        StoredIngredient edittedIngredient = new StoredIngredient(description, amount, unit, category, date, location);
+                        db.editIngredient(storedIngredient,edittedIngredient);
+
+
+                    } else if (result.getResultCode() == 402) {
+                        db.deleteStoredIngredient(storedIngredient);
+                    }
+                }
+            }
+        });
 
     }
 }
