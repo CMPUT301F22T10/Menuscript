@@ -46,6 +46,8 @@ public class ShopListActivity extends AppCompatActivity {
     Ingredient selectedIngredient;
     Spinner sortButton;
     Button confirmButton;
+    DatabaseManager db = new DatabaseManager(this);
+    private ActivityResultLauncher<Intent> activityResultLauncher;
     private FirebaseFirestore databaseInstance;
     private CollectionReference mealPlanCollection;
     private CollectionReference ingredientCollection;
@@ -66,6 +68,9 @@ public class ShopListActivity extends AppCompatActivity {
         mealPlanCollection = databaseInstance.collection("MealPlanIngredients");
         ingredientCollection = databaseInstance.collection("StoredIngredients");
 
+        /**
+         * Gets names of ingredients from meal plan
+         */
         mealPlanCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
@@ -84,6 +89,9 @@ public class ShopListActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Gets additional information about ingredients
+         */
         ingredientCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
@@ -113,6 +121,9 @@ public class ShopListActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Displays information about ingredient clicked
+         */
         shoppingList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -128,6 +139,9 @@ public class ShopListActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Sorts by category or description
+         */
         sortButton.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -146,6 +160,11 @@ public class ShopListActivity extends AppCompatActivity {
             }
 
         });
+
+        /**
+         * Passes information to IngredientListActivity to create or edit
+         * ingredients. *** STILL WIP ***
+         */
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -159,14 +178,13 @@ public class ShopListActivity extends AppCompatActivity {
                                 if(doc.getData().get("description") == ingredient.getDescription() &&
                                 doc.getData().get("unit") == ingredient.getUnit()) {
                                     intent.putExtra("DESCRIPTION", ingredient.getDescription());
-                                    intent.putExtra("AMOUNT", Float.valueOf(ingredient.getAmount());
-
-                                    Log.d("CREATION", ingredient.getDescription());
-                                    Log.d("CREATION", String.valueOf(ingredient.getAmount()));
-                                    Log.d("CREATION", ingredient.getUnit());
-                                    Log.d("CREATION", ingredient.getCategory());
+                                    intent.putExtra("AMOUNT", Float.valueOf(ingredient.getAmount()));
+                                    intent.putExtra("CATEGORIES", ingredient.getCategory());
+                                    intent.putExtra("UNITS", ingredient.getUnit());
+                                    activityResultLauncher.launch(intent);
                                 } else {
                                     intent.putExtra("DESCRIPTION", ingredient.getDescription());
+                                    activityResultLauncher.launch(intent);
                                 }
                             }
                         }
