@@ -47,6 +47,7 @@ import java.util.Objects;
 public class AddIngredientMealPlanActivity extends AppCompatActivity {
 
     private TextView selectItemTextView;
+    private TextView selectAmountTextView;
     private Button addNewIngredientButton;
     private EditText ingredientAmountEditText;
     private Button addToMealPlanButton;
@@ -55,6 +56,7 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
     private CollectionReference ingredientCollectionReference;
     private CollectionReference mealPlanIngredientCollectionReference;
     private ArrayList ingredientsList;
+    private ArrayList ingredientUnitList;
     private ArrayList spinnerArray;
     //meal plan ingredients list  of ingredient keys so ingredients already in the meal plan are not shown in the spinner
     private ArrayList mealPlanIngredientsList;
@@ -64,6 +66,7 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
     private String ingredientKeytoAdd;
     private String ingredientDescriptiontoAdd;
     private String ingredientAmount;
+    private String ingredientUnittoAdd;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -73,10 +76,12 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
         mealPlanIngredientsList = new ArrayList<>();
         ingredientsList = new ArrayList<>();
         spinnerArray = new ArrayList<>();
+        ingredientUnitList = new ArrayList<>();
         ingredientKeytoAdd = null;
         ingredientDescriptiontoAdd = null;
         ingredientAmount = null;
         selectItemTextView = findViewById(R.id.selectItemTextView);
+        selectAmountTextView = findViewById(R.id.selectQuantityTextView);
         addNewIngredientButton = findViewById(R.id.NewItemButton);
         ingredientAmountEditText = findViewById(R.id.itemAmountEditText);
         addToMealPlanButton = findViewById(R.id.addButton);
@@ -118,15 +123,18 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
             public void onEvent(@Nullable QuerySnapshot queryDocumentsSnapshots, @Nullable FirebaseFirestoreException error) {
                 spinnerArray.clear();
                 ingredientsList.clear();
+                ingredientUnitList.clear();
 
                 for (QueryDocumentSnapshot doc : queryDocumentsSnapshots) {
                     Log.d(TAG,String.valueOf(doc.getData().get("description")));
 
                     String ingredientKey = doc.getId();
                     String ingredientDescription = (String) doc.getData().get("description");
+                    String ingredientUnit = (String) doc.getData().get("unit");
                     if (!(mealPlanIngredientsList.contains( ingredientKey))){
                         ingredientsList.add(doc.getId());
                         spinnerArray.add(ingredientDescription);
+                        ingredientUnitList.add(ingredientUnit);
                     }
 
                 }
@@ -134,21 +142,22 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
             }
         });
 
-//        ingredientsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                ingredientDescriptiontoAdd = (String) spinnerArray.get(i);
-//                ingredientKeytoAdd = (String) ingredientsList.get(i);
-//
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//                ingredientDescriptiontoAdd = null;
-//                ingredientKeytoAdd = null;
-//            }
-//
-//        });
+        ingredientsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                ingredientDescriptiontoAdd = (String) spinnerArray.get(i);
+                ingredientKeytoAdd = (String) ingredientsList.get(i);
+                ingredientUnittoAdd = (String) ingredientUnitList.get(i);
+                selectAmountTextView.setText("Select amount (" + ingredientUnittoAdd + ") :");
+
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                ingredientDescriptiontoAdd = null;
+            }
+
+        });
 
         selectItemTextView.setText("Select Ingredient");
         addToMealPlanButton.setText("Add Ingredient to Meal Plan");
@@ -162,16 +171,19 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
                 if (index != INVALID_POSITION){
                     ingredientDescriptiontoAdd = (String) spinnerArray.get(index);
                     ingredientKeytoAdd = (String) ingredientsList.get(index);
+                    ingredientUnittoAdd = (String) ingredientUnitList.get(index);
                 }
                 else{
                     ingredientDescriptiontoAdd = null;
                     ingredientKeytoAdd = null;
+                    ingredientUnittoAdd = null;
                 }
                 HashMap<String, String> data = new HashMap<>();
 
                 if (ingredientDescriptiontoAdd != null && ingredientKeytoAdd.length() > 0 && ingredientAmount.length() > 0) {
                     data.put("amount", ingredientAmount);
                     data.put("description", ingredientDescriptiontoAdd);
+                    data.put("unit", ingredientUnittoAdd);
 
                     mealPlanIngredientCollectionReference
                             .document(ingredientKeytoAdd)

@@ -209,13 +209,14 @@ public class DatabaseManager {
                                 docID.add(document.getId());
                                 String toEdit = docID.get(0);
 
-                                //update meal plan as well if description changed
+                                //update meal plan as well if description or unit is changed
                                 mealPlanIngredientsCollectionReference
                                         .whereEqualTo(DOCUMENT_ID, toEdit )
                                         .get()
                                         .addOnCompleteListener(task2 -> {
                                             if (task2.isSuccessful()){
                                                 mealPlanIngredientsCollectionReference.document(toEdit).update("description", replacement.getDescription());
+                                                mealPlanIngredientsCollectionReference.document(toEdit).update("unit", replacement.getUnit());
                                             }
                                         });
 

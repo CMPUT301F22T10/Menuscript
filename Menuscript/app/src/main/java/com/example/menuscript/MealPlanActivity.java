@@ -217,7 +217,7 @@ public class MealPlanActivity extends AppCompatActivity {
                     Log.d(TAG,String.valueOf(doc.getData().get("title")));
                     String recipeTitle = (String) doc.getData().get("title");
                     String recipeKey = doc.getId();
-                    mealPlanRecipesList.add(recipeTitle);
+                    mealPlanRecipesList.add(recipeTitle + " (" + doc.getData().get("servings") + " servings)");
                     mealPlanRecipeKeys.add(recipeKey);
                 }
                 recipesAdapter.notifyDataSetChanged();
@@ -233,7 +233,9 @@ public class MealPlanActivity extends AppCompatActivity {
                     Log.d(TAG,String.valueOf(doc.getData().get("description")));
                     String ingredientDescription = (String) doc.getData().get("description");
                     String ingredientKey = doc.getId();
-                    mealPlanIngredientsList.add(ingredientDescription);
+                    String ingredientUnit = (String) doc.getData().get("unit");
+                    String ingredientAmount = (String) doc.getData().get("amount");
+                    mealPlanIngredientsList.add(ingredientDescription +" (" + ingredientAmount + " " + ingredientUnit + ")");
                     mealPlanIngredientKeys.add(ingredientKey);
                 }
                 ingredientsAdapter.notifyDataSetChanged();
