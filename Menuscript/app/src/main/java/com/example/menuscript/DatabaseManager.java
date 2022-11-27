@@ -127,7 +127,7 @@ public class DatabaseManager {
 
      /**
      * Add ingredient to shopping list
-     * @param storedIngredient
+     * @param ingredient
      */
     public void addShoppingItem(Ingredient ingredient){
         collectionReference = databaseInstance.collection("ShoppingList");

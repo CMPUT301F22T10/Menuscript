@@ -19,6 +19,7 @@ public class ShopListAdapter extends ArrayAdapter<Ingredient> {
     private Context context;
     private ArrayList<Ingredient> mealPlanIngredients;
 
+
     public ShopListAdapter(Context context, ArrayList<Ingredient> mealPlanIngredients) {
         super(context, 0, mealPlanIngredients);
         this.context = context;

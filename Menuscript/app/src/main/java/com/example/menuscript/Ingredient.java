@@ -1,6 +1,7 @@
 package com.example.menuscript;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 /**
  * This class minimally defines a general ingredient for use in recipes,
@@ -54,6 +55,7 @@ public class Ingredient implements Serializable {
     public float getAmount () { return this.amount;}
 
     public String getUnit () {return this.unit;}
+    public void setAmount (Float amount) { this.amount = amount;}
 
     /**
      * Returns the {@link String String} category of the Ingredient.
