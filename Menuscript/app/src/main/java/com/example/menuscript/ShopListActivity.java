@@ -46,8 +46,6 @@ public class ShopListActivity extends AppCompatActivity {
     HashMap<String, Float> mealPlanIngredients; // {hashmap of ingredient key, amount needed}
     HashMap<String,Float> mealPlanRecipes; // {hashmap of recipe key, servings needed}
 
-
-
     ListView shoppingList;
     Ingredient selectedIngredient;
 
@@ -178,16 +176,15 @@ public class ShopListActivity extends AppCompatActivity {
 
 
         //sort button
-        Spinner sortButton=findViewById(R.id.shopListMainSpinner);
         String sortOptions[]={"Sort by Category", "Sort by Description"};
         CustomSortAdapter<String> sortAdapter=new CustomSortAdapter<>(this,android.R.layout.simple_spinner_dropdown_item, sortOptions);
-        sortButton.setAdapter(sortAdapter);
-        sortButton.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        sortSpinner.setAdapter(sortAdapter);
+        sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(adapterView.getItemAtPosition(i)=="Category") {
+                if(adapterView.getItemAtPosition(i).equals("Sort by Category")) {
                     ingredientList.sort(Comparator.comparing(Ingredient::getCategory));
-                } else if(adapterView.getItemAtPosition(i)=="Description"){
+                } else if(adapterView.getItemAtPosition(i).equals("Sort by Description")){
                     ingredientList.sort(Comparator.comparing(Ingredient::getDescription));
                 }
                 shoppingAdapter.notifyDataSetChanged();
