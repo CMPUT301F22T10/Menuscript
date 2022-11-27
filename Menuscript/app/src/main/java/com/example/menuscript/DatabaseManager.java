@@ -174,6 +174,50 @@ public class DatabaseManager {
 
     }
 
+    public void editIngredient(StoredIngredient original, StoredIngredient replacement) {
+        collectionReference = databaseInstance.collection("StoredIngredients");
+
+        ArrayList<String> docID = new ArrayList<>();
+
+        collectionReference
+                .whereEqualTo("description", original.getDescription())
+                .whereEqualTo("category", original.getCategory())
+                .whereEqualTo("date", original.getDate())
+                .whereEqualTo("location", original.getLocation())
+                .whereEqualTo("unit", original.getUnit())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                docID.add(document.getId());
+                                String toEdit = docID.get(0);
+                                collectionReference
+                                        .document(toEdit)
+                                        .set(replacement)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Log.d(TAG, "DocumentSnapshot successfully edited!");
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.d(TAG, "Error editing document", e);
+                                            }
+                                        });
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+
+                    }
+                });
+
+    }
+
     public void addRecipe(Recipe recipe) {
         collectionReference = databaseInstance.collection("Recipes");
 
@@ -243,6 +287,60 @@ public class DatabaseManager {
                             }
                         }
                     });
+
+
+    }
+
+    public void editRecipe(Recipe recipe, Recipe edittedRecipe) {
+        collectionReference = databaseInstance.collection("Recipes");
+
+        //HashMap<String,Object> data = recipe.asHashMap();
+
+        ArrayList<String> docID = new ArrayList<>();
+
+        collectionReference
+                .whereEqualTo("title",recipe.getTitle())
+                .whereEqualTo("time",recipe.getTime())
+                .whereEqualTo("servings",String.valueOf(recipe.getServings()))
+                .whereEqualTo("category",recipe.getCategory())
+                .whereEqualTo("comments",recipe.getComments())
+                //.whereEqualTo("image", recipe.getEncodedImage())
+                .whereEqualTo("ingredients",recipe.getHashedIngredients())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            for(QueryDocumentSnapshot document : task.getResult()){
+                                docID.add(document.getId());
+                                Log.d("myTag", document.getId() +"=>"+document.getData());
+                                String toEdit = docID.get(0);
+                                Log.d("myTag",toEdit);
+                                Log.d("myTag",docID.toString());
+                                collectionReference
+                                        .document(toEdit)
+                                        .update("title",edittedRecipe.getTitle(),"time",edittedRecipe.getTime(),
+                                                "servings",String.valueOf(edittedRecipe.getServings()),"category",edittedRecipe.getCategory(),
+                                                "comments",edittedRecipe.getComments(),"image",edittedRecipe.getEncodedImage(),"ingredients",
+                                                edittedRecipe.getHashedIngredients())
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                            @Override
+                                            public void onSuccess(Void unused) {
+                                                Log.d("myTag", "DocumentSnapshot successfully editted");
+                                            }
+                                        }).addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Log.w("myTag","Error editting document",e);
+                                            }
+                                        });
+                            }
+                        }
+                        else {
+                            Log.d("myTag", "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
 
 
     }

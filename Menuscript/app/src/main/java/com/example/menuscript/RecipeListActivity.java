@@ -211,13 +211,8 @@ public class RecipeListActivity extends AppCompatActivity {
 
                     } else if (result.getResultCode() == 421){
                         //edit/view Recipe
-                        db.deleteRecipe(selectedRecipe);
-                        dataList.remove(selectedRecipe);
-
-                        selectedRecipe = new Recipe(title, time, servings, category, comments, image, (ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
-
-                        db.addRecipe(selectedRecipe);
-                        dataList.add(selectedRecipe);
+                        Recipe edittedRecipe = new Recipe(title, time, servings, category, comments, image, (ArrayList<Ingredient>) args.getSerializable("INGREDIENTSLIST"));
+                        db.editRecipe(selectedRecipe,edittedRecipe);
 
 
                     } else if (result.getResultCode() == 422){
