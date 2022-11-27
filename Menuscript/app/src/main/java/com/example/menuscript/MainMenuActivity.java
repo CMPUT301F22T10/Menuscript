@@ -1,16 +1,12 @@
 package com.example.menuscript;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.CollectionReference;
@@ -97,6 +93,13 @@ public class MainMenuActivity extends AppCompatActivity {
                 }
             }
         });
+
+        viewShoppingListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startShoppingListActivity();
+            }
+        });
     }
 
     public void startIngredientListActivity(){
@@ -113,6 +116,11 @@ public class MainMenuActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, MealPlanActivity.class);
         intent.putExtra("Days", days);
+        startActivity(intent);
+    }
+
+    public void startShoppingListActivity(){
+        Intent intent = new Intent(this, ShopListActivity.class);
         startActivity(intent);
     }
 
