@@ -240,7 +240,37 @@ public class MealPlanActivity extends AppCompatActivity {
             }
         });
 
+    clearMealPlanButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(MealPlanActivity.this);
+            builder
+                    .setMessage("Delete entire meal plan?")
+                    .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            daysCollectionReference.document("Days").update("days","0");
+                            days = "0";
+                            daysEditText.setText(days);
 
+                            for (String recipeKey : mealPlanRecipeKeys) {
+                                mealPlanRecipesCollectionReference.document(recipeKey).delete();
+                            }
+
+                            for (String ingredientKey : mealPlanIngredientKeys){
+                                mealPlanIngredientCollectionReference.document(ingredientKey).delete();
+                            }
+                        }
+                    }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        }
+    });
 
     }
 }
