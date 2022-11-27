@@ -218,6 +218,7 @@ public class RecipeListActivity extends AppCompatActivity {
                     } else if (result.getResultCode() == 422){
                         db.deleteRecipe(selectedRecipe);
                         dataList.remove(selectedRecipe);
+
                     }
                     recipeAdapter.notifyDataSetChanged();
 

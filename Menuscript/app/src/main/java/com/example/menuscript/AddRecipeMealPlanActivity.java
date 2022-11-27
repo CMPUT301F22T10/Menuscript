@@ -1,6 +1,7 @@
 package com.example.menuscript;
 
 import static android.content.ContentValues.TAG;
+import static android.view.accessibility.AccessibilityEvent.INVALID_POSITION;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -132,7 +133,7 @@ public class AddRecipeMealPlanActivity extends AppCompatActivity {
             }
         });
 
-        recipesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+/*        recipesSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 recipeTitletoAdd = (String) spinnerArray.get(i);
@@ -146,7 +147,7 @@ public class AddRecipeMealPlanActivity extends AppCompatActivity {
                 recipeKeytoAdd = null;
             }
 
-        });
+        });*/
 
         recipeServingsTextView.setText("Select Number of Servings");
         selectItemTextView.setText("Select Recipe");
@@ -157,6 +158,15 @@ public class AddRecipeMealPlanActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 recipeServings = recipeServingsEditText.getText().toString();
+                int index = recipesSpinner.getSelectedItemPosition();
+                if (index != INVALID_POSITION){
+                    recipeTitletoAdd = (String) spinnerArray.get(index);
+                    recipeKeytoAdd = (String) recipesList.get(index);
+                }
+                else{
+                    recipeTitletoAdd = null;
+                    recipeKeytoAdd = null;
+                }
                 HashMap<String, String> data = new HashMap<>();
 
                 if (recipeTitletoAdd != null && recipeKeytoAdd.length() > 0 && recipeServings.length() > 0) {

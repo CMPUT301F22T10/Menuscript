@@ -1,6 +1,7 @@
 package com.example.menuscript;
 
 import static android.content.ContentValues.TAG;
+import static android.view.accessibility.AccessibilityEvent.INVALID_POSITION;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -25,6 +26,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -33,6 +36,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 /**
  * class for adding a ingredient to meal plan.
@@ -95,9 +99,6 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
             Log.d("ADDINGREDIENT","NO MEAL PLAN INGREDIENT KEY PASSED");
         }
 
-        for (Object ingredientkey : mealPlanIngredientsList) {
-            Log.d("ADDINGREDIENT", (String) ingredientkey);
-        }
         //get meal plan ingredients
         mealPlanIngredientCollectionReference.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
@@ -108,9 +109,6 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
                     Log.d(TAG,String.valueOf(doc.getData().get("description")));
                     String ingredientKey = doc.getId();
                     mealPlanIngredientsList.add(ingredientKey);
-                }
-                for (Object ingredientkey : mealPlanIngredientsList) {
-                    Log.d("ADDINGREDIENT2", (String) ingredientkey);
                 }
             }
         });
@@ -132,31 +130,25 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
                     }
 
                 }
-                for (Object ingredientkey : spinnerArray) {
-                    Log.d("SPINNERARRAY", (String) ingredientkey);
-                }
-                for (Object ingredientkey : ingredientsList) {
-                    Log.d("ingredients", (String) ingredientkey);
-                }
                 spinnerAdapter.notifyDataSetChanged();
             }
         });
 
-        ingredientsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                ingredientDescriptiontoAdd = (String) spinnerArray.get(i);
-                ingredientKeytoAdd = (String) ingredientsList.get(i);
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                ingredientDescriptiontoAdd = null;
-                ingredientKeytoAdd = null;
-            }
-
-        });
+//        ingredientsSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                ingredientDescriptiontoAdd = (String) spinnerArray.get(i);
+//                ingredientKeytoAdd = (String) ingredientsList.get(i);
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//                ingredientDescriptiontoAdd = null;
+//                ingredientKeytoAdd = null;
+//            }
+//
+//        });
 
         selectItemTextView.setText("Select Ingredient");
         addToMealPlanButton.setText("Add Ingredient to Meal Plan");
@@ -166,6 +158,15 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 ingredientAmount = ingredientAmountEditText.getText().toString();
+                int index = ingredientsSpinner.getSelectedItemPosition();
+                if (index != INVALID_POSITION){
+                    ingredientDescriptiontoAdd = (String) spinnerArray.get(index);
+                    ingredientKeytoAdd = (String) ingredientsList.get(index);
+                }
+                else{
+                    ingredientDescriptiontoAdd = null;
+                    ingredientKeytoAdd = null;
+                }
                 HashMap<String, String> data = new HashMap<>();
 
                 if (ingredientDescriptiontoAdd != null && ingredientKeytoAdd.length() > 0 && ingredientAmount.length() > 0) {
@@ -200,13 +201,90 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
             }
         });
 
+
+        //  fetches Categories from Firestore
+        final String addOption = "Add new item";
+        ArrayList<String> catOptions = new ArrayList<>();
+        CollectionReference catColRef = databaseInstance.collection("Options");
+        final DocumentReference catDocRef = catColRef.document("Ingredient Categories");
+        catDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    catOptions.clear();
+                    catOptions.add(addOption);
+                    catOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("category data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("category data", "Current data: null");
+                }
+            }
+        });
+
+        //  fetches Locations from Firestore
+        ArrayList<String> locOptions = new ArrayList<>();
+        CollectionReference locColRef = databaseInstance.collection("Options");
+        final DocumentReference locDocRef = locColRef.document("Locations");
+
+        locDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    locOptions.clear();
+                    locOptions.add(addOption);
+                    locOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("location data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("location data", "Current data: null");
+                }
+            }
+        });
+        //  fetches Units from Firestore
+        ArrayList<String> unitOptions = new ArrayList<>();
+        CollectionReference unitColRef = databaseInstance.collection("Options");
+        final DocumentReference unitDocRef = unitColRef.document("Units");
+
+        unitDocRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    Log.w(TAG, "Listen failed.", e);
+                    return;
+                }
+                if (snapshot != null && snapshot.exists()) {
+                    unitOptions.clear();
+                    unitOptions.add(addOption);
+                    unitOptions.addAll(0, Objects.requireNonNull(snapshot.getData()).keySet());
+                    Log.d("unit data", "Current data: " + snapshot.getData());
+                } else {
+                    Log.d("unit data", "Current data: null");
+                }
+            }
+        });
+
         addNewIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent addIngredientIntent = new Intent(AddIngredientMealPlanActivity.this, AddIngredientActivity.class);
+                addIngredientIntent.putExtra("CATEGORIES", catOptions);
+                addIngredientIntent.putExtra("LOCATIONS", locOptions);
+                addIngredientIntent.putExtra("UNITS", unitOptions);
                 AddIngredientMealPlanActivity.this.startActivity(addIngredientIntent);
             }
         });
+
+
 
 
     }

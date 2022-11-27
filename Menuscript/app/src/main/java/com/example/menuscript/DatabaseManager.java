@@ -2,6 +2,7 @@ package com.example.menuscript;
 
 
 import static android.content.ContentValues.TAG;
+import static android.provider.MediaStore.MediaColumns.DOCUMENT_ID;
 
 import android.app.Activity;
 import android.content.Context;
@@ -126,10 +127,12 @@ public class DatabaseManager {
 
     public void deleteStoredIngredient(StoredIngredient storedIngredient) {
         collectionReference = databaseInstance.collection("StoredIngredients");
+        CollectionReference  mealPlanIngredientsCollectionReference = databaseInstance.collection("MealPlanIngredients");
 
         HashMap<String, Object> data = storedIngredient.asHashMap();
 
         ArrayList<String> docID = new ArrayList<>();
+
 
         collectionReference
                 .whereEqualTo("description", storedIngredient.getDescription())
@@ -147,6 +150,16 @@ public class DatabaseManager {
                                 Log.d("what", document.getId() + " => " + document.getData());
 
                                 String toDelete = docID.get(0);
+
+                                mealPlanIngredientsCollectionReference
+                                        .whereEqualTo(DOCUMENT_ID, toDelete)
+                                        .get()
+                                        .addOnCompleteListener(task2 -> {
+                                            if (task2.isSuccessful()){
+                                                mealPlanIngredientsCollectionReference.document(docID.get(0)).delete();
+                                            }
+                                        });
+
                                 Log.d("non nonono", toDelete);
                                 Log.d("mmm", docID.toString());
                                 collectionReference
@@ -171,6 +184,7 @@ public class DatabaseManager {
 
                     }
                 });
+
 
     }
 

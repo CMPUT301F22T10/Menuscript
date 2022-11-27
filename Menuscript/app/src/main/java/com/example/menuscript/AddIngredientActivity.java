@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +31,7 @@ import java.util.Locale;
  * ingredientLocation {@link Spinner}
  * ingredientCategory {@link Spinner}
  *
- * @author Micheal
+ * @author Micheal, Wanlin
  * @see Ingredient
  * @see StoredIngredient
  * @see IngredientListActivity
@@ -209,37 +210,59 @@ public class AddIngredientActivity extends AppCompatActivity implements AddOptio
     }
 
     private Intent onButtonClick(Intent intent) {
+        String description = ingredientDescription.getText().toString();
+        String amount = ingredientAmount.getText().toString();
+        String unit = ingredientUnit.getSelectedItem().toString();
+        String date = ingredientDate.getText().toString();
+        String category = ingredientCategory.getSelectedItem().toString();
+        String location = ingredientLocation.getSelectedItem().toString();
 
-        if (!ingredientDescription.getText().toString().equals("")) {
-            intent.putExtra("description", ingredientDescription.getText().toString());
+        if (!description.equals("")) {
+            intent.putExtra("description", description);
         } else {
             intent.putExtra("description", "Unnamed Ingredient");
+            description = "Unnamed Ingredient";
         }
-        if (!ingredientAmount.getText().toString().equals("")) {
-            intent.putExtra("amount", Float.valueOf(ingredientAmount.getText().toString()));
+        if (!amount.equals("")) {
+            intent.putExtra("amount", Float.valueOf(amount));
         } else {
             intent.putExtra("amount", 0.0f);
+            amount = "0";
         }
-        if (!ingredientUnit.getSelectedItem().toString().equals("")) {
-            intent.putExtra("unit", ingredientUnit.getSelectedItem().toString());
+        if (!unit.equals("")) {
+            intent.putExtra("unit", unit);
         } else {
             intent.putExtra("unit", "No Unit");
+            unit = "No Unit";
         }
-        if (!ingredientDate.getText().toString().equals("")) {
-            intent.putExtra("date", ingredientDate.getText().toString());
+        if (!date.equals("")) {
+            intent.putExtra("date", date);
         } else {
             intent.putExtra("category", "No Best Before Date");
+            date = "No Best Before Date";
         }
-        if (!ingredientCategory.getSelectedItem().toString().equals("")) {
-            intent.putExtra("category", ingredientCategory.getSelectedItem().toString());
+        if (!category.equals("")) {
+            intent.putExtra("category", category);
         } else {
             intent.putExtra("category", "Uncategorized");
+            category = "Uncategorized";
         }
-        if (!ingredientLocation.getSelectedItem().toString().equals("")) {
-            intent.putExtra("location", ingredientLocation.getSelectedItem().toString());
+        if (!location.equals("")) {
+            intent.putExtra("location", location);
         } else {
             intent.putExtra("location", "No Location");
+            location = "No location";
         }
+
+        //check for what qualifies as an ingredient entry
+        if (!(description == "Unnamed Ingredient")) {
+            StoredIngredient newIngredient = new StoredIngredient(description, Float.valueOf(amount), unit, category, date, location);
+            db.addStoredIngredient(newIngredient);
+        } else {
+            CharSequence text = "Missing ingredient name, failure to add.";
+            Toast.makeText(AddIngredientActivity.this, text, Toast.LENGTH_SHORT).show();
+        }
+
         return intent;
     }
 
