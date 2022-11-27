@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -14,6 +15,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,18 +33,19 @@ import java.util.Comparator;
  * This class displays a list of ingredients that are currently in the meal plan.
  * Clicking on an ingredient shows some of the details relevant to shopping.
  * User can check off multiple ingredients and click the confirm button on the bottom
- * to
+ *
  *
  * @author Josh
  */
 public class ShopListActivity extends AppCompatActivity {
-    ArrayAdapter<Ingredient> shoppingAdapter;
+    ShopListAdapter shoppingAdapter;
     ArrayList<Ingredient> ingredientList;
     ArrayList<Ingredient> ingredientNeededList;
     ArrayList<String> ingredientNameList;
     ListView shoppingList;
     Ingredient selectedIngredient;
     Spinner sortButton;
+    Button confirmButton;
     private FirebaseFirestore databaseInstance;
     private CollectionReference mealPlanCollection;
     private CollectionReference ingredientCollection;
@@ -56,6 +59,7 @@ public class ShopListActivity extends AppCompatActivity {
         ingredientNameList = new ArrayList<String>();
         shoppingList = findViewById(R.id.shopListMainIngredients);
         sortButton = findViewById(R.id.shopListMainSpinner);
+        confirmButton = findViewById(R.id.shopListButton);
         shoppingAdapter = new ShopListAdapter(this, ingredientList);
         shoppingList.setAdapter(shoppingAdapter);
         databaseInstance = FirebaseFirestore.getInstance();
@@ -77,7 +81,6 @@ public class ShopListActivity extends AppCompatActivity {
 
                     ingredientNameList.add(name);
                 }
-                shoppingAdapter.notifyDataSetChanged();
             }
         });
 
@@ -141,7 +144,35 @@ public class ShopListActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
-        });
 
+        });
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(Ingredient ingredient : shoppingAdapter.getIngredients()) {
+                    ingredientCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+                        @Override
+                        public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable
+                                FirebaseFirestoreException error) {
+                            Intent intent = new Intent(ShopListActivity.this, AddIngredientActivity.class);
+                            for(QueryDocumentSnapshot doc: queryDocumentSnapshots) {
+                                if(doc.getData().get("description") == ingredient.getDescription() &&
+                                doc.getData().get("unit") == ingredient.getUnit()) {
+                                    intent.putExtra("DESCRIPTION", ingredient.getDescription());
+                                    intent.putExtra("AMOUNT", Float.valueOf(ingredient.getAmount());
+
+                                    Log.d("CREATION", ingredient.getDescription());
+                                    Log.d("CREATION", String.valueOf(ingredient.getAmount()));
+                                    Log.d("CREATION", ingredient.getUnit());
+                                    Log.d("CREATION", ingredient.getCategory());
+                                } else {
+                                    intent.putExtra("DESCRIPTION", ingredient.getDescription());
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 }
