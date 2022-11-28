@@ -43,7 +43,7 @@ import java.util.Objects;
  * This class displays a list of ingredients that are currently in the meal plan.
  * Clicking on an ingredient shows some of the details relevant to shopping.
  * User can check off multiple ingredients and click the confirm button on the bottom
- *
+ * <p>
  * Requires being passed hashmap of ingredients (key, amount) needed from previous activity (Main)
  *
  * @author Josh, Wanlin
@@ -54,9 +54,9 @@ public class ShopListActivity extends AppCompatActivity {
     private ArrayList<Ingredient> ingredientToBeAddedList;
     ShopListAdapter shoppingAdapter;
     ArrayList<Ingredient> ingredientList;
-    HashMap<String,StoredIngredient> storedIngredientsList;
-    HashMap<String,Float> mealPlanIngredients; // {hashmap of ingredient key, amount needed}
-    HashMap<String,Float> mealPlanRecipes; // {hashmap of recipe key, servings needed}
+    HashMap<String, StoredIngredient> storedIngredientsList;
+    HashMap<String, Float> mealPlanIngredients; // {hashmap of ingredient key, amount needed}
+    HashMap<String, Float> mealPlanRecipes; // {hashmap of recipe key, servings needed}
 
     ListView shoppingList;
     Ingredient selectedIngredient;
@@ -76,22 +76,22 @@ public class ShopListActivity extends AppCompatActivity {
         ingredientList = new ArrayList<Ingredient>();
 
         Bundle args = getIntent().getBundleExtra("MEALPLAN_ITEMS");
-        if (args.getSerializable("MEALPLAN_INGREDIENTS") != null){
+        if (args.getSerializable("MEALPLAN_INGREDIENTS") != null) {
             mealPlanIngredients = (HashMap<String, Float>) args.getSerializable("MEALPLAN_INGREDIENTS");
-        } else{
+        } else {
             mealPlanIngredients = new HashMap<>();
         }
 
-        if (args.getSerializable("MEALPLAN_RECIPES") != null){
-            mealPlanRecipes  = (HashMap<String, Float>) args.getSerializable("MEALPLAN_RECIPES");
-        } else{
-            mealPlanRecipes  = new HashMap<>();
+        if (args.getSerializable("MEALPLAN_RECIPES") != null) {
+            mealPlanRecipes = (HashMap<String, Float>) args.getSerializable("MEALPLAN_RECIPES");
+        } else {
+            mealPlanRecipes = new HashMap<>();
         }
 
-        if (args.getSerializable("STORED_INGREDIENTS") != null){
-            storedIngredientsList  = (HashMap<String,StoredIngredient>) args.getSerializable("STORED_INGREDIENTS");
-        } else{
-            storedIngredientsList  = new HashMap<>();
+        if (args.getSerializable("STORED_INGREDIENTS") != null) {
+            storedIngredientsList = (HashMap<String, StoredIngredient>) args.getSerializable("STORED_INGREDIENTS");
+        } else {
+            storedIngredientsList = new HashMap<>();
         }
 
         shoppingList = findViewById(R.id.shopListMainIngredients);
@@ -103,8 +103,8 @@ public class ShopListActivity extends AppCompatActivity {
         recipesCollection = databaseInstance.collection("Recipes");
 
 
-        for (String key : mealPlanIngredients.keySet()){
-            if (storedIngredientsList.keySet().contains(key)){
+        for (String key : mealPlanIngredients.keySet()) {
+            if (storedIngredientsList.keySet().contains(key)) {
                 Ingredient ingredientToAdd = storedIngredientsList.get(key);
                 Float amountNeeded = mealPlanIngredients.get(key) - ingredientToAdd.getAmount();
                 //ingredientToAdd.setAmount(amountNeeded);
@@ -119,8 +119,8 @@ public class ShopListActivity extends AppCompatActivity {
         recipesCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                Log.d("SHOPPING LIST","ONEVENT RECIPES");
-                for(QueryDocumentSnapshot doc: value) {
+                Log.d("SHOPPING LIST", "ONEVENT RECIPES");
+                for (QueryDocumentSnapshot doc : value) {
                     if (mealPlanRecipes.keySet().contains(doc.getId())) {
                         Float servings = mealPlanRecipes.get(doc.getId());
                         Float recipeServings = Float.parseFloat((String) doc.getData().get("servings"));
@@ -135,9 +135,9 @@ public class ShopListActivity extends AppCompatActivity {
                             String unit = String.valueOf(ingredient.get("unit"));
                             String category = String.valueOf(ingredient.get("category"));
 
-                            for (Ingredient ingredient1 : ingredientList){ //checking if already in IngredientList
-                                if ((ingredient1.getDescription().equals(description)) && (ingredient1.getCategory().equals(category)) && (ingredient1.getUnit().equals(unit))){
-                                    float neededAmount = ingredient1.getAmount() + (servings * (Float.parseFloat(String.valueOf(ingredient.get("amount")))/recipeServings));
+                            for (Ingredient ingredient1 : ingredientList) { //checking if already in IngredientList
+                                if ((ingredient1.getDescription().equals(description)) && (ingredient1.getCategory().equals(category)) && (ingredient1.getUnit().equals(unit))) {
+                                    float neededAmount = ingredient1.getAmount() + (servings * (Float.parseFloat(String.valueOf(ingredient.get("amount"))) / recipeServings));
                                     ingredient1.setAmount(neededAmount);
                                     alreadyInIngredientList = true;
                                 }
@@ -146,10 +146,10 @@ public class ShopListActivity extends AppCompatActivity {
                             if (!alreadyInIngredientList) {
                                 //check if in storedIngredientsList
                                 boolean inStoredIngredientsList = false;
-                                for (String key : storedIngredientsList.keySet()){
+                                for (String key : storedIngredientsList.keySet()) {
                                     Ingredient storedIngredient1 = storedIngredientsList.get(key);
-                                    if ((storedIngredient1.getDescription().equals(description)) && (storedIngredient1.getCategory().equals(category)) && (storedIngredient1.getUnit().equals(unit))){
-                                        Float amountNeeded = ((Float.parseFloat(String.valueOf(ingredient.get("amount")))/recipeServings) * servings) - storedIngredient1.getAmount();
+                                    if ((storedIngredient1.getDescription().equals(description)) && (storedIngredient1.getCategory().equals(category)) && (storedIngredient1.getUnit().equals(unit))) {
+                                        Float amountNeeded = ((Float.parseFloat(String.valueOf(ingredient.get("amount"))) / recipeServings) * servings) - storedIngredient1.getAmount();
                                         //storedIngredient1.setAmount(amountNeeded);
                                         ingredientList.add(new Ingredient(storedIngredient1.getDescription(), amountNeeded, storedIngredient1.getUnit(), storedIngredient1.getCategory()));
                                         inStoredIngredientsList = true;
@@ -160,7 +160,7 @@ public class ShopListActivity extends AppCompatActivity {
                                 if (!inStoredIngredientsList) {
                                     ingredientList.add(new Ingredient(
                                             description,
-                                            ((Float.parseFloat(String.valueOf(ingredient.get("amount")))/recipeServings) * servings),
+                                            ((Float.parseFloat(String.valueOf(ingredient.get("amount"))) / recipeServings) * servings),
                                             unit,
                                             category));
                                     alreadyInIngredientList = false;
@@ -173,12 +173,7 @@ public class ShopListActivity extends AppCompatActivity {
 
                 //check ingredients list for negative amountsNeeded
 
-                for (Iterator<Ingredient> it = ingredientList.iterator(); it.hasNext();){
-                    Ingredient ingredient = it.next();
-                    if (ingredient.getAmount() <= 0){
-                        it.remove();
-                    }
-                }
+                ingredientList.removeIf(ingredient -> ingredient.getAmount() <= 0);
                 shoppingAdapter.notifyDataSetChanged();
             }
         });
@@ -203,15 +198,15 @@ public class ShopListActivity extends AppCompatActivity {
 
 
         //sort button
-        String sortOptions[]={"Sort by Category", "Sort by Description"};
-        CustomSortAdapter<String> sortAdapter=new CustomSortAdapter<>(this,android.R.layout.simple_spinner_dropdown_item, sortOptions);
+        String sortOptions[] = {"Sort by Category", "Sort by Description"};
+        CustomSortAdapter<String> sortAdapter = new CustomSortAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, sortOptions);
         sortSpinner.setAdapter(sortAdapter);
         sortSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(adapterView.getItemAtPosition(i).equals("Sort by Category")) {
+                if (adapterView.getItemAtPosition(i).equals("Sort by Category")) {
                     ingredientList.sort(Comparator.comparing(Ingredient::getCategory));
-                } else if(adapterView.getItemAtPosition(i).equals("Sort by Description")){
+                } else if (adapterView.getItemAtPosition(i).equals("Sort by Description")) {
                     ingredientList.sort(Comparator.comparing(Ingredient::getDescription));
                 }
                 shoppingAdapter.notifyDataSetChanged();
@@ -269,6 +264,7 @@ public class ShopListActivity extends AppCompatActivity {
                 }
             }
         });
+
         //  fetches Units from Firestore
         ArrayList<String> unitOptions = new ArrayList<>();
         CollectionReference unitColRef = databaseInstance.collection("Options");
@@ -298,7 +294,7 @@ public class ShopListActivity extends AppCompatActivity {
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(Ingredient ingredient : shoppingAdapter.getIngredients()) {
+                for (Ingredient ingredient : shoppingAdapter.getIngredients()) {
                     String description = ingredient.getDescription();
                     String unit = ingredient.getUnit();
                     String category = ingredient.getCategory();
@@ -308,14 +304,14 @@ public class ShopListActivity extends AppCompatActivity {
                     String storedIngredientKey = "";
 
                     //if already a stored ingredient
-                    Boolean inStoredIngredientsList = false;
+                    boolean inStoredIngredientsList = false;
 
-                    for (String key : storedIngredientsList.keySet()){
+                    for (String key : storedIngredientsList.keySet()) {
                         StoredIngredient oldStoredIngredient = storedIngredientsList.get(key);
-                        if ((oldStoredIngredient.getDescription().equals(description)) && (oldStoredIngredient.getCategory().equals(category)) && (oldStoredIngredient.getUnit().equals(unit))){
+                        if ((oldStoredIngredient.getDescription().equals(description)) && (oldStoredIngredient.getCategory().equals(category)) && (oldStoredIngredient.getUnit().equals(unit))) {
                             Log.d("CHECKLIST", "description" + description);
                             Log.d("CHECKLIST", "oldStoredIngredient amount1" + String.valueOf(amount));
-                            amount = amount + oldStoredIngredient.getAmount() ;
+                            amount = amount + oldStoredIngredient.getAmount();
                             Log.d("CHECKLIST", "oldStoredIngredient old amount" + String.valueOf(oldStoredIngredient.getAmount()));
                             location = oldStoredIngredient.getLocation();
                             date = oldStoredIngredient.getDate();
@@ -326,7 +322,7 @@ public class ShopListActivity extends AppCompatActivity {
                         }
                     }
 
-                    StoredIngredient newIngredient = new StoredIngredient(description,amount,unit,category, date, location);
+                    StoredIngredient newIngredient = new StoredIngredient(description, amount, unit, category, date, location);
                     Log.d("CHECKLIST", storedIngredientKey);
                     if (!inStoredIngredientsList) {
                         db.addStoredIngredient(newIngredient);
@@ -338,7 +334,7 @@ public class ShopListActivity extends AppCompatActivity {
                     intent.putExtra("LOCATIONS", locOptions);
                     intent.putExtra("UNITS", unitOptions);
                     activityResultLauncher.launch(intent);
-                    }
+                }
 
 
             }
@@ -361,7 +357,7 @@ public class ShopListActivity extends AppCompatActivity {
 
                     if (result.getResultCode() == 401) {
                         StoredIngredient edittedIngredient = new StoredIngredient(description, amount, unit, category, date, location);
-                        db.editIngredient(storedIngredient,edittedIngredient);
+                        db.editIngredient(storedIngredient, edittedIngredient);
 
                         //-------------------------------------ALLOWS ONLY THE EDIT OF ONE ITEM = LESS ERRORS WITH CURRENT VERSION --------------------
                         finish();

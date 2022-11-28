@@ -10,9 +10,7 @@
         android:gravity="center"
         android:padding="15sp"
         android:text="MEAL PLAN"
-        android:textSize="25sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"/>
+        style="@style/MainHeader"/>
 
     <LinearLayout
         android:layout_width="match_parent"

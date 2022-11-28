@@ -114,7 +114,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         if (viewedIngredient.getLocation() != null && locOptions.contains(viewedIngredient.getLocation())) {
             ingredientLocation.setSelection(locOptions.indexOf(viewedIngredient.getLocation()));
         } else if (!locOptions.contains(viewedIngredient.getLocation())) {
-            locOptions.add(0, viewedIngredient.getCategory());
+            locOptions.add(0, viewedIngredient.getLocation());
             locAdapter.notifyDataSetChanged();
             ingredientLocation.setSelection(0);
         } else {
@@ -126,7 +126,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         if (viewedIngredient.getUnit() != null && unitOptions.contains(viewedIngredient.getUnit())) {
             ingredientUnit.setSelection(unitOptions.indexOf(viewedIngredient.getUnit()));
         } else if (!unitOptions.contains(viewedIngredient.getUnit())) {
-            unitOptions.add(0, viewedIngredient.getCategory());
+            unitOptions.add(0, viewedIngredient.getUnit());
             unitAdapter.notifyDataSetChanged();
             ingredientUnit.setSelection(0);
         } else {
