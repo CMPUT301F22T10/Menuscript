@@ -84,18 +84,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/countEditText" />
 
-        <EditText
-            android:id="@+id/unitEditText"
-            style="@style/MainBody"
-            android:layout_width="wrap_content"
+        <Spinner
+            android:id="@+id/unitSpinner"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:ems="8"
-            android:importantForAutofill="no"
-            android:inputType="text"
+            style="@style/MainBody"
+            android:background="@android:drawable/edit_text"
+            android:gravity="center"
+            android:spinnerMode="dropdown"
             android:textAlignment="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/bestBeforeEditText"
+            app:layout_constraintStart_toStartOf="@id/bestBeforeEditText"
             app:layout_constraintTop_toBottomOf="@id/unitTextView" />
 
         <TextView
@@ -109,7 +108,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/unitEditText" />
+            app:layout_constraintTop_toBottomOf="@id/unitSpinner" />
 
         <EditText
             android:id="@+id/bestBeforeEditText"
@@ -160,7 +159,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="Select Item Category"
+            android:text="Category"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

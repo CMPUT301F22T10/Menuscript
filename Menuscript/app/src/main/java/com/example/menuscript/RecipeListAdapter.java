@@ -39,7 +39,11 @@ public class RecipeListAdapter extends ArrayAdapter<Recipe> {
         Recipe recipe = recipes.get(position);
 
         TextView recipeName = view.findViewById(R.id.description_text);
+        //TextView tv_amount = view.findViewById(R.id.tv_item_amount);
+        //TextView tv_unit = view.findViewById(R.id.tv_item_unit);
+
         recipeName.setText(recipe.getTitle());
+        //tv_amount.setText(String.valueOf(recipe.))
 
         return view;
     }

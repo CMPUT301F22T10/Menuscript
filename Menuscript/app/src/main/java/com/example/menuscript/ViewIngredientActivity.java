@@ -1,13 +1,8 @@
 package com.example.menuscript;
 
-import static android.content.ContentValues.TAG;
-
 import android.app.DatePickerDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,29 +10,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import org.checkerframework.checker.units.qual.A;
-
-import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Map;
+
 /**
- *  This class displays the details of an Ingredient.
+ * This class displays the details of an Ingredient.
  * ingredientDescription {@link EditText}
  * ingredientAmount {@link EditText}
  * ingredientDate {@link EditText}
@@ -46,34 +30,35 @@ import java.util.Map;
  * ingredientCategory {@link Spinner}
  * calendar {@link Calendar}
  *
+ * @author Micheal
  * @see Ingredient
  */
 public class ViewIngredientActivity extends AppCompatActivity implements AddOptionFragment.OnFragmentInteractionListener {
-
-
     private EditText ingredientDescription;
-
     private EditText ingredientAmount;
     private EditText ingredientDate;
-    private EditText ingredientUnit;
+    private Spinner ingredientUnit;
     private Spinner ingredientLocation;
     private Spinner ingredientCategory;
 
     ArrayAdapter<String> locAdapter;
     ArrayAdapter<String> catAdapter;
+    ArrayAdapter<String> unitAdapter;
 
     ArrayList<String> locOptions;
     ArrayList<String> catOptions;
-
-//    private static final String[] locOptions = {"Pantry", "Fridge", "Freezer", "Add new location"};
-//    private static final String[] catOptions = {"Protein", "Carb", "Veg"};
+    ArrayList<String> unitOptions;
 
     Calendar calendar = Calendar.getInstance();
 
-    private FirebaseFirestore databaseInstance;
-    private CollectionReference collectionReference;
     DatabaseManager db = new DatabaseManager(this);
 
+    /**
+     * Obtains date from the user to set date for the date attribute in the ingredient class.
+     * format {@link String}
+     *
+     * @see Ingredient
+     */
     private void updateLabel() {
         String format = "yyyy-MM-dd";
         SimpleDateFormat dateFormat = new SimpleDateFormat(format, Locale.CANADA);
@@ -86,65 +71,71 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_ingredients);
 
-        databaseInstance = FirebaseFirestore.getInstance();
-        collectionReference = databaseInstance.collection("Options");
-
         ingredientDescription = findViewById(R.id.itemDescriptionEditText);
         ingredientAmount = findViewById(R.id.countEditText);
         ingredientDate = findViewById(R.id.bestBeforeEditText);
-        ingredientUnit = findViewById(R.id.unitEditText);
-        ingredientLocation = (Spinner) findViewById(R.id.locationSpinner);
-        ingredientCategory = (Spinner) findViewById(R.id.categorySpinner);
+        ingredientUnit = findViewById(R.id.unitSpinner);
+        ingredientLocation = findViewById(R.id.locationSpinner);
+        ingredientCategory = findViewById(R.id.categorySpinner);
 
-        StoredIngredient viewedIngredient = (StoredIngredient) getIntent().getSerializableExtra("INGREDIENT");
-
-        locOptions = new ArrayList<>();
-        catOptions = new ArrayList<>();
-
-        final String addOption = "Add new item";
-
-        locOptions.add(addOption);
-        catOptions.add(0, "");
-
-        final DocumentReference catRef = collectionReference.document("Ingredient Categories");
-        catRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot snapshot,
-                                @Nullable FirebaseFirestoreException e) {
-                if (e != null) {
-                    Log.w(TAG, "Listen failed.", e);
-                    return;
-                }
-                if (snapshot != null && snapshot.exists()) {
-                    catOptions.clear();
-                    catOptions.add(addOption);
-                    catOptions.addAll(0, snapshot.getData().keySet());
-                    Log.d(TAG, "Current data: " + snapshot.getData());
-                } else {
-                    Log.d(TAG, "Current data: null");
-                }
-                catAdapter.notifyDataSetChanged();
-            }
-        });
-
-        ingredientDescription.setText(viewedIngredient.getDescription());
-        ingredientAmount.setText((String.valueOf(viewedIngredient.getAmount())));
-        ingredientDate.setText(viewedIngredient.getDate());
-        ingredientUnit.setText(viewedIngredient.getUnit());
-
-        Log.d("i hate tgis", catOptions.toString());
-        ingredientCategory.setSelection(catOptions.indexOf(viewedIngredient.getCategory()));
-
+        catOptions = (ArrayList<String>) getIntent().getSerializableExtra("CATEGORIES");
+        locOptions = (ArrayList<String>) getIntent().getSerializableExtra("LOCATIONS");
+        unitOptions = (ArrayList<String>) getIntent().getSerializableExtra("UNITS");
 
         locAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, locOptions);
         catAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, catOptions);
+        unitAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, unitOptions);
 
         locAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         catAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        unitAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         ingredientLocation.setAdapter(locAdapter);
         ingredientCategory.setAdapter(catAdapter);
+        ingredientUnit.setAdapter(unitAdapter);
 
+        StoredIngredient viewedIngredient = (StoredIngredient) getIntent().getSerializableExtra("INGREDIENT");
+        ingredientDescription.setText(viewedIngredient.getDescription());
+        ingredientAmount.setText((String.valueOf(viewedIngredient.getAmount())));
+        ingredientDate.setText(viewedIngredient.getDate());
+
+        if (viewedIngredient.getCategory() != null && catOptions.contains(viewedIngredient.getCategory())) {
+            ingredientCategory.setSelection(catOptions.indexOf(viewedIngredient.getCategory()));
+        } else if (!catOptions.contains(viewedIngredient.getCategory())) {
+            catOptions.add(0, viewedIngredient.getCategory());
+            catAdapter.notifyDataSetChanged();
+            ingredientCategory.setSelection(0);
+        } else {
+            catOptions.add(0, "");
+            catAdapter.notifyDataSetChanged();
+            ingredientCategory.setSelection(0);
+        }
+
+        if (viewedIngredient.getLocation() != null && locOptions.contains(viewedIngredient.getLocation())) {
+            ingredientLocation.setSelection(locOptions.indexOf(viewedIngredient.getLocation()));
+        } else if (!locOptions.contains(viewedIngredient.getLocation())) {
+            locOptions.add(0, viewedIngredient.getCategory());
+            locAdapter.notifyDataSetChanged();
+            ingredientLocation.setSelection(0);
+        } else {
+            locOptions.add(0, "");
+            locAdapter.notifyDataSetChanged();
+            ingredientLocation.setSelection(0);
+        }
+
+        if (viewedIngredient.getUnit() != null && unitOptions.contains(viewedIngredient.getUnit())) {
+            ingredientUnit.setSelection(unitOptions.indexOf(viewedIngredient.getUnit()));
+        } else if (!unitOptions.contains(viewedIngredient.getUnit())) {
+            unitOptions.add(0, viewedIngredient.getCategory());
+            unitAdapter.notifyDataSetChanged();
+            ingredientUnit.setSelection(0);
+        } else {
+            unitOptions.add(0, "");
+            unitAdapter.notifyDataSetChanged();
+            ingredientUnit.setSelection(0);
+        }
+
+        //  deals with selecting date
         DatePickerDialog.OnDateSetListener datePicker = (datePicker1, year, month, day) -> {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
@@ -169,48 +160,100 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
                 calendar.get(Calendar.DAY_OF_MONTH)
         ).show());
 
+        //  listens for selection of category
         ingredientCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (adapterView.getItemAtPosition(i) == addOption) {
+                if (adapterView.getItemAtPosition(i) == catOptions.get(catOptions.size() - 1)) {
                     new AddOptionFragment().show(getSupportFragmentManager(), "ADD CATEGORY");
+                } else if (adapterView.getItemAtPosition(i) != "" && catOptions.contains("")) {
+                    catOptions.remove("");
+                    catAdapter.notifyDataSetChanged();
+                    ingredientCategory.setSelection(i - 1);
                 } else {
-//                    ingredientCategory.setSelection(i);
+                    catAdapter.notifyDataSetChanged();
+                    ingredientCategory.setSelection(i);
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-
             }
         });
 
+        //  listens for selection of location
+        ingredientLocation.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (adapterView.getItemAtPosition(i) == locOptions.get(locOptions.size() - 1)) {
+                    new AddOptionFragment().show(getSupportFragmentManager(), "ADD LOCATION");
+                } else if (adapterView.getItemAtPosition(i) != "" && locOptions.contains("")) {
+                    locOptions.remove("");
+                    locAdapter.notifyDataSetChanged();
+                    ingredientLocation.setSelection(i - 1);
+                } else {
+                    locAdapter.notifyDataSetChanged();
+                    ingredientLocation.setSelection(i);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        //  listens for selection of unit
+        ingredientUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if (adapterView.getItemAtPosition(i) == unitOptions.get(unitOptions.size() - 1)) {
+                    new AddOptionFragment().show(getSupportFragmentManager(), "ADD UNIT");
+                } else if (adapterView.getItemAtPosition(i) != "" && unitOptions.contains("")) {
+                    unitOptions.remove("");
+                    unitAdapter.notifyDataSetChanged();
+                    ingredientUnit.setSelection(i - 1);
+                } else {
+                    unitAdapter.notifyDataSetChanged();
+                    ingredientUnit.setSelection(i);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
+
+        //  confirms editing of Ingredient
         Button submitButton = findViewById(R.id.submitButton);
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent = onButtonClick(intent);
+                onButtonClick(intent);
                 setResult(401, intent);
                 finish();
-
             }
         });
 
+        //  delete ingredient button
         Button deleteButton = findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent = onButtonClick(intent);
+                onButtonClick(intent);
                 setResult(402, intent);
                 finish();
-
             }
         });
     }
 
-    private Intent onButtonClick(Intent intent) {
+    /**
+     * Handles returning to the Ingredient list after editing.
+     *
+     * @param intent
+     */
+    private void onButtonClick(Intent intent) {
 
         if (!ingredientDescription.getText().toString().equals("")) {
             intent.putExtra("description", ingredientDescription.getText().toString());
@@ -222,15 +265,15 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         } else {
             intent.putExtra("amount", 0.0f);
         }
-        if (!ingredientUnit.getText().toString().equals("")) {
-            intent.putExtra("unit", ingredientUnit.getText().toString());
+        if (!ingredientUnit.getSelectedItem().toString().equals("")) {
+            intent.putExtra("unit", ingredientUnit.getSelectedItem().toString());
         } else {
             intent.putExtra("unit", "No Unit");
         }
         if (!ingredientDate.getText().toString().equals("")) {
             intent.putExtra("date", ingredientDate.getText().toString());
         } else {
-            intent.putExtra("category", "No Best Before Date");
+            intent.putExtra("date", "No Best Before Date");
         }
         if (!ingredientCategory.getSelectedItem().toString().equals("")) {
             intent.putExtra("category", ingredientCategory.getSelectedItem().toString());
@@ -242,13 +285,35 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         } else {
             intent.putExtra("location", "No Location");
         }
-        return intent;
     }
 
-    public void onAddOKPressed(String option) {
+    /**
+     * Handles returning from AddOptionFragment when adding a new category, location, or unit
+     *
+     * @param option
+     * @param tag
+     */
+    public void onAddOKPressed(String option, int tag) {
         if (option != null) {
-            db.addIngredientCategory(option);
-            catAdapter.notifyDataSetChanged();
+            if (tag == 1) {
+                db.addIngredientCategory(option);
+                catOptions.remove("");
+                catOptions.add(0, option);
+                catAdapter.notifyDataSetChanged();
+                ingredientCategory.setSelection(0);
+            } else if (tag == 2) {
+                db.addLocation(option);
+                locOptions.remove("");
+                locOptions.add(0, option);
+                locAdapter.notifyDataSetChanged();
+                ingredientLocation.setSelection(0);
+            } else {
+                db.addUnit(option);
+                unitOptions.remove("");
+                unitOptions.add(0, option);
+                unitAdapter.notifyDataSetChanged();
+                ingredientUnit.setSelection(0);
+            }
         }
     }
 }

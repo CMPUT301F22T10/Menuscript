@@ -37,8 +37,12 @@ public class StoredIngredientListAdapter extends ArrayAdapter {
         }
         Ingredient ingredient = items.get(position);
         TextView descriptionText = view.findViewById(R.id.description_text);
+        TextView amountText = view.findViewById(R.id.tv_item_amount);
+        TextView unitText = view.findViewById(R.id.tv_item_unit);
 
         descriptionText.setText(ingredient.getDescription());
+        amountText.setText(String.valueOf(ingredient.getAmount()));
+        unitText.setText(ingredient.getUnit());
 
         return view;
     }
