@@ -41,7 +41,6 @@ import java.util.Objects;
 /**
  * This class controls the addition of a new recipe.
  * Users can input desired attributes (within restrictions) and click the top-left button to add the recipe.
- * Currently, adding of specific ingredients is not implemented.
  * recipeName {@link EditText}
  * recipePrepTime {@link EditText}
  * recipeServings {@link EditText}

@@ -48,7 +48,6 @@ import java.util.Objects;
  * This class also serves to edit and delete a Viewed Recipe.
  * Attributes can be edited by clicking on them, and clicking the top-right button confirms the changes.
  * Clicking the top-left button will delete the recipe.
- * Currently, interactions with ingredients is not yet implemented.
  * recipeName {@link EditText}
  * recipePrepTime {@link EditText}
  * recipeServings {@link EditText}

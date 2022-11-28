@@ -8,6 +8,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * This class allow the user to view the details of an ingredient in the shopping list:
+ * ingredientName {@link TextView}
+ * ingredientCount {@link TextView}
+ * ingredientUnit {@link TextView}
+ * ingredientCategory {@link TextView}
+ *
+ * @see Ingredient
+ */
 public class ViewShopListIngredientActivity extends AppCompatActivity {
 
     private TextView ingredientName;

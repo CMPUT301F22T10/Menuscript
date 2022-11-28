@@ -18,6 +18,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * Custom array adapter for shopping list in ShopListActivity
+ * mealPlanIngredients {@link ArrayList<Ingredient>}
+ * checkedIngredients {@link ArrayList<Ingredient>}
+ */
 public class ShopListAdapter extends ArrayAdapter<Ingredient> {
     private Context context;
     private ArrayList<Ingredient> mealPlanIngredients;

@@ -38,6 +38,16 @@ import java.util.Calendar;
 import java.util.Comparator;
 import java.util.Locale;
 
+/**
+ * This class allows to edit an ingredient that is inside of a recipe. Users can modify the:
+ * description
+ * amount
+ * unit
+ * category
+ *
+ * for an ingredient {@link Ingredient}
+ *
+ */
 public class EditIngredientInRecipeActivity extends AppCompatActivity implements AddOptionFragment.OnFragmentInteractionListener {
 
     private EditText ingredientDescription;
