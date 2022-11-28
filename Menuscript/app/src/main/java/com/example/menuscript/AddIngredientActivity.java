@@ -14,8 +14,6 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -202,14 +200,14 @@ public class AddIngredientActivity extends AppCompatActivity implements AddOptio
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                intent = onButtonClick(intent);
+                onButtonClick(intent);
                 setResult(400, intent);
                 finish();
             }
         });
     }
 
-    private Intent onButtonClick(Intent intent) {
+    private void onButtonClick(Intent intent) {
         String description = ingredientDescription.getText().toString();
         String amount = ingredientAmount.getText().toString();
         String unit = ingredientUnit.getSelectedItem().toString();
@@ -255,15 +253,14 @@ public class AddIngredientActivity extends AppCompatActivity implements AddOptio
         }
 
         //check for what qualifies as an ingredient entry
-        if (!(description == "Unnamed Ingredient")) {
-            StoredIngredient newIngredient = new StoredIngredient(description, Float.valueOf(amount), unit, category, date, location);
+        if (!(description.equals("Unnamed Ingredient"))) {
+            StoredIngredient newIngredient = new StoredIngredient(description, Float.parseFloat(amount), unit, category, date, location);
             db.addStoredIngredient(newIngredient);
         } else {
             CharSequence text = "Missing ingredient name, failure to add.";
             Toast.makeText(AddIngredientActivity.this, text, Toast.LENGTH_SHORT).show();
         }
 
-        return intent;
     }
 
     public void onAddOKPressed(String option, int tag) {
