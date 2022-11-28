@@ -66,9 +66,7 @@ public class RecipeListActivity extends AppCompatActivity {
     DatabaseManager db = new DatabaseManager(this);
 
 
-//_____________________TESTING_______________________
-    ArrayList<Ingredient> ingredients;
-//---------------------------------------------------
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -232,7 +230,6 @@ public class RecipeListActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // add recipe activity
                 Intent intent = new Intent(getApplicationContext(),AddRecipeActivity.class);
-                intent.putExtra("ingredients",ingredients); //NOTE: USING TEMPORARY ingredients ARRAYLIST -- PLEASE NOTE FOR FULL IMPLEMENTATION
                 intent.putExtra("CATEGORIES", catOptions);
                 activityResultLauncher.launch(intent);
             }
