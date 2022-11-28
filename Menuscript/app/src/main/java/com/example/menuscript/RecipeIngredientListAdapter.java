@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * @see RecipeListAdapter
  * @see ViewRecipeActivity
  */
-public class RecipeIngredientListAdapter extends ArrayAdapter<Ingredient> {
+public class  RecipeIngredientListAdapter extends ArrayAdapter<Ingredient> {
     private ArrayList<Ingredient> recipeIngredients;
     private Context context;
 

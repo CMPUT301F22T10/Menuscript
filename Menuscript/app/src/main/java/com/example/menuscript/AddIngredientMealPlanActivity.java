@@ -148,7 +148,8 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
                 ingredientDescriptiontoAdd = (String) spinnerArray.get(i);
                 ingredientKeytoAdd = (String) ingredientsList.get(i);
                 ingredientUnittoAdd = (String) ingredientUnitList.get(i);
-                selectAmountTextView.setText("Select amount (" + ingredientUnittoAdd + ") :");
+                String selectAmount = "Select amount (" + ingredientUnittoAdd + ") :";
+                selectAmountTextView.setText(selectAmount);
 
             }
 
@@ -159,9 +160,14 @@ public class AddIngredientMealPlanActivity extends AppCompatActivity {
 
         });
 
-        selectItemTextView.setText("Select Ingredient");
-        addToMealPlanButton.setText("Add Ingredient to Meal Plan");
-        addNewIngredientButton.setText("Add New Ingredient");
+        String selectItem = "Select Ingredient";
+        selectItemTextView.setText(selectItem);
+
+        String addToPlan = "Add Ingredient to Meal Plan";
+        addToMealPlanButton.setText(addToPlan);
+
+        String addIngredient = "Add New Ingredient";
+        addNewIngredientButton.setText(addIngredient);
 
         addToMealPlanButton.setOnClickListener(new View.OnClickListener() {
             @Override
