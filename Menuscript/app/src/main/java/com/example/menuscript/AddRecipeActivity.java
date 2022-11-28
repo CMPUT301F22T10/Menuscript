@@ -48,7 +48,7 @@ import java.util.Objects;
  * recipeCategory {@link EditText}
  * recipeComments {@link EditText}
  * recipeImage {@link ImageButton}
- * ingredientAdapter {@link CustomIngredientList}
+ * ingredientAdapter {@link RecipeIngredientListAdapter}
  * ingredientList {@link ListView}
  *
  * @author Dylan Clarke
