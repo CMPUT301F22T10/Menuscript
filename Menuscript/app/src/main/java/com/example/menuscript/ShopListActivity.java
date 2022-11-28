@@ -298,38 +298,37 @@ public class ShopListActivity extends AppCompatActivity {
                     String description = ingredient.getDescription();
                     String unit = ingredient.getUnit();
                     String category = ingredient.getCategory();
-                    Float amount = ingredient.getAmount();
+                    Float amountNeeded = ingredient.getAmount();
+                    Float amountPurchased = 0f;
+                    Float amountInStorage = 0f;
                     String date = "";
                     String location = "";
                     String storedIngredientKey = "";
-
                     //if already a stored ingredient
                     boolean inStoredIngredientsList = false;
 
+                    Log.d("INGREDIENTS IN KEY SET", String.valueOf(storedIngredientsList.keySet()));
                     for (String key : storedIngredientsList.keySet()) {
                         StoredIngredient oldStoredIngredient = storedIngredientsList.get(key);
                         if ((oldStoredIngredient.getDescription().equals(description)) && (oldStoredIngredient.getCategory().equals(category)) && (oldStoredIngredient.getUnit().equals(unit))) {
-                            Log.d("CHECKLIST", "description" + description);
-                            Log.d("CHECKLIST", "oldStoredIngredient amount1" + String.valueOf(amount));
-                            amount = amount + oldStoredIngredient.getAmount();
-                            Log.d("CHECKLIST", "oldStoredIngredient old amount" + String.valueOf(oldStoredIngredient.getAmount()));
+                            amountInStorage = oldStoredIngredient.getAmount();
                             location = oldStoredIngredient.getLocation();
                             date = oldStoredIngredient.getDate();
-                            storedIngredientKey = key;
                             inStoredIngredientsList = true;
                             storedIngredient = oldStoredIngredient;
-                            Log.d("CHECKLIST", "oldStoredIngredient amount2" + String.valueOf(amount));
                         }
                     }
 
-                    StoredIngredient newIngredient = new StoredIngredient(description, amount, unit, category, date, location);
-                    Log.d("CHECKLIST", storedIngredientKey);
+
+                    StoredIngredient newIngredient = new StoredIngredient(description, amountInStorage, unit, category, date, location);
+//                    Log.d("CHECKLIST", storedIngredientKey);
                     if (!inStoredIngredientsList) {
                         db.addStoredIngredient(newIngredient);
                     }
 
                     Intent intent = new Intent(getApplicationContext(), ViewIngredientActivity.class);
                     intent.putExtra("INGREDIENT", newIngredient);
+                    intent.putExtra("AMOUNT NEEDED", amountNeeded);
                     intent.putExtra("CATEGORIES", catOptions);
                     intent.putExtra("LOCATIONS", locOptions);
                     intent.putExtra("UNITS", unitOptions);
@@ -355,8 +354,10 @@ public class ShopListActivity extends AppCompatActivity {
                     String category = intent.getStringExtra("category");
                     String location = intent.getStringExtra("location");
 
+
                     if (result.getResultCode() == 401) {
                         StoredIngredient edittedIngredient = new StoredIngredient(description, amount, unit, category, date, location);
+
                         db.editIngredient(storedIngredient, edittedIngredient);
 
                         //-------------------------------------ALLOWS ONLY THE EDIT OF ONE ITEM = LESS ERRORS WITH CURRENT VERSION --------------------
