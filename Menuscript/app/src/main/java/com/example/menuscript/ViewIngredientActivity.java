@@ -273,7 +273,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         if (!ingredientDate.getText().toString().equals("")) {
             intent.putExtra("date", ingredientDate.getText().toString());
         } else {
-            intent.putExtra("category", "No Best Before Date");
+            intent.putExtra("date", "No Best Before Date");
         }
         if (!ingredientCategory.getSelectedItem().toString().equals("")) {
             intent.putExtra("category", ingredientCategory.getSelectedItem().toString());

@@ -1,10 +1,7 @@
 package com.example.menuscript;
 
-import static android.content.ContentValues.TAG;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
@@ -20,6 +17,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.checkerframework.checker.units.qual.A;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * MainMenuActvitiy is the starting screen of Menuscript. The user can go to the
  * other activities, Ingredients, Recipes, Meal Plans, and Shopping List.
@@ -34,6 +36,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
     //DatabaseManager db = new DatabaseManager();
     String days;
+    HashMap<String, Float> mealPlanIngredients; // {hashmap of ingredient key, amount needed}
+    HashMap<String,Float> mealPlanRecipes; // {hashmap of recipe key, servings needed}
+    HashMap<String,Ingredient> storedIngredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +51,13 @@ public class MainMenuActivity extends AppCompatActivity {
         final Button viewShoppingListButton = findViewById(R.id.shopping_list_button);
         FirebaseFirestore databaseInstance;
         CollectionReference daysCollectionReference;
+        CollectionReference mealPlanIngredientsCollection;
+        CollectionReference mealPlanRecipesCollection;
+        CollectionReference ingredientsCollection;
         days = "0";
+        mealPlanIngredients = new HashMap<>();
+        mealPlanRecipes = new HashMap<>();
+        storedIngredients = new HashMap<>();
 
         /**
          * Switches to the ingredient list activity.
@@ -97,7 +108,69 @@ public class MainMenuActivity extends AppCompatActivity {
                 }
             }
         });
+
+
+        /**
+         * Switches to the shopping list activity.
+         *
+         * @see ShopListActivity
+         */
+        viewShoppingListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startShoppingListActivity();
+            }
+        });
+        /**
+         * getting meal plan recipes/ingredients for shopping list
+         * */
+
+        mealPlanIngredientsCollection = databaseInstance.collection("MealPlanIngredients");
+        mealPlanRecipesCollection = databaseInstance.collection("MealPlanRecipes");
+        ingredientsCollection = databaseInstance.collection("StoredIngredients");
+
+        mealPlanIngredientsCollection.addSnapshotListener((new EventListener<QuerySnapshot>() {
+
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                mealPlanIngredients.clear();
+                for(QueryDocumentSnapshot doc: value){
+                    Float amount = Float.parseFloat((String) doc.getData().get("amount"));
+                    String key = doc.getId();
+                    mealPlanIngredients.put(key, amount);
+                }
+            }
+        }));
+
+        mealPlanRecipesCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                mealPlanRecipes.clear();
+                for(QueryDocumentSnapshot doc: value){
+                    Float amount = Float.parseFloat((String) doc.getData().get("servings"));
+                    String key = doc.getId();
+                    mealPlanRecipes.put(key, amount);
+                }
+            }
+        });
+
+        ingredientsCollection.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                storedIngredients.clear();
+                for(QueryDocumentSnapshot doc: value){
+                    String name = (String) doc.getData().get("description");
+                    String unit = (String) doc.getData().get("unit");
+                    String category = (String) doc.getData().get("category");
+                    Float amount = Float.parseFloat( String.valueOf(doc.getData().get("amount")));
+                    storedIngredients.put(doc.getId() , new Ingredient(name, amount, unit, category));
+                }
+            }
+        });
+
     }
+
+
 
     public void startIngredientListActivity(){
         Intent intent = new Intent(this, IngredientListActivity.class);
@@ -113,6 +186,16 @@ public class MainMenuActivity extends AppCompatActivity {
 
         Intent intent = new Intent(this, MealPlanActivity.class);
         intent.putExtra("Days", days);
+        startActivity(intent);
+    }
+
+    public void startShoppingListActivity(){
+        Intent intent = new Intent(this, ShopListActivity.class);
+        Bundle args = new Bundle();
+        args.putSerializable("MEALPLAN_INGREDIENTS", mealPlanIngredients);
+        args.putSerializable("MEALPLAN_RECIPES", mealPlanRecipes);
+        args.putSerializable("STORED_INGREDIENTS", storedIngredients);
+        intent.putExtra("MEALPLAN_ITEMS", args);
         startActivity(intent);
     }
 
