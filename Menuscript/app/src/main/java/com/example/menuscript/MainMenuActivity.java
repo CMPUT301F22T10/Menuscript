@@ -31,6 +31,8 @@ import java.util.HashMap;
  * @author Micheal,  Wanlin
  * @see IngredientListActivity
  * @see RecipeListActivity
+ * @see MealPlanActivity
+ * @see ShopListActivity
  */
 public class MainMenuActivity extends AppCompatActivity {
 
@@ -38,7 +40,7 @@ public class MainMenuActivity extends AppCompatActivity {
     String days;
     HashMap<String, Float> mealPlanIngredients; // {hashmap of ingredient key, amount needed}
     HashMap<String,Float> mealPlanRecipes; // {hashmap of recipe key, servings needed}
-    HashMap<String,Ingredient> storedIngredients;
+    HashMap<String,StoredIngredient> storedIngredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -163,7 +165,9 @@ public class MainMenuActivity extends AppCompatActivity {
                     String unit = (String) doc.getData().get("unit");
                     String category = (String) doc.getData().get("category");
                     Float amount = Float.parseFloat( String.valueOf(doc.getData().get("amount")));
-                    storedIngredients.put(doc.getId() , new Ingredient(name, amount, unit, category));
+                    String date = (String) doc.getData().get("date");
+                    String location = (String) doc.getData().get("location");
+                    storedIngredients.put(doc.getId() , new StoredIngredient(name, amount, unit, category, date, location));
                 }
             }
         });

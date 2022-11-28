@@ -233,6 +233,7 @@ public class DatabaseManager {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 docID.add(document.getId());
                                 String toEdit = docID.get(0);
+                                Log.d("CHECKLIST QUERY FOUND", toEdit);
 
                                 //update meal plan as well if description or unit is changed
                                 mealPlanIngredientsCollectionReference
