@@ -83,6 +83,15 @@ public class Recipe {
         return ingredients;
     }
 
+    /**
+     * Method to return a hashmap filled with data of the recipe's ingredients with
+     * the keys as what values represent
+     * list {@link HashMap<String, String>}
+     *
+     * @return  list    a hashmap containing all the details of the ingredients
+     *                  associated with right keys.
+     */
+
     public ArrayList<HashMap<String,String>> getHashedIngredients() {
         ArrayList<HashMap<String,String>> list = new ArrayList<HashMap<String,String>>();
 
@@ -97,6 +106,12 @@ public class Recipe {
 
         return list;
     }
+
+    /**
+     * Method to convert the recipe's image (currently a byte[]) into a String.
+     * This is so it can be stored in the database.
+     * @return the byte[] converted into a String
+     */
 
     public String getEncodedImage(){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -131,6 +146,12 @@ public class Recipe {
     public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
     }
+
+    /** Converts the entire Recipe into a Hashmap<String, Object> so it can be stored in the database.
+     * Keys are associated with what each attribute represents.
+     *
+     * @return data - fully hashed map of the recipe
+     */
 
     public HashMap<String, Object> asHashMap () {
         HashMap<String, Object> data = new HashMap<>();
