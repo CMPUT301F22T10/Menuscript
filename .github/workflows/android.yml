@@ -10,7 +10,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
-
+    
+    defaults:
+      run:
+        working-directory: ./Menuscript
+        
     steps:
     - uses: actions/checkout@v3
     - name: set up JDK 11
@@ -21,6 +25,6 @@ jobs:
         cache: gradle
 
     - name: Grant execute permission for gradlew
-      run: chmod +x Menuscript/gradlew
+      run: chmod +x gradlew
     - name: Build with Gradle
-      run: Menuscript/gradlew build
+      run: gradlew build
