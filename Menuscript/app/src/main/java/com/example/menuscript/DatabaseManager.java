@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
@@ -149,7 +150,10 @@ public class DatabaseManager {
                 });
     }
 
-
+    /**
+     * Deletes a storedIngredient from the database, and consequently, the app.
+     * @param storedIngredient  -- the ingredient to be deleted
+     */
     public void deleteStoredIngredient(StoredIngredient storedIngredient) {
         collectionReference = databaseInstance.collection("StoredIngredients");
         CollectionReference  mealPlanIngredientsCollectionReference = databaseInstance.collection("MealPlanIngredients");
@@ -212,7 +216,11 @@ public class DatabaseManager {
 
 
     }
-
+    /**
+     * Edits/Updates a storedIngredient in the database with new values and attributes.
+     * @param original {@link StoredIngredient} -- the original version of the ingredient
+     * @param replacement {@link StoredIngredient} -- the updated version of the ingredient
+     */
     public void editIngredient(StoredIngredient original, StoredIngredient replacement) {
         collectionReference = databaseInstance.collection("StoredIngredients");
         CollectionReference  mealPlanIngredientsCollectionReference = databaseInstance.collection("MealPlanIngredients");
@@ -271,6 +279,10 @@ public class DatabaseManager {
 
     }
 
+    /**
+     * Adds a new recipe to the database, and consequently, the app.
+     * @param recipe  -- the recipe to be added
+     */
     public void addRecipe(Recipe recipe) {
         collectionReference = databaseInstance.collection("Recipes");
 
@@ -291,7 +303,10 @@ public class DatabaseManager {
                 });
 
     }
-
+    /**
+     * Deletes a specified recipe from the database, and consequently, the app.
+     * @param recipe  -- the recipe to be deleted
+     */
     public void deleteRecipe(Recipe recipe) {
         collectionReference = databaseInstance.collection("Recipes");
         CollectionReference mealPlanRecipesCollectionReference = databaseInstance.collection("MealPlanRecipes");
@@ -357,7 +372,11 @@ public class DatabaseManager {
 
 
     }
-
+    /**
+     * Edits a specified recipe and applies the changes to the database.
+     * @param recipe  -- the original version of the recipe
+     * @param edittedRecipe -- the editted version of the recipe
+     */
     public void editRecipe(Recipe recipe, Recipe edittedRecipe) {
         collectionReference = databaseInstance.collection("Recipes");
         CollectionReference mealPlanRecipesCollectionReference = databaseInstance.collection("MealPlanRecipes");
@@ -424,22 +443,38 @@ public class DatabaseManager {
 
     }
 
+    /**
+     * Adds a new recipe category into the database.
+     * @param category -- the category which is being added
+     */
     public void addRecipeCategory(String category) {
         DocumentReference categories = databaseInstance.collection("Options").document("Recipe Categories");
 
         categories.update(category, category);
     }
 
+    /**
+     * Adds a new ingredient category into the database.
+     * @param category -- the category which is being added
+     */
     public void addIngredientCategory(String category) {
         DocumentReference categories = databaseInstance.collection("Options").document("Ingredient Categories");
 
         categories.update(category, category);
     }
+    /**
+     * Adds a new ingredient location into the database.
+     * @param location -- the category which is being added
+     */
     public void addLocation(String location) {
         DocumentReference categories = databaseInstance.collection("Options").document("Locations");
 
         categories.update(location, location);
     }
+    /**
+     * Adds a new ingredient unit into the database.
+     * @param unit -- the category which is being added
+     */
     public void addUnit(String unit) {
         DocumentReference categories = databaseInstance.collection("Options").document("Units");
 
