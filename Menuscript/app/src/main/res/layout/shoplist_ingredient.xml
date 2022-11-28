@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingVertical="25dp"
-        android:text="Shopping List"
+        android:text="SHOPPING LIST"
         android:textSize="40dp"
         style="@style/MainHeader"/>
 

@@ -3,6 +3,7 @@ package com.example.menuscript;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -48,6 +49,8 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
     ArrayList<String> locOptions;
     ArrayList<String> catOptions;
     ArrayList<String> unitOptions;
+
+    boolean fromShop = false;
 
     Calendar calendar = Calendar.getInstance();
 
@@ -96,7 +99,14 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
 
         StoredIngredient viewedIngredient = (StoredIngredient) getIntent().getSerializableExtra("INGREDIENT");
         ingredientDescription.setText(viewedIngredient.getDescription());
-        ingredientAmount.setText((String.valueOf(viewedIngredient.getAmount())));
+        Float amountNeeded = (Float) getIntent().getFloatExtra("AMOUNT NEEDED", 0f);
+        if (amountNeeded != 0f) {
+            ingredientAmount.setHint("Amount needed: " + String.valueOf(amountNeeded));
+            fromShop = true;
+        } else {
+            ingredientAmount.setText((String.valueOf(viewedIngredient.getAmount())));
+        }
+        Float amountStored = viewedIngredient.getAmount();
         ingredientDate.setText(viewedIngredient.getDate());
 
         if (viewedIngredient.getCategory() != null && catOptions.contains(viewedIngredient.getCategory())) {
@@ -114,7 +124,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         if (viewedIngredient.getLocation() != null && locOptions.contains(viewedIngredient.getLocation())) {
             ingredientLocation.setSelection(locOptions.indexOf(viewedIngredient.getLocation()));
         } else if (!locOptions.contains(viewedIngredient.getLocation())) {
-            locOptions.add(0, viewedIngredient.getCategory());
+            locOptions.add(0, viewedIngredient.getLocation());
             locAdapter.notifyDataSetChanged();
             ingredientLocation.setSelection(0);
         } else {
@@ -126,7 +136,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
         if (viewedIngredient.getUnit() != null && unitOptions.contains(viewedIngredient.getUnit())) {
             ingredientUnit.setSelection(unitOptions.indexOf(viewedIngredient.getUnit()));
         } else if (!unitOptions.contains(viewedIngredient.getUnit())) {
-            unitOptions.add(0, viewedIngredient.getCategory());
+            unitOptions.add(0, viewedIngredient.getUnit());
             unitAdapter.notifyDataSetChanged();
             ingredientUnit.setSelection(0);
         } else {
@@ -229,7 +239,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                onButtonClick(intent);
+                onButtonClick(intent, amountStored);
                 setResult(401, intent);
                 finish();
             }
@@ -241,7 +251,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent();
-                onButtonClick(intent);
+                onButtonClick(intent, 0f);
                 setResult(402, intent);
                 finish();
             }
@@ -253,7 +263,14 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
      *
      * @param intent
      */
-    private void onButtonClick(Intent intent) {
+    private void onButtonClick(Intent intent, Float amountStored) {
+
+        Float newAmount = Float.valueOf(ingredientAmount.getText().toString());
+        Log.d("WALT PLEASE", String.valueOf(newAmount));
+        if (fromShop) {
+            newAmount = newAmount + amountStored;
+            Log.d("I AM GOING TO EXPLODE", String.valueOf(newAmount));
+        }
 
         if (!ingredientDescription.getText().toString().equals("")) {
             intent.putExtra("description", ingredientDescription.getText().toString());
@@ -261,7 +278,7 @@ public class ViewIngredientActivity extends AppCompatActivity implements AddOpti
             intent.putExtra("description", "Unnamed Ingredient");
         }
         if (!ingredientAmount.getText().toString().equals("")) {
-            intent.putExtra("amount", Float.valueOf(ingredientAmount.getText().toString()));
+            intent.putExtra("amount", newAmount);
         } else {
             intent.putExtra("amount", 0.0f);
         }
