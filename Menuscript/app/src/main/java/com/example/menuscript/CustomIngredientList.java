@@ -38,12 +38,8 @@ public class CustomIngredientList extends ArrayAdapter {
         }
         Ingredient ingredient = items.get(position);
         TextView descriptionText = view.findViewById(R.id.description_text);
-        TextView ingredientAmount = view.findViewById(R.id.tv_item_amount);
-        TextView ingredientUnit = view.findViewById(R.id.tv_item_unit);
 
         descriptionText.setText(ingredient.getDescription());
-        ingredientAmount.setText(String.valueOf(ingredient.getAmount()));
-        ingredientUnit.setText(ingredient.getUnit());
 
         return view;
     }
