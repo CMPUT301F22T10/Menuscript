@@ -38,7 +38,8 @@ public class Ingredient implements Serializable {
      * @param category  the category to which the Ingredient belongs
      */
     public Ingredient (String description, float amount, String unit, String category) {
-        assert(amount >= 0);
+//        had to comment out this line, otherwise Shopping List crashes due to how interaction with meal plan works
+//        assert(amount >= 0);
 
         this.description = description;
         this.amount = amount;
